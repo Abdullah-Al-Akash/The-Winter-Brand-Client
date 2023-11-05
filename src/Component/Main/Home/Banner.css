@@ -1,0 +1,12 @@
+.banner-content{
+    background:  /* top, transparent black, faked with gradient */
+    linear-gradient(
+      rgba(10, 10, 10, 0.868),
+      rgba(0, 0, 0, 0.7)
+    ),
+    url('../../../assets/images/Banner.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 80vh;
+}

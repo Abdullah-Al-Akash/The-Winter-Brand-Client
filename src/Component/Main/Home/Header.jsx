@@ -1,11 +1,23 @@
 import React from 'react';
+import Banner from './Banner';
+import OfferSection from './OfferSection';
+import HowWork from './HowWork';
+import GetReady from './GetReady';
+import Accordion from './AccordionSection';
+import ItemSlider from './ItemSlider';
+import FollowUs from './FollowUs';
 
 const Header = () => {
     return (
         <div>
-            create development branch dev-akash
-            <h2>Hello Brother</h2>
-            create development branch dev-biplop
+            <Banner></Banner>
+            <OfferSection></OfferSection>
+            <HowWork></HowWork>
+            <ItemSlider></ItemSlider>
+            <OfferSection></OfferSection>
+            <GetReady></GetReady>
+            <Accordion></Accordion>
+            <FollowUs></FollowUs>
         </div>
     );
 };

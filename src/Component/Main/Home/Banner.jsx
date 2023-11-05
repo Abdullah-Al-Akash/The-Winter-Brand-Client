@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Banner.css'
 import { TypeAnimation } from 'react-type-animation';
+import DrawerComponent from '../../../Sheard/Drawer/DrawerComponent';
+import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 const Banner = () => {
+    const { isOpen, setIsOpen, toggleDrawer } = useContext(AuthContext);
     return (
         <div className="banner-content text-center">
             <div className="flex justify-center items-center h-[80vh]">
@@ -29,10 +32,11 @@ const Banner = () => {
                         </span>
                     </div>
                     <div className='mt-5'>
-                        <button className='btn brand-btn font-bold'>Get The Bundle</button>
+                        <button onClick={toggleDrawer} className='btn brand-btn font-bold'>Get The Bundle</button>
                     </div>
                 </div>
             </div>
+            <DrawerComponent></DrawerComponent>
         </div >
     );
 };

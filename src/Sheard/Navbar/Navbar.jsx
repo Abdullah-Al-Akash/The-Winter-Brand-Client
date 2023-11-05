@@ -16,7 +16,7 @@ const Navbar = () => {
       <Link to={"/contact"}>Contact</Link>
       <Link to={"/reviews"}>Reviews</Link>
       <Link to={"/faq"}>FAQ</Link>
-      <Link to={"/"}>Daily SHopping</Link>
+      <Link to={"/"}>Daily Shopping</Link>
     </>
   );
   return (
@@ -80,7 +80,7 @@ const Navbar = () => {
                 </Link>
               </div>
               <button
-                className="bg-green-400 md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px]"
+                className="bg-[#ff4500] text-white transition-all ease-in-out duration-500 hover:text-[#ff4500] hover:bg-black md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px]"
                 onClick={toggleDrawer}
               >
                 Join

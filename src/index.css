@@ -2,21 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-.brand-color{
+* {
+    box-sizing: border-box;
+}
+
+.brand-color {
     color: orangered;
 }
-.brand-bg{
+
+.brand-bg {
     background-color: orangered;
     color: white;
 }
 
-.brand-btn{
+.brand-btn {
     background-color: orangered;
     color: black;
     border: 2px solid orangered;
     border-radius: 25px;
 }
-.brand-btn:hover{
+
+.brand-btn:hover {
     background-color: black;
     color: orangered;
     border: 2px solid orangered;

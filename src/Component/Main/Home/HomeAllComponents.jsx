@@ -7,7 +7,7 @@ import Accordion from './AccordionSection';
 import ItemSlider from './ItemSlider';
 import FollowUs from './FollowUs';
 
-const Header = () => {
+const HomeAllComponents = () => {
     return (
         <div>
             <Banner></Banner>
@@ -22,4 +22,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default HomeAllComponents;

@@ -8,6 +8,8 @@ import Faq from "../Pages/Main/FAQ/Faq";
 import Login from "../Pages/Main/Login/Login";
 import Products from "../Pages/Main/Products/Products";
 import Register from "../Pages/Main/Register/Register";
+import Dashboard from "../Layout/Dashboard/Dashboard";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +47,16 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "/dashboard",
+        element: <DashboardHome></DashboardHome>,
       },
     ],
   },

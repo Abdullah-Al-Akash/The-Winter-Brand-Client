@@ -1,6 +1,6 @@
 import React from "react";
 import Navlogo from "../../assets/Navlogo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FcBusinessman } from "react-icons/fc";
 import { FiShoppingCart } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -10,18 +10,9 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import NavDrawer from "../NavDrawer/NavDrawer";
 
 const Navbar = () => {
-  const { isOpen, setIsOpen, toggleDrawer, NavToggleDrawer } =
+  const { isOpen, setIsOpen, toggleDrawer, NavToggleDrawer, setNevActive } =
     useContext(AuthContext);
-  const menu = (
-    <>
-      <Link to={"/"}>Home</Link>
-      <Link to={"/about"}>About US</Link>
-      <Link to={"/contact"}>Contact</Link>
-      <Link to={"/reviews"}>Reviews</Link>
-      <Link to={"/faq"}>FAQ</Link>
-      <Link to={"/"}>Daily Shopping</Link>
-    </>
-  );
+
   return (
     <div className="border-b py-4">
       <div className="max-w-[1200px] mx-auto">
@@ -40,7 +31,7 @@ const Navbar = () => {
               </div>
             </div>
             <div className="flex justify-center items-center">
-              <Link to="/">
+              <Link to="/" onClick={()=>setNevActive("home")}>
                 <img
                   src={Navlogo}
                   className="h-[40px] cursor-pointer md:h-[50px]"

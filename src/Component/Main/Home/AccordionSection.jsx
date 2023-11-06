@@ -35,7 +35,7 @@ const AccordionSection = () => {
         "We always want our subscribers to LOVE their socks. If you don't for any reason, send us a message and as part of our happiness guarantee, we'll send you a free replacement pair with your next shipment. Only active subscribers can request replacement socks, and you can only do so once every 6 months. If your subscription is canceled or expired, you won't be able to exchange your socks.",
     },
   ];
-  const handleDrop = (_id, isOpen) => {};
+  const handleDrop = (_id, isOpen) => { };
   console.log(drop);
   return (
     <div className="container mx-auto grid md:grid-cols-2 gap-4 py-12 p-4">
@@ -52,9 +52,9 @@ const AccordionSection = () => {
         <p className="brand-color">Subscriptions start from $6.50</p>
       </div>
       <div>
-        <Accordion allowZeroExpanded>
+        <Accordion allowZeroExpanded className="border-0">
           {items.map((item) => (
-            <AccordionItem key={item.id} className="bg-orange-50 px-2">
+            <AccordionItem key={item.id} className="bg-orange-50 px-2 mt-4">
               <AccordionItemHeading>
                 <AccordionItemButton
                   className="brand-color py-2 flex items-center"

@@ -64,8 +64,8 @@ const Faq = () => {
                   : item.indexNumber % 4 === 2
                   ? "border-l-[10px] px-2 border-blue-800"
                   : item.indexNumber % 4 === 3
-                  ? "bg-[#CCDAF5]"
-                  : "bg-[#D8D2E7]"
+                  ? "border-green-400"
+                  : "border-red-400"
               } text-2xl`}
               header={item?.header}
             >

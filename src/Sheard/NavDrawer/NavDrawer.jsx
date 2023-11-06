@@ -14,8 +14,11 @@ import {
 import "react-modern-drawer/dist/index.css";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const NavDrawer = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const path = currentPath.split("/")[1];
   const {
     isOpen,
     NavIsOpen,
@@ -29,7 +32,7 @@ const NavDrawer = () => {
     <>
       <Link
         className={`${
-          nevActive === "home" ? "text-[#FF4500]" : ""
+          nevActive === "home" && path == false ? "text-[#FF4500]" : ""
         } flex items-center justify-center gap-2`}
         onClick={() => {
           NavToggleDrawer();
@@ -41,7 +44,9 @@ const NavDrawer = () => {
       </Link>
       <Link
         className={`${
-          nevActive === "about" ? "text-[#FF4500]" : ""
+          nevActive === "about" || (path === "about") == true
+            ? "text-[#FF4500]"
+            : ""
         } flex items-center justify-center gap-2`}
         onClick={() => {
           NavToggleDrawer();
@@ -54,7 +59,9 @@ const NavDrawer = () => {
       </Link>
       <Link
         className={`${
-          nevActive === "contact" ? "text-[#FF4500]" : ""
+          nevActive === "contact" || (path == "contact") == true
+            ? "text-[#FF4500]"
+            : ""
         }  flex items-center justify-center gap-2`}
         onClick={() => {
           NavToggleDrawer();
@@ -67,7 +74,9 @@ const NavDrawer = () => {
       </Link>
       <Link
         className={`${
-          nevActive === "reviews" ? "text-[#FF4500]" : ""
+          nevActive === "reviews" || (path == "reviews") == true
+            ? "text-[#FF4500]"
+            : ""
         }  flex items-center justify-center gap-2`}
         onClick={() => {
           NavToggleDrawer();
@@ -80,7 +89,7 @@ const NavDrawer = () => {
       </Link>
       <Link
         className={`${
-          nevActive === "faq" ? "text-[#FF4500]" : ""
+          nevActive === "faq" || (path == "faq") == true ? "text-[#FF4500]" : ""
         }  flex items-center justify-center gap-2`}
         onClick={() => {
           NavToggleDrawer();

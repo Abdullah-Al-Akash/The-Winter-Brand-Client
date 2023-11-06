@@ -14,7 +14,7 @@ const DrawerComponent = () => {
       onClose={toggleDrawer}
       direction="right"
       size={window.innerWidth >= 768 ? "50%" : "100%"}
-      className="bla bla bla relative"
+      className="bla bla bla relative opacity-70"
     >
       <button
         className="absolute md:top-10 md:right-10 top-5 right-5 text-2xl"

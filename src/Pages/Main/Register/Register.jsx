@@ -82,7 +82,7 @@ const Register = () => {
     <div className="max-w-[1200px] mx-auto px-2 md:px-0">
       <div className="flex flex-col justify-center items-center">
         <h2 className="my-5 text-2xl font-semibold">
-          Create your DailyHabits account
+          Create your The Winter Brand account
         </h2>
         <div className="md:w-[400px]">
           <form

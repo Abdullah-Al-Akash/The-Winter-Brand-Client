@@ -41,6 +41,7 @@ const sizes = [
 const Subscription = () => {
   const { toggleDrawer } = useContext(AuthContext);
   const [sub, setSub] = useState("me");
+  const [gender, setGender] = useState("female");
   const [plan, setPlan] = useState("plan1");
   const [sizeName, setSizeName] = useState("XL");
   const [quantity, setQuantity] = useState("1");
@@ -56,9 +57,8 @@ const Subscription = () => {
           {/* bg-[#ff4500] */}
           <button
             onClick={() => setSub("me")}
-            className={`${
-              sub === "me" ? "bg-[#ff4500] text-white" : ""
-            } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-[#ff4500]  font-bold border`}
+            className={`${sub === "me" ? "bg-[#ff4500] text-white" : ""
+              } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-[#ff4500]  font-bold border`}
           >
             <img
               className="h-[24px] w-[24px] md:w-[34px] md:h-[34px]"
@@ -69,9 +69,8 @@ const Subscription = () => {
           </button>
           <button
             onClick={() => setSub("gift")}
-            className={`${
-              sub === "gift" ? "bg-[#ff4500] text-white" : ""
-            } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-[#ff4500]  font-bold border`}
+            className={`${sub === "gift" ? "bg-[#ff4500] text-white" : ""
+              } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-[#ff4500]  font-bold border`}
           >
             <img
               className="h-[24px] w-[24px] md:w-[34px] md:h-[34px]"
@@ -137,58 +136,48 @@ const Subscription = () => {
             </div>
           </form>
         )}
-        {/* select duration  */}
+        {/* Select Gender */}
         <h3 className="text-[16px] font-bold md:text-[24px] my-4">
-          Select Duration
+          Select Gender
         </h3>
+
         <div className="w-full">
           <button
-            onClick={() => setPlan("plan1")}
-            className={`${
-              plan === "plan1" ? "bg-[#ff4500] text-white" : ""
-            } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex  items-center justify-between gap-3`}
+
+            className={`${gender === "male" ? "bg-[#ff4500] text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex  items-center justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji1} alt="" />
               <span className="flex flex-col items-start">
                 <span className="my-1 text-[14px] font-bold md:text-[18px]">
-                  This time
-                </span>
-                <span className="my-1 text-[14px]">
-                  $6.50 USD 1st month then $12.99 USD
+                  Male
                 </span>
               </span>
             </p>
             <p className="flex flex-col items-start -mb-3">
-              <span className="my-1 text-[18px]">USD</span>
-              <span className="my-1 text-[18px]">8</span>
-              <span className="my-1 line-through text-[14px]">USD 15</span>
+
             </p>
           </button>
           <button
-            onClick={() => setPlan("plan2")}
-            className={`${
-              plan === "plan2" ? "bg-[#ff4500] text-white" : ""
-            } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-center justify-between gap-3`}
+            onClick={() => setGender("female")}
+            className={`${gender === "female" ? "bg-[#ff4500] text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-center justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji2} alt="" />
               <span className="flex flex-col items-start">
                 <span className="my-1 text-[14px] font-bold md:text-[18px]">
-                  Anuall plan
-                </span>
-                <span className="my-1 text-[14px]">
-                  $6.50 USD 1st month then $12.99 USD
+                  Female
                 </span>
               </span>
             </p>
             <p className="flex flex-col items-start -mb-3">
-              <span className="my-1 text-[18px]">USD</span>
-              <span className="my-1 text-[18px]">50</span>
-              <span className="my-1 line-through text-[14px]">USD 15</span>
             </p>
           </button>
         </div>
+        {/* select duration  */}
+
 
         {/* sizes  */}
         <h3 className="text-[16px] font-bold md:text-[24px] mt-10 mb-4">
@@ -199,9 +188,8 @@ const Subscription = () => {
             return (
               <button
                 onClick={() => setSizeName(size.name)}
-                className={`${
-                  sizeName === size.name ? "bg-[#ff4500] text-white" : ""
-                } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-end  gap-3`}
+                className={`${sizeName === size.name ? "bg-[#ff4500] text-white" : ""
+                  } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-end  gap-3`}
                 key={i}
               >
                 <img src={size.image} alt="" />
@@ -213,6 +201,46 @@ const Subscription = () => {
             );
           })}
         </div>
+
+        <h3 className="text-[16px] font-bold md:text-[24px] my-4">
+          Select Duration
+        </h3>
+
+        <div className="w-full">
+          <button
+            onClick={() => setPlan("plan1")}
+            className={`${plan === "plan1" ? "bg-[#ff4500] text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex  items-center justify-between gap-3`}
+          >
+            <p className="flex gap-3 items-center">
+              <img className="w-[35px] h-[35px]" src={emoji1} alt="" />
+              <span className="flex flex-col items-start">
+                <span className="my-1 text-[14px] font-bold md:text-[18px]">
+                  One Time Bundle
+                </span>
+              </span>
+            </p>
+            <p className="flex flex-col items-start -mb-3">
+
+            </p>
+          </button>
+          <button
+            onClick={() => setPlan("plan2")}
+            className={`${plan === "plan2" ? "bg-[#ff4500] text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-center justify-between gap-3`}
+          >
+            <p className="flex gap-3 items-center">
+              <img className="w-[35px] h-[35px]" src={emoji2} alt="" />
+              <span className="flex flex-col items-start">
+                <span className="my-1 text-[14px] font-bold md:text-[18px]">
+                  Annual Bundle
+                </span>
+              </span>
+            </p>
+            <p className="flex flex-col items-start -mb-3">
+            </p>
+          </button>
+        </div>
         {/* Select Quantity */}
         <h3 className="text-[16px] font-bold md:text-[24px] my-4">
           Select Quantity
@@ -220,92 +248,89 @@ const Subscription = () => {
         <div className="w-full">
           <button
             onClick={() => setQuantity("1")}
-            className={`${
-              quantity === "1" ? "bg-[#ff4500] text-white" : ""
-            } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-end justify-between gap-3`}
+            className={`${quantity === "1" ? "bg-[#ff4500] text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-end justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji1} alt="" />
               <span className="flex flex-col items-start">
                 <span className="my-1 text-[14px] font-bold md:text-[18px]">
-                  1 Pair a Month
+                  1 Bundle
                 </span>
                 <span className="my-1 text-[14px]">
-                  Tk 800.00 1st month then Tk 1,500.00
+                  Upto save 30%
                 </span>
               </span>
             </p>
             <p className="flex flex-col items-start -mb-3">
-              <span className="my-1 text-[18px]">USD</span>
-              <span className="my-1 text-[18px]">8</span>
-              <span className="my-1 line-through text-[14px]">USD 15</span>
+              <p className="flex items-center pb-4">
+                <span className="my-1 text-[18px]">$ </span>
+                <span className="my-1 text-[18px]"> 49</span>
+                {/* <span className="my-1 line-through text-[14px]">USD 15</span> */}
+              </p>
+              {/* <span className="my-1 line-through text-[14px]">USD 15</span> */}
             </p>
           </button>
           <button
             onClick={() => setQuantity("2")}
-            className={`${
-              quantity === "2" ? "bg-[#ff4500] text-white" : ""
-            } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-end justify-between gap-3`}
+            className={`${quantity === "2" ? "bg-[#ff4500] text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-end justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji2} alt="" />
               <span className="flex flex-col items-start">
                 <span className="my-1 text-[14px] font-bold md:text-[18px]">
-                  2 Pairs a Month
+                  2 Bundle
                 </span>
                 <span className="my-1 text-[14px]">
-                  k 1,200.00 1st month then Tk 2,300.00
+                  Upto save 70%
                 </span>
               </span>
             </p>
-            <p className="flex flex-col items-start -mb-3">
-              <span className="my-1 text-[18px]">USD</span>
-              <span className="my-1 text-[18px]">50</span>
-              <span className="my-1 line-through text-[14px]">USD 15</span>
+            <p className="flex items-center pb-4">
+              <span className="my-1 text-[18px]">$ </span>
+              <span className="my-1 text-[18px]"> 90</span>
+              {/* <span className="my-1 line-through text-[14px]">USD 15</span> */}
             </p>
           </button>
         </div>
         {/* Select Sock Craziness */}
         <h3 className="text-[16px] font-bold md:text-[24px] my-4">
-          Select Sock Craziness
+          Select Beanie Craziness
         </h3>
         <div className="w-full flex gap-3">
           <div
             onClick={() => (quantity === "1" ? setSetected("S1") : "")}
-            className={`${
-              setected === "S1"
-                ? "bg-[#ff4500] text-white"
-                : quantity === "2" && "bg-[#ff4500] text-white"
-            } duration-200 my-2 border  rounded-lg hover:border-[#ff4500] w-full flex flex-col gap-3`}
+            className={`${setected === "S1"
+              ? "bg-[#ff4500] text-white"
+              : quantity === "2" && "bg-[#ff4500] text-white"
+              } duration-200 my-2 border  rounded-lg hover:border-[#ff4500] w-full flex flex-col gap-3`}
           >
             <img
-              className="w-full rounded-t-lg"
-              src="https://sayitwithasock.com/cdn/shop/files/Graphic_Socks_Combo_250x.jpg?v=1643071446"
+              className="w-full rounded-t-lg bg-white"
+              src="https://i.ibb.co/hcLwg9W/399755345-1372243073710860-2973877592655521287-n.jpg"
               alt=""
             />
 
             <div className="flex flex-col items-start p-2">
-              <p className="my-1 text-[18px] font-bold">Wild and Colorful</p>
-              <p className="my-1 text-[14px]">Bright colors</p>
+              <p className="my-1 text-[18px] font-bold">Neutral Color</p>
             </div>
           </div>
           <div
             onClick={() => (quantity === "1" ? setSetected("S2") : "")}
-            className={`${
-              setected === "S2"
-                ? "bg-[#ff4500] text-white"
-                : quantity === "2" && "bg-[#ff4500] text-white"
-            } duration-200 my-2 border rounded-lg hover:border-[#ff4500] w-full flex flex-col gap-3`}
+            className={`${setected === "S2"
+              ? "bg-[#ff4500] text-white"
+              : quantity === "2" && "bg-[#ff4500] text-white"
+              } duration-200 my-2 border rounded-lg hover:border-[#ff4500] w-full flex flex-col gap-3`}
           >
             <img
               className="w-full rounded-t-lg"
-              src="https://sayitwithasock.com/cdn/shop/files/Graphic_Socks_Combo_250x.jpg?v=1643071446"
+              src="https://i.ibb.co/1zcm6LW/385533376-1046381806804730-7955442742744901698-n.jpg"
               alt=""
             />
 
             <div className="flex flex-col items-start p-2">
               <p className="my-1 text-[18px] font-bold">Wild and Colorful</p>
-              <p className="my-1 text-[14px]">Bright colors</p>
             </div>
           </div>
         </div>

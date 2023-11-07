@@ -13,13 +13,13 @@ const GetReady = () => {
           <img className="rounded md:p-8" src={getReady} alt="" />
         </div>
         <div className="flex items-center justify-center md:justify-start p-8">
-          <div className="text-center md:text-start">
+          <div className="text-center md:text-start flex flex-col gap-2">
             <p className="brand-color">Customize Your Subscription</p>
-            <h1 className="md:text-5xl text-2xl font-semibold leading-tight">
+            <h1 className="md:text-4xl text-2xl font-semibold leading-tight">
               Get Ready for the <br></br>{" "}
               <span className="brand-color">Beanie Bundle?</span>{" "}
             </h1>
-            <div className="mt-6">
+            <div className="mt-2">
               <button onClick={toggleDrawer} className="btn brand-btn">
                 Get The Bundle
               </button>

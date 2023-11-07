@@ -1,0 +1,9 @@
+.accordion__button{
+    background-color: rgb(255, 247, 237) !important;
+    color: orangered;
+    font-weight: bold !important;
+    border-left: 3px solid orangered;
+    border-bottom: 3px solid orangered;
+    box-shadow: 2px 2px 5px rgba(197, 191, 191, 0.389);
+    border-radius: 5px;
+}

@@ -3,8 +3,8 @@ import React from 'react';
 const ProductsCard = ({ product }) => {
     const { name, sale_price, regular_price, img } = product;
     return (
-        <div className="flex justify-center">
-            <div className="card w-96 bg-base-100 shadow-xl">
+        <div className="flex w-96 justify-center">
+            <div className="card bg-base-100 shadow-2xl">
                 <div className="flex justify-center">
                     <img style={{ height: '300px', width: '350px' }} className="px-8" src={img} alt="Beanie" />
                 </div>

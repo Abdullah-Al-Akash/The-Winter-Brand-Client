@@ -38,7 +38,7 @@ const AccordionSection = () => {
   const handleDrop = (_id, isOpen) => { };
   console.log(drop);
   return (
-    <div className="container mx-auto grid md:grid-cols-2 gap-4 py-12 p-4">
+    <div className="container mx-auto md:px-24 grid md:grid-cols-2 gap-4 py-12 p-4">
       <div>
         <h3 className="brand-color font-semibold">Got Questions?</h3>
         <h1 className="text-5xl font-semibold mt-4">We’ve Got You Covered!</h1>

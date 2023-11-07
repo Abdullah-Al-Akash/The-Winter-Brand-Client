@@ -10,8 +10,9 @@ const Banner = () => {
         <div className="banner-content text-center">
             <div className="flex justify-center items-center h-[80vh]">
                 <div className="">
-                    <h1 className='text-4xl font-semibold text-white'>Elevate Your <span className="brand-color font-bold text-5xl">Winter Style</span> with Our </h1>
-                    <h1 className='text-4xl text-white mt-3'>Cozy <span className="brand-color font-semibold">Beanie Bundle</span>!</h1>
+                    <h1 className='md:text-4xl text-2xl font-semibold text-white '>Elevate Your <span className="brand-color font-bold md:text-5xl text-3xl">Winter Style</span> <br />  </h1>
+                    <h1 className='md:text-4xl text-2xl font-semibold text-white mt-2'>with Our</h1>
+                    <h1 className='md:text-4xl text-2xl text-white mt-3'>Cozy <span className="brand-color font-semibold">Beanie Bundle</span>!</h1>
                     <h3 className='text-gray-300 text-xl mt-5'>Everything in one Bundle: Unparalleled Quality, Unbeatable Price, and Fashion Forward</h3>
                     <div className='mt-3'>
                         <span className='bg-black brand-color p-2 rounded text-lg font-semibold'>

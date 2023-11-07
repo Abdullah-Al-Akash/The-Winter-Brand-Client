@@ -41,7 +41,7 @@ const sizes = [
 const Subscription = () => {
   const { toggleDrawer } = useContext(AuthContext);
   const [sub, setSub] = useState("me");
-  const [gender, setGender] = useState("female");
+  const [gender, setGender] = useState("male");
   const [plan, setPlan] = useState("plan1");
   const [sizeName, setSizeName] = useState("XL");
   const [quantity, setQuantity] = useState("1");
@@ -49,7 +49,7 @@ const Subscription = () => {
   return (
     <>
       <div className="mt-5 mb-3">
-        <h3 className="text-4xl font-bold my-[30px]">
+        <h3 className="md:text-4xl text-2xl font-bold my-[30px]">
           Customize Your Subscription
         </h3>
         {/* Customize btns  */}
@@ -77,12 +77,12 @@ const Subscription = () => {
               src={emoji1}
               alt=""
             />
-            <span className="text-[14px] md:text-[20px]">This is for me</span>
+            <span className="text-[14px] md:text-[20px]">This is for Gift</span>
           </button>
         </div>
         {sub === "gift" && (
           <form>
-            <h2 className="text-[24px] font-bold">Gift Option</h2>
+            <h2 className="text-sm md:text-[24px] font-bold my-4">Gift Option</h2>
             <p>
               Don't worry, we won't send them any emails until the date you tell
               us to. We wouldn't want to spoil the surprise!
@@ -143,7 +143,7 @@ const Subscription = () => {
 
         <div className="w-full">
           <button
-
+            onClick={() => setGender("male")}
             className={`${gender === "male" ? "bg-[#ff4500] text-white" : ""
               } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex  items-center justify-between gap-3`}
           >
@@ -336,7 +336,7 @@ const Subscription = () => {
         </div>
         <Link
           onClick={toggleDrawer}
-          className=" w-full my-4 py-3 block bg-[#ff7610] rounded-full font-bold text-white text-[18px] text-center"
+          className=" w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center"
           to="/checkout"
         >
           <button>Continue to checkout</button>

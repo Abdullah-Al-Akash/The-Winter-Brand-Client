@@ -23,7 +23,7 @@ const DrawerComponent = () => {
       >
         <GrFormClose />
       </button>
-      <div className="p-[100px]">
+      <div className="md:p-[50px] p-[20px]">
         {/* TODO  */}
         <Subscription />
       </div>

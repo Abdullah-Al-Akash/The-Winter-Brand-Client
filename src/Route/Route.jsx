@@ -9,7 +9,19 @@ import Login from "../Pages/Main/Login/Login";
 import Products from "../Pages/Main/Products/Products";
 import Register from "../Pages/Main/Register/Register";
 import Dashboard from "../Layout/Dashboard/Dashboard";
-import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import Checkout from "../Pages/Main/Checkout/Checkout";
+import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
+import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
+import AllProducts from "../Pages/Dashboard/AllProducts/AllProducts";
+import AddFeature from "../Pages/Dashboard/AddFeature/AddFeature";
+import AllFeature from "../Pages/Dashboard/AllFeature/AllFeature";
+import AllFaq from "../Pages/Dashboard/AllFaq/AllFaq";
+import ViewFaq from "../Pages/Dashboard/ViewFaq/ViewFaq";
+import PendingReview from "../Pages/Dashboard/PendingReview/PendingReview";
+import AllReview from "../Pages/Dashboard/AllReview/AllReview";
+import ManageOrder from "../Pages/Dashboard/ManageOrder/ManageOrder";
+import Payment from "../Pages/Dashboard/Payment/Payment";
+import AdminContact from "../Pages/Dashboard/AdminContact/AdminContact";
 
 export const router = createBrowserRouter([
   {
@@ -50,7 +62,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: <Register></Register>,
+        element: <Checkout></Checkout>,
       },
     ],
   },
@@ -64,43 +76,47 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/add-product",
-        element: <DashboardHome></DashboardHome>,
+        element: <AddProduct></AddProduct>,
       },
       {
         path: "/dashboard/all-products",
-        element: <DashboardHome></DashboardHome>,
+        element: <AllProducts></AllProducts>,
       },
       {
         path: "/dashboard/add-feature",
-        element: <DashboardHome></DashboardHome>,
+        element: <AddFeature></AddFeature>,
       },
       {
         path: "/dashboard/all-feature",
-        element: <DashboardHome></DashboardHome>,
+        element: <AllFeature></AllFeature>,
       },
       {
         path: "/dashboard/all-faq",
-        element: <DashboardHome></DashboardHome>,
+        element: <AllFaq></AllFaq>,
       },
       {
         path: "/dashboard/view-faq",
-        element: <DashboardHome></DashboardHome>,
+        element: <ViewFaq></ViewFaq>,
       },
       {
         path: "/dashboard/pending-review",
-        element: <DashboardHome></DashboardHome>,
+        element: <PendingReview></PendingReview>,
       },
       {
-        path: "/dashboard/approve-review",
-        element: <DashboardHome></DashboardHome>,
+        path: "/dashboard/all-review",
+        element: <AllReview></AllReview>,
       },
       {
         path: "/dashboard/manage-order",
-        element: <DashboardHome></DashboardHome>,
+        element: <ManageOrder></ManageOrder>,
       },
       {
         path: "/dashboard/payment",
-        element: <DashboardHome></DashboardHome>,
+        element: <Payment></Payment>,
+      },
+      {
+        path: "/dashboard/contact",
+        element: <AdminContact></AdminContact>,
       },
     ],
   },

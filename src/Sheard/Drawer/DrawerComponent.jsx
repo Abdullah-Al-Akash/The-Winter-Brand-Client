@@ -23,11 +23,9 @@ const DrawerComponent = () => {
       >
         <GrFormClose />
       </button>
-      <div className="p-5">
-
+      <div className="p-[100px]">
         {/* TODO  */}
         <Subscription />
-
       </div>
     </Drawer>
   );

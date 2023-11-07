@@ -3,10 +3,10 @@ import React from 'react';
 const ProductsCard = ({ product }) => {
     const { name, sale_price, regular_price, img } = product;
     return (
-        <div className="flex w-96 justify-center">
+        <div className="flex justify-center mx-auto">
             <div className="card bg-base-100 shadow-2xl">
                 <div className="flex justify-center">
-                    <img style={{ height: '300px', width: '350px' }} className="px-8" src={img} alt="Beanie" />
+                    <img className="px-8" src={img} alt="Beanie" />
                 </div>
                 <div className="card-body">
                     <h2 className="card-title">{name}</h2>

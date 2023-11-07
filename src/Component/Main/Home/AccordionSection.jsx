@@ -10,7 +10,7 @@ import {
   AccordionItemPanel,
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
-import { AiOutlineRight } from "react-icons/ai";
+import './Accordian.css'
 
 const AccordionSection = () => {
   const { isOpen, setIsOpen, toggleDrawer } = useContext(AuthContext);
@@ -41,7 +41,7 @@ const AccordionSection = () => {
     <div className="container mx-auto md:px-24 grid md:grid-cols-2 gap-4 py-12 p-4">
       <div>
         <h3 className="brand-color font-semibold">Got Questions?</h3>
-        <h1 className="text-5xl font-semibold mt-4">We’ve Got You Covered!</h1>
+        <h1 className="text-3xl font-semibold mt-4">We’ve Got You Covered!</h1>
         <h5 className="font-semibold text-xl mt-2">Chat Now</h5>
         <h6 className="mt-2">Call or SMS us on +1 424-398-8032</h6>
         <div className="py-2">
@@ -49,7 +49,7 @@ const AccordionSection = () => {
             Get The Bundle
           </button>
         </div>
-        <p className="brand-color">Subscriptions start from $6.50</p>
+        <p className="brand-color">Subscriptions start from $39 only</p>
       </div>
       <div>
         <Accordion allowZeroExpanded className="border-0">

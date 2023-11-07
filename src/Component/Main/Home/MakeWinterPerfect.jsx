@@ -56,7 +56,7 @@ const MakeWinterPerfect = () => {
                     </div>
                 </div>
             </div> */}
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center md:p-0 px-8 my-4">
                 <img className="shadow-2xl rounded-lg" src={img1} alt="" />
             </div>
             <DrawerComponent></DrawerComponent>

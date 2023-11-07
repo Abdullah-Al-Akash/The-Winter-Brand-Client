@@ -14,9 +14,9 @@ const GetReady = () => {
       <div className="flex items-center p-8">
         <div>
           <p className="brand-color">Customize Your Subscription</p>
-          <h1 className="text-5xl font-semibold leading-tight">
+          <h1 className="text-2xl mt-2 md:text-2xl font-semibold leading-tight">
             Get Ready for the <br></br>{" "}
-            <span className="brand-color">Beanie Bundle?</span>{" "}
+            <span className="brand-color mt-2">Beanie Bundle?</span>{" "}
           </h1>
           <div className="mt-6">
             <button onClick={toggleDrawer} className="btn brand-btn">

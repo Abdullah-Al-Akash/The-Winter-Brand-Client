@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../assets/FooterLogo.png";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { AiOutlineMail } from "react-icons/ai";
@@ -6,8 +6,10 @@ import { RiTiktokLine } from "react-icons/ri";
 import { BiLogoInstagramAlt } from "react-icons/bi";
 import { BsFacebook } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Footer = () => {
+  const { nevActive, setNevActive } = useContext(AuthContext);
   return (
     <footer className="bg-[#141414]">
       <div className="footer p-10 md:py-20 container mx-auto text-[#b0b0b0]">
@@ -28,19 +30,39 @@ const Footer = () => {
         </nav>
         <nav>
           <header className="footer-title">Menu</header>
-          <Link to="/" className="link link-hover">
+          <Link
+            to="/"
+            onClick={() => setNevActive("home")}
+            className="link link-hover"
+          >
             Home
           </Link>
-          <Link to="/about" className="link link-hover">
+          <Link
+            to="/about"
+            onClick={() => setNevActive("about")}
+            className="link link-hover"
+          >
             About
           </Link>
-          <Link to="/contact" className="link link-hover">
+          <Link
+            to="/contact"
+            onClick={() => setNevActive("contact")}
+            className="link link-hover"
+          >
             contact
           </Link>
-          <Link to="/reviews" className="link link-hover">
+          <Link
+            to="/reviews"
+            onClick={() => setNevActive("reviews")}
+            className="link link-hover"
+          >
             Review
           </Link>
-          <Link to="/faq" className="link link-hover">
+          <Link
+            to="/faq"
+            onClick={() => setNevActive("faq")}
+            className="link link-hover"
+          >
             Faq
           </Link>
         </nav>

@@ -4,6 +4,7 @@
 
 * {
     box-sizing: border-box;
+    font-family: 'Roboto Slab', serif;
 }
 
 .brand-color {
@@ -26,4 +27,24 @@
     background-color: black;
     color: orangered;
     border: 2px solid orangered;
+}
+
+.rotate-90 {
+    transform: rotate(90deg);
+}
+
+.EZDrawer__overlay {
+    opacity: 0.20 !important;
+}
+
+.contactForm-OverlayShadow {
+    box-shadow: 16px 15px 8px -1px rgba(0, 0, 0, 0.14) inset;
+    -webkit-box-shadow: 16px 15px 8px -1px rgba(0, 0, 0, 0.14) inset;
+    -moz-box-shadow: 16px 15px 8px -1px rgba(0, 0, 0, 0.14) inset;
+}
+
+.contactForm-Shadow {
+    box-shadow: 16px 15px 8px -1px rgba(0, 0, 0, 0.14);
+    -webkit-box-shadow: 16px 15px 8px -1px rgba(0, 0, 0, 0.14);
+    -moz-box-shadow: 16px 15px 8px -1px rgba(0, 0, 0, 0.14);
 }

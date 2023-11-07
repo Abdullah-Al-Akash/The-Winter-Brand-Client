@@ -17,8 +17,13 @@ import { app } from "../firebase/firebase.config";
 const githubProvider = new GithubAuthProvider();
 const AuthProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [nevActive, setNevActive] = useState("home");
+  const [NavIsOpen, setNavIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
+  };
+  const NavToggleDrawer = () => {
+    setNavIsOpen((prevState) => !prevState);
   };
   const auth = getAuth(app);
   const [Favorite, setFavorite] = useState([]);
@@ -94,6 +99,11 @@ const AuthProvider = ({ children }) => {
     isOpen,
     setIsOpen,
     toggleDrawer,
+    NavToggleDrawer,
+    NavIsOpen,
+    setNavIsOpen,
+    nevActive,
+    setNevActive,
   };
 
   return (

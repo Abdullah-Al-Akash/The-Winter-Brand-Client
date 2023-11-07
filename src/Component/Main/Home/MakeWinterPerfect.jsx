@@ -3,27 +3,27 @@ import "./HowWork.css";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import DrawerComponent from "../../../Sheard/Drawer/DrawerComponent";
-import img1 from '../../../assets/HowItWork/MakeWinterPerfect-removebg-preview.png'
+import img1 from "../../../assets/HowItWork/MakeWinterPerfect-removebg-preview.png";
 
 const MakeWinterPerfect = () => {
     const { isOpen, setIsOpen, toggleDrawer } = useContext(AuthContext);
 
     return (
-        <div className="container mx-auto grid md:grid-cols-2 gap-4 lg:p-0 p-4">
+        <div className="container mx-auto md:mx-12 grid md:grid-cols-2 gap-4 lg:p-0 p-4">
             <div className="flex justify-center items-center">
-                <div>
-                    <h1 className="text-3xl font-semibold leading-tight">
+                <div className="text-center md:text-start">
+                    <h1 className="md:text-3xl text-xl  font-semibold leading-tight">
                         Make your <br />{" "}
                         <span className="brand-color pt-8">winter perfect</span>
                     </h1>
-                    <h1 className="text-3xl mt-2 font-semibold">
+                    <h1 className="md:text-3xl text-xl mt-2 font-semibold">
                         with quality <span className="brand-color">Beanie</span> bundle
                     </h1>
-                    <div className="mt-4">
+                    <div className="mt-4 text-[15px] md:text-[20px]">
                         <p>Everyone loves Beanie. Everyone needs Beanie.</p>
                         <p>
-                            Be a gifting pro and give the unique gift that keeps on giving, all
-                            year long!
+                            Be a gifting pro and give the unique gift that keeps on giving,
+                            all year long!
                         </p>
                     </div>
                     <div className="mt-6">

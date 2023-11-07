@@ -39,9 +39,11 @@ const AccordionSection = () => {
   console.log(drop);
   return (
     <div className="container mx-auto md:px-24 grid md:grid-cols-2 gap-4 py-12 p-4">
-      <div>
+      <div className="text-center md:text-start">
         <h3 className="brand-color font-semibold">Got Questions?</h3>
-        <h1 className="text-3xl font-semibold mt-4">We’ve Got You Covered!</h1>
+        <h1 className="md:text-4xl text-xl font-semibold mt-4">
+          We’ve Got You Covered!
+        </h1>
         <h5 className="font-semibold text-xl mt-2">Chat Now</h5>
         <h6 className="mt-2">Call or SMS us on +1 424-398-8032</h6>
         <div className="py-2">
@@ -57,12 +59,12 @@ const AccordionSection = () => {
             <AccordionItem className="mt-3 bg-orange-50" key={item.id}>
               <AccordionItemHeading className="">
                 <AccordionItemButton>
-                  <span className="brand-color font-semibold">{item.heading}</span>
+                  <span className="brand-color font-semibold">
+                    {item.heading}
+                  </span>
                 </AccordionItemButton>
               </AccordionItemHeading>
-              <AccordionItemPanel>
-                {item.content}
-              </AccordionItemPanel>
+              <AccordionItemPanel>{item.content}</AccordionItemPanel>
             </AccordionItem>
           ))}
         </Accordion>

@@ -48,3 +48,7 @@
     -webkit-box-shadow: 16px 15px 8px -1px rgba(0, 0, 0, 0.14);
     -moz-box-shadow: 16px 15px 8px -1px rgba(0, 0, 0, 0.14);
 }
+
+input::placeholder {
+    font-size: 12px;
+}

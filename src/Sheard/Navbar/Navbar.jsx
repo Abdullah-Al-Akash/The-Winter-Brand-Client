@@ -44,7 +44,7 @@ const Navbar = () => {
                 <Link className="text-3xl" to={"/login"}>
                   <FcBusinessman></FcBusinessman>
                 </Link>
-                <Link className="text-2xl" to={"/products"}>
+                <Link className="text-2xl" to={"/cart"}>
                   <FiShoppingCart></FiShoppingCart>
                 </Link>
               </div>

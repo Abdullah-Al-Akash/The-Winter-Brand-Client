@@ -48,6 +48,10 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register></Register>,
       },
+      {
+        path: "/checkout",
+        element: <Register></Register>,
+      },
     ],
   },
   {
@@ -56,6 +60,46 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/add-product",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/all-products",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/add-feature",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/all-feature",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/all-faq",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/view-faq",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/pending-review",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/approve-review",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/manage-order",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "/dashboard/payment",
         element: <DashboardHome></DashboardHome>,
       },
     ],

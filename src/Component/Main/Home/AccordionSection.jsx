@@ -54,19 +54,15 @@ const AccordionSection = () => {
       <div>
         <Accordion allowZeroExpanded className="border-0">
           {items.map((item) => (
-            <AccordionItem key={item.id} className="bg-orange-50 px-2 mt-4">
-              <AccordionItemHeading>
-                <AccordionItemButton
-                  className="brand-color py-2 flex items-center"
-                  onClick={() => setDrop(!drop)}
-                >
-                  <span className="text-2xl">{item.heading}</span>
-                  <AiOutlineRight
-                    className={`transition-transform transform rotate-90 ms-2 font-semibold`}
-                  />
+            <AccordionItem className="mt-3 bg-orange-50" key={item.id}>
+              <AccordionItemHeading className="">
+                <AccordionItemButton>
+                  <span className="brand-color font-semibold">{item.heading}</span>
                 </AccordionItemButton>
               </AccordionItemHeading>
-              <AccordionItemPanel>{item.content}</AccordionItemPanel>
+              <AccordionItemPanel>
+                {item.content}
+              </AccordionItemPanel>
             </AccordionItem>
           ))}
         </Accordion>

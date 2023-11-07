@@ -6,10 +6,10 @@ import './HowItWork.css';
 
 const HowItWork = () => {
     return (
-        <div className='container mx-auto py-16 md:px-0 px-8'>
+        <div className='container mx-auto py-16 px-8 md:px-24'>
             <h1 className='text-center brand-color my-8 text-3xl font-semibold'>How It Work?</h1>
             <div className="howWork grid md:grid-cols-3 gap-12 py-8">
-                <div className='shadow-2xl py-8 rounded-lg'>
+                <div className='shadow-2xl py-8 rounded-lg md:px-0 px-4'>
                     <div className='flex justify-center'>
                         <img src="https://cdn-icons-png.flaticon.com/512/31/31370.png" alt="" />
                     </div>
@@ -20,7 +20,7 @@ const HowItWork = () => {
                         </div>
                     </div>
                 </div>
-                <div className='shadow-2xl py-8 rounded-lg'>
+                <div className='shadow-2xl py-8 rounded-lg  md:px-0 px-4'>
                     <div className='flex justify-center'>
                         <img src="https://cdn-icons-png.flaticon.com/512/6648/6648537.png" alt="" />
                     </div>
@@ -31,7 +31,7 @@ const HowItWork = () => {
                         </div>
                     </div>
                 </div>
-                <div className='shadow-2xl py-8 rounded-lg'>
+                <div className='shadow-2xl py-8 rounded-lg  md:px-0 px-4'>
                     <div className='flex justify-center'>
                         <img src="https://static.thenounproject.com/png/24950-200.png" alt="" />
                     </div>

@@ -14,11 +14,11 @@ const Navbar = () => {
     useContext(AuthContext);
 
   return (
-    <div className="border-b py-4">
+    <div className="border-b md:py-2 max-h-16 md:max-h-20">
       <div className="max-w-[1200px] mx-auto">
         <div className="navbar bg-base-100">
           <div className="flex justify-between items-center w-full">
-            <div className="flex">
+            <div className="flex items-center">
               <ul className="menu menu-horizontal px-1 gap-5 text-[16px]"></ul>
               <div
                 className="flex flex-col items-center cursor-pointer"

@@ -7,9 +7,9 @@ import { AuthContext } from "../../../AuthProvider/AuthProvider";
 const GetReady = () => {
   const { isOpen, setIsOpen, toggleDrawer } = useContext(AuthContext);
   return (
-    <div className="container grid md:grid-cols-2 gap-4 mx-auto my-12 p-4">
+    <div className="container grid md:grid-cols-2 gap-4 mx-auto my-12 p-8">
       <div>
-        <img className="rounded" src={getReady} alt="" />
+        <img className="rounded md:p-8" src={getReady} alt="" />
       </div>
       <div className="flex items-center p-8">
         <div>

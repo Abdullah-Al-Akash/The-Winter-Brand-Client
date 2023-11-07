@@ -49,7 +49,7 @@ const Dashboard = () => {
           {Menus.map((Menu, index) => (
             <NavLink exact={true} to={Menu.link}
               key={index}
-              className={({ isActive }) => (isActive ? 'bg-[#ff7610] flex  rounded-md p-2  cursor-pointer hover:bg-light-white  items-center gap-x-4 text-white' : ' flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-black items-center gap-x-4')}
+              className={({ isActive }) => (isActive ? 'brand-bg flex  rounded-md p-2  cursor-pointer hover:bg-light-white  items-center gap-x-4 text-white' : ' flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-black items-center gap-x-4')}
 
             >
               {Menu.src}

@@ -41,9 +41,9 @@ const Faq = () => {
     },
   ];
   return (
-    <div className="max-w-[1200px] mx-auto my-[100px]">
+    <div className="lg:max-w-[1200px] container md:mx-auto mx-5 my-10 md:my-[100px]">
       <div className="text-center">
-        <h1 className="text-5xl">Frequently asked and question</h1>
+        <h1 className="md:text-5xl text-xl">Frequently asked and question</h1>
         <p className="mt-4 text-[#FF4500]">Clear Confusion</p>
       </div>
       <Accordion className="grid grid-cols-1 gap-5  my-[50px]">
@@ -66,10 +66,13 @@ const Faq = () => {
                   : item.indexNumber % 4 === 3
                   ? "border-green-400"
                   : "border-red-400"
-              } text-2xl`}
+              } md:text-2xl`}
               header={item?.header}
             >
-              <span className="text-[18px]"> {item?.content}</span>
+              <span className="md:text-[18px] text-[12px]">
+                {" "}
+                {item?.content}
+              </span>
             </AccordionItem>
           );
         })}

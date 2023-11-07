@@ -15,13 +15,16 @@ import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
 import AllProducts from "../Pages/Dashboard/AllProducts/AllProducts";
 import AddFeature from "../Pages/Dashboard/AddFeature/AddFeature";
 import AllFeature from "../Pages/Dashboard/AllFeature/AllFeature";
-import AllFaq from "../Pages/Dashboard/AllFaq/AllFaq";
+import PostFaq from "../Pages/Dashboard/PostFaq/PostFaq";
 import ViewFaq from "../Pages/Dashboard/ViewFaq/ViewFaq";
 import PendingReview from "../Pages/Dashboard/PendingReview/PendingReview";
 import AllReview from "../Pages/Dashboard/AllReview/AllReview";
 import ManageOrder from "../Pages/Dashboard/ManageOrder/ManageOrder";
 import Payment from "../Pages/Dashboard/Payment/Payment";
 import AdminContact from "../Pages/Dashboard/AdminContact/AdminContact";
+import Cart from "../Pages/Main/Cart/Cart";
+import EmailMarketing from "../Pages/Dashboard/EmailMarketing/EmailMarketing";
+import NumberMarketing from "../Pages/Dashboard/NumberMarketing/NumberMarketing";
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +52,11 @@ export const router = createBrowserRouter([
         element: <Faq></Faq>,
       },
       {
-        path: "/products",
+        path: "/cart",
+        element: <Cart></Cart>,
+      },
+      {
+        path: "/all-product",
         element: <Products></Products>,
       },
       {
@@ -91,8 +98,8 @@ export const router = createBrowserRouter([
         element: <AllFeature></AllFeature>,
       },
       {
-        path: "/dashboard/all-faq",
-        element: <AllFaq></AllFaq>,
+        path: "/dashboard/post-faq",
+        element: <PostFaq></PostFaq>,
       },
       {
         path: "/dashboard/view-faq",
@@ -117,6 +124,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/contact",
         element: <AdminContact></AdminContact>,
+      },
+      {
+        path: "/dashboard/email-marketing",
+        element: <EmailMarketing></EmailMarketing>,
+      },
+      {
+        path: "/dashboard/number-marketing",
+        element: <NumberMarketing></NumberMarketing>,
       },
     ],
   },

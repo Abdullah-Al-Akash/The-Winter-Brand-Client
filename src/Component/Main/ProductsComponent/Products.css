@@ -1,0 +1,100 @@
+:root {
+  --swiper-navigation-size: 24px !important;
+}
+
+/* CSS for slider dots */
+.custom-slider .slick-dots li {
+  display: none;
+}
+
+.custom-slider .slick-dots li:nth-child(-n+3) {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+/* CSS for custom arrows */
+.custom-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.custom-prev-arrow {
+  left: 10px;
+}
+
+.custom-next-arrow {
+  right: 10px;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-button-prev {
+  color: orangered !important;
+  font-weight: bold !important;
+  font-size: 12px !important;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: orangered !important;
+  font-weight: bold !important;
+  font-size: 12px !important;
+}
+
+.swiper-pagination-progressbar-fill {
+  background-color: orangered !important;
+  width: 100% !important;
+}
+
+/* Increase the icon size for the next button */
+.swiper-button-next::before {
+  font-size: 24px !important;
+}
+
+/* Increase the icon size for the previous button */
+.swiper-button-prev::before {
+  font-size: 14px !important;
+}
+
+.swiper-button-next:after,
+.swiper-rtl .swiper-button-prev:after {
+  border: 2px solid orangered !important;
+  background-color: orangered;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 50%;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  border: 2px solid orangered !important;
+  background-color: orangered;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 50%;
+}

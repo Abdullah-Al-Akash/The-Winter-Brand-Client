@@ -1,10 +1,14 @@
 import { useState } from "react";
 import controllerIcon from "./../../assets/control.png";
 import logo from "./../../assets/Navlogo.png";
-import { NavLink, Outlet } from "react-router-dom";
-import { BiSolidDashboard, BiSolidContact } from "react-icons/bi";
+import { Link, NavLink, Outlet } from "react-router-dom";
+import {
+  BiSolidDashboard,
+  BiSolidContact,
+  BiSolidMessageAltDetail,
+} from "react-icons/bi";
 import { HiViewGridAdd } from "react-icons/hi";
-import { AiFillProfile } from "react-icons/ai";
+import { AiFillProfile, AiOutlineMail } from "react-icons/ai";
 import {
   MdFeaturedPlayList,
   MdReviews,
@@ -12,6 +16,7 @@ import {
   MdOutlinePayment,
 } from "react-icons/md";
 import { FaQuoteRight } from "react-icons/fa";
+import { PiSignpostFill } from "react-icons/pi";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(true);
@@ -37,7 +42,7 @@ const Dashboard = () => {
       src: <MdFeaturedPlayList />,
       link: "/dashboard/all-feature",
     },
-    { title: "All Faq", src: <FaQuoteRight />, link: "/dashboard/all-faq" },
+    { title: "Post Faq", src: <PiSignpostFill />, link: "/dashboard/post-faq" },
     { title: "View Faq", src: <FaQuoteRight />, link: "/dashboard/view-faq" },
     {
       title: "Pending Reviews ",
@@ -60,6 +65,16 @@ const Dashboard = () => {
       link: "/dashboard/payment",
     },
     { title: "Contacts", src: <BiSolidContact />, link: "/dashboard/contact" },
+    {
+      title: "Email Marketing",
+      src: <AiOutlineMail />,
+      link: "/dashboard/email-marketing",
+    },
+    {
+      title: "Number Marketing",
+      src: <BiSolidMessageAltDetail />,
+      link: "/dashboard/number-marketing",
+    },
   ];
 
   return (
@@ -75,36 +90,43 @@ const Dashboard = () => {
            border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
-        <div className="flex gap-x-4 items-center">
-          <img
-            src={logo}
-            className={`cursor-pointer duration-500 w-[130px] 
-              }`}
-          />
-        </div>
-        <ul className="pt-6 !text-xl">
-          {Menus.map((Menu, index) => (
-            <NavLink
-              exact={true}
-              to={Menu.link}
-              key={index}
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-[#ff7610] flex  rounded-md p-2  cursor-pointer hover:bg-light-white  items-center gap-x-4 text-white"
-                  : " flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-black items-center gap-x-4"
-              }
-            >
-              {Menu.src}
-              <span
-                className={`${
-                  !open && "hidden"
-                } whitespace-nowrap origin-left duration-200`}
+        <div className="flex flex-col justify-between h-full">
+          <div className="flex gap-x-4 items-center">
+            <Link to="/">
+              <img
+                src={logo}
+                className={`cursor-pointer duration-500 w-[130px] 
+              `}
+              />
+            </Link>
+          </div>
+          <ul className="pt-6 !text-xl">
+            {Menus.map((Menu, index) => (
+              <NavLink
+                exact={true}
+                to={Menu.link}
+                key={index}
+                className={({ isActive }) =>
+                  isActive
+                    ? "brand-bg flex  rounded-md p-2  cursor-pointer hover:bg-light-white  items-center gap-x-4 text-white"
+                    : " flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-black items-center gap-x-4"
+                }
               >
-                {Menu.title}
-              </span>
-            </NavLink>
-          ))}
-        </ul>
+                {Menu.src}
+                <span
+                  className={`${
+                    !open && "hidden"
+                  } whitespace-nowrap origin-left duration-200`}
+                >
+                  {Menu.title}
+                </span>
+              </NavLink>
+            ))}
+          </ul>
+          <button className="brand-bg btn hover:bg-black hover:text-[#fff]">
+            LogOut
+          </button>
+        </div>
       </div>
       <div className="h-screen flex-1 p-7">
         <Outlet />

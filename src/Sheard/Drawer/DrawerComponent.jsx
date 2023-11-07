@@ -6,6 +6,7 @@ import { GrFormClose } from "react-icons/gr";
 import "react-modern-drawer/dist/index.css";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext } from "react";
+import Subscription from "../../Component/Main/Home/Subscription";
 const DrawerComponent = () => {
   const { isOpen, setIsOpen, toggleDrawer } = useContext(AuthContext);
   return (
@@ -14,7 +15,7 @@ const DrawerComponent = () => {
       onClose={toggleDrawer}
       direction="right"
       size={window.innerWidth >= 768 ? "50%" : "100%"}
-      className="bla bla bla relative opacity-70"
+      className="relative  overflow-y-auto drawer-custom-scrollbar"
     >
       <button
         className="absolute md:top-10 md:right-10 top-5 right-5 text-2xl"
@@ -22,8 +23,11 @@ const DrawerComponent = () => {
       >
         <GrFormClose />
       </button>
-      <div className="text-5xl border h-full flex justify-center items-center">
-        Under Construction
+      <div className="p-5">
+
+        {/* TODO  */}
+        <Subscription />
+
       </div>
     </Drawer>
   );

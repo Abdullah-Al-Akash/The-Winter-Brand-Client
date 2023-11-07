@@ -24,14 +24,14 @@ const Navbar = () => {
                 className="flex flex-col items-center cursor-pointer"
                 onClick={NavToggleDrawer}
               >
-                <p className="text-xs font-bold">Menu</p>
+                {/* <p className="text-xs font-bold">Menu</p> */}
                 <span className="text-3xl">
                   <GiHamburgerMenu></GiHamburgerMenu>
                 </span>
               </div>
             </div>
-            <div className="flex justify-center items-center">
-              <Link to="/" onClick={()=>setNevActive("home")}>
+            <div className="flex justify-center items-center ms-12">
+              <Link to="/" onClick={() => setNevActive("home")}>
                 <img
                   src={Navlogo}
                   className="h-[40px] cursor-pointer md:h-[50px]"

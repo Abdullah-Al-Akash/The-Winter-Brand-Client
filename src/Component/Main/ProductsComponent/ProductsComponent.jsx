@@ -14,7 +14,7 @@ const ProductsComponent = () => {
             })
     }, []);
     return (
-        <div className="">
+        <div className="container mx-auto">
             <h2 className="text-3xl text-center font-semibold brand-color">See Our Beanie Bundle</h2>
             <Link to="/">
                 <div className='flex items-center justify-end py-4 md:pe-8'>
@@ -24,7 +24,7 @@ const ProductsComponent = () => {
 
                 </div>
             </Link>
-            <div className="grid md:grid-cols-3 gap-4 py-14 container mx-auto">
+            <div className="grid md:grid-cols-3 gap-4 py-14 container">
                 {
                     location.pathname === "/" ? products.slice(0, 6)?.map(product => <ProductsCard
                         key={product.id}

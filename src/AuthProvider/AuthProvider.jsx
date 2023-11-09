@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext(null);
 import {
@@ -55,22 +55,22 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      // get and set token\
-      //   if (currentUser) {
-      //     // console.log("data");
-      //     axios
-      //       .post("https://creativa-design-hub-server-site.vercel.app/jwt", {
-      //         email: currentUser.email,
-      //       })
-      //       .then((data) => {
-      //         localStorage.setItem("access-token", data.data.token);
-      //         setLoading(false);
-      //         setReload(false);
-      //       });
-      //   } else {
-      //     localStorage.removeItem("access-token");
-      //     setLoading(false);
-      //   }
+
+      if (currentUser) {
+        // console.log("data");
+        axios
+          .post("http://localhost:5000/api/v1/", {
+            email: currentUser.email,
+          })
+          .then((data) => {
+            localStorage.setItem("access-token", data.data.token);
+            setLoading(false);
+            setReload(false);
+          });
+      } else {
+        localStorage.removeItem("access-token");
+        setLoading(false);
+      }
       setLoading(false);
       setReload(false);
     });
@@ -85,6 +85,7 @@ const AuthProvider = ({ children }) => {
       photoURL: PhotoUrl,
     });
   };
+
 
   const authInfo = {
     user,
@@ -114,5 +115,10 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };
+
+export const useAuth = () => {
+  return useContext(AuthContext)
+}
+
 
 export default AuthProvider;

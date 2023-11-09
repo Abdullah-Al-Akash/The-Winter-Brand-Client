@@ -4,21 +4,27 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { AuthContext } from "../../../AuthProvider/AuthProvider";
+
+import { AuthContext, useAuth } from "../../../AuthProvider/AuthProvider";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const Register = () => {
+
+  const { user } = useAuth()
+  console.log(13, user)
   const [toggleIcon, setToggleIcon] = useState(true);
   const [errorMassage, setErrorMassage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { signUp } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const { axiosSecure } = useAxiosSecure()
   const from = location.state?.from?.pathname || "/";
 
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e?.target;
     const email = form?.email?.value;
+    const name = form?.name?.value
     const password = form?.password?.value;
     if (password < 6) {
       setErrorMassage("Minimum six characters provide your password");
@@ -30,17 +36,18 @@ const Register = () => {
     } else {
       signUp(email, password)
         .then((result) => {
-          const saveUser = result.user;
-          // console.log(email);
-          axios
-            .post("https://habit-server-eight.vercel.app/users", {
-              email: email,
-            })
+          const saveUser = result.user
+          console.log(saveUser)
+          axiosSecure.post("/user-registration", {
+            name: name,
+            email: saveUser.email,
+            firebaseUId: saveUser.uid
+          })
             .then((data) => {
-              if (data.data.insertedId) {
+              if (data.data.success) {
                 toast("Register successful!");
                 form.reset();
-                navigate("/habits", { replace: true });
+                navigate("/", { replace: true });
                 setErrorMassage("");
                 setSuccessMessage("");
               }
@@ -90,29 +97,18 @@ const Register = () => {
             className="flex flex-col justify-start items-start w-full md:w-[400px]"
           >
             <div className="flex flex-col md:w-[400px] w-full">
-              <label htmlFor="First_Name" className="py-5">
-                <span className="text-red-600">*</span> First Name
+              <label htmlFor="name" className="py-5">
+                <span className="text-red-600">*</span>Name
               </label>
               <input
                 className="outline-none border-2 px-3 py-1"
                 type="text"
-                name="First_Name"
-                onChange={handleEmail}
-                placeholder="First Name"
+                name="name"
+                placeholder="enter your name"
+                id="name"
               />
             </div>
-            <div className="flex flex-col md:w-[400px] w-full">
-              <label htmlFor="Last_Name" className="py-5">
-                <span className="text-red-600">*</span> Last Name
-              </label>
-              <input
-                className="outline-none border-2 px-3 py-1"
-                type="email"
-                name="Last_Name"
-                onChange={handleEmail}
-                placeholder="Last Name"
-              />
-            </div>
+
             <div className="flex flex-col md:w-[400px] w-full">
               <label htmlFor="email" className="py-5">
                 <span className="text-red-600">*</span> Email Address

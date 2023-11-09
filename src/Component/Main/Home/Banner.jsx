@@ -5,6 +5,7 @@ import DrawerComponent from '../../../Sheard/Drawer/DrawerComponent';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 const Banner = () => {
+
     const { isOpen, setIsOpen, toggleDrawer } = useContext(AuthContext);
     return (
         <div className="banner-content text-center">

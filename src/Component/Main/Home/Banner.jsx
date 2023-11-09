@@ -8,8 +8,8 @@ const Banner = () => {
 
     const { isOpen, setIsOpen, toggleDrawer } = useContext(AuthContext);
     return (
-        <div className="banner-content text-center">
-            <div className="flex justify-center items-center h-[80vh]">
+        <div className="text-center">
+            {/* <div className="flex justify-center items-center h-[80vh]">
                 <div className="">
                     <h1 className='md:text-4xl text-2xl font-semibold text-white '>Elevate Your <span className="brand-color font-bold md:text-5xl text-3xl">Winter Style</span> <br />  </h1>
                     <h1 className='md:text-4xl text-2xl font-semibold text-white mt-2'>with Our</h1>
@@ -37,7 +37,8 @@ const Banner = () => {
                         <button onClick={toggleDrawer} className='btn brand-btn font-bold'>Get The Bundle</button>
                     </div>
                 </div>
-            </div>
+            </div> */}
+
             <DrawerComponent></DrawerComponent>
         </div >
     );

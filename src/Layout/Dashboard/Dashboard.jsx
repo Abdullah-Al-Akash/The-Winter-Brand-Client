@@ -15,7 +15,7 @@ import {
   MdSensorDoor,
   MdOutlinePayment,
 } from "react-icons/md";
-import { FaQuoteRight } from "react-icons/fa";
+import { FaQuoteRight, FaUsers } from "react-icons/fa";
 import { PiSignpostFill } from "react-icons/pi";
 
 const Dashboard = () => {
@@ -23,10 +23,16 @@ const Dashboard = () => {
   const Menus = [
     { title: "Dashboard", src: <BiSolidDashboard />, link: "/dashboard/" },
     {
+      title: "Users",
+      src: <FaUsers />,
+      link: "/dashboard/all-users",
+    },
+    {
       title: "Add Product",
       src: <HiViewGridAdd />,
       link: "/dashboard/add-product",
     },
+
     {
       title: "All Product ",
       src: <AiFillProfile />,
@@ -82,7 +88,7 @@ const Dashboard = () => {
       <div
         className={` ${
           open ? "w-72" : "w-20"
-        } bg-dark-purple h-screen p-5 bg-gray-300   pt-8 relative duration-300 border-r`}
+        } bg-dark-purple sticky top-0 p-5 bg-gray-300  pt-8  duration-300 border-r`}
       >
         <img
           src={controllerIcon}
@@ -123,12 +129,16 @@ const Dashboard = () => {
               </NavLink>
             ))}
           </ul>
-          <button className="brand-bg btn hover:bg-black hover:text-[#fff]">
+          <button
+            className={`${
+              open ? "" : "text-[8px]"
+            } brand-bg btn hover:bg-black hover:text-[#fff]`}
+          >
             LogOut
           </button>
         </div>
       </div>
-      <div className="h-screen flex-1 p-7">
+      <div className="flex-1 p-7">
         <Outlet />
       </div>
     </div>

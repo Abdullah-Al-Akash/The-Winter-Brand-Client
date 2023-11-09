@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const Footer = () => {
-  const { nevActive, setNevActive } = useContext(AuthContext);
+  const { nevActive, setNevActive, handleTop } = useContext(AuthContext);
   return (
     <footer className="bg-[#141414]">
       <div className="footer p-10 md:py-20 container mx-auto text-[#b0b0b0]">
@@ -32,35 +32,50 @@ const Footer = () => {
           <header className="footer-title">Menu</header>
           <Link
             to="/"
-            onClick={() => setNevActive("home")}
+            onClick={() => {
+              handleTop();
+              setNevActive("home");
+            }}
             className="link link-hover"
           >
             Home
           </Link>
           <Link
             to="/about"
-            onClick={() => setNevActive("about")}
+            onClick={() => {
+              handleTop();
+              setNevActive("about");
+            }}
             className="link link-hover"
           >
             About
           </Link>
           <Link
             to="/contact"
-            onClick={() => setNevActive("contact")}
+            onClick={() => {
+              handleTop();
+              setNevActive("contact");
+            }}
             className="link link-hover"
           >
             contact
           </Link>
           <Link
             to="/reviews"
-            onClick={() => setNevActive("reviews")}
+            onClick={() => {
+              handleTop();
+              setNevActive("reviews");
+            }}
             className="link link-hover"
           >
             Review
           </Link>
           <Link
             to="/faq"
-            onClick={() => setNevActive("faq")}
+            onClick={() => {
+              handleTop();
+              setNevActive("faq");
+            }}
             className="link link-hover"
           >
             Faq
@@ -68,7 +83,11 @@ const Footer = () => {
         </nav>
         <nav>
           <header className="footer-title">CATEGORIES</header>
-          <Link to="/products" className="link link-hover">
+          <Link
+            to="/all-product"
+            onClick={handleTop}
+            className="link link-hover"
+          >
             All Products
           </Link>
         </nav>

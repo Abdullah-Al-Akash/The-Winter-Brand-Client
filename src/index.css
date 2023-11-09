@@ -52,3 +52,10 @@
 input::placeholder {
     font-size: 12px;
 }
+.profile-content {
+    clip-path: polygon(0 0, 100% 0%, 100% 70%, 50% 100%, 0 70%);
+}
+.custom-file-input {
+    position: absolute;
+    top: -9999px;
+  }

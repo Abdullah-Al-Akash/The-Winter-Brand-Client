@@ -25,7 +25,17 @@ import AdminContact from "../Pages/Dashboard/AdminContact/AdminContact";
 import Cart from "../Pages/Main/Cart/Cart";
 import EmailMarketing from "../Pages/Dashboard/EmailMarketing/EmailMarketing";
 import NumberMarketing from "../Pages/Dashboard/NumberMarketing/NumberMarketing";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -73,6 +83,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/dashboard",
     element: <Dashboard></Dashboard>,
@@ -132,6 +143,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/number-marketing",
         element: <NumberMarketing></NumberMarketing>,
+      },
+      {
+        path: "/dashboard/all-users",
+        element: <AllUsers></AllUsers>,
       },
     ],
   },

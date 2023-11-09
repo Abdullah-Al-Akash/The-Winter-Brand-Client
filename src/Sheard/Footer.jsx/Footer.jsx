@@ -20,11 +20,12 @@ const Footer = () => {
           <div className="  text-[16px] flex flex-col gap-2">
             <div className="flex justify-start items-center gap-4">
               <HiOutlineLocationMarker></HiOutlineLocationMarker>
-              <span>Add Location</span>
+              <span>1225 richards st Joliet Illinois
+              </span>
             </div>
             <div className="flex justify-start items-center gap-4">
               <AiOutlineMail></AiOutlineMail>
-              <span>Add Contact Email</span>
+              <span>info@thewinterbrand.com</span>
             </div>
           </div>
         </nav>

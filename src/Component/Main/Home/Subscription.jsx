@@ -12,27 +12,12 @@ import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 const sizes = [
   {
-    name: "XL",
-    body: "Suggested for Giants US 12-14",
-    image: size1,
-  },
-  {
-    name: "Large",
-    body: "Suggested for Men US 8-11",
-    image: size2,
-  },
-  {
-    name: "Medium",
-    body: "Suggested for Women US 5-8",
-    image: size3,
-  },
-  {
-    name: "Kid's Large",
-    body: "Ages 7 - 10 (US 1 -5)",
+    name: "Adult",
+    body: "Ages 13+",
     image: size4,
   },
   {
-    name: "Kid's Medium",
+    name: "Kid's ",
     body: "Ages 3 - 6 (US 8 - 13)",
     image: size5,
   },
@@ -54,11 +39,11 @@ const Subscription = () => {
         </h3>
         {/* Customize btns  */}
         <div className="w-full flex items-center gap-3 my-3 justify-between">
-          {/* bg-[#ff4500] */}
+          {/* bg-black */}
           <button
             onClick={() => setSub("me")}
-            className={`${sub === "me" ? "bg-[#ff4500] text-white" : ""
-              } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-[#ff4500]  font-bold border`}
+            className={`${sub === "me" ? "bg-black text-white" : ""
+              } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-black  font-bold border`}
           >
             <img
               className="h-[24px] w-[24px] md:w-[34px] md:h-[34px]"
@@ -69,8 +54,8 @@ const Subscription = () => {
           </button>
           <button
             onClick={() => setSub("gift")}
-            className={`${sub === "gift" ? "bg-[#ff4500] text-white" : ""
-              } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-[#ff4500]  font-bold border`}
+            className={`${sub === "gift" ? "bg-black text-white" : ""
+              } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-black  font-bold border`}
           >
             <img
               className="h-[24px] w-[24px] md:w-[34px] md:h-[34px]"
@@ -144,8 +129,8 @@ const Subscription = () => {
         <div className="w-full">
           <button
             onClick={() => setGender("male")}
-            className={`${gender === "male" ? "bg-[#ff4500] text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex  items-center justify-between gap-3`}
+            className={`${gender === "male" ? "bg-black text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex  items-center justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji1} alt="" />
@@ -161,8 +146,8 @@ const Subscription = () => {
           </button>
           <button
             onClick={() => setGender("female")}
-            className={`${gender === "female" ? "bg-[#ff4500] text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-center justify-between gap-3`}
+            className={`${gender === "female" ? "bg-black text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-center justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji2} alt="" />
@@ -188,8 +173,8 @@ const Subscription = () => {
             return (
               <button
                 onClick={() => setSizeName(size.name)}
-                className={`${sizeName === size.name ? "bg-[#ff4500] text-white" : ""
-                  } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-end  gap-3`}
+                className={`${sizeName === size.name ? "bg-black text-white" : ""
+                  } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-end  gap-3`}
                 key={i}
               >
                 <img src={size.image} alt="" />
@@ -209,8 +194,8 @@ const Subscription = () => {
         <div className="w-full">
           <button
             onClick={() => setPlan("plan1")}
-            className={`${plan === "plan1" ? "bg-[#ff4500] text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex  items-center justify-between gap-3`}
+            className={`${plan === "plan1" ? "bg-black text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex  items-center justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji1} alt="" />
@@ -226,8 +211,8 @@ const Subscription = () => {
           </button>
           <button
             onClick={() => setPlan("plan2")}
-            className={`${plan === "plan2" ? "bg-[#ff4500] text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-center justify-between gap-3`}
+            className={`${plan === "plan2" ? "bg-black text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-center justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji2} alt="" />
@@ -248,8 +233,8 @@ const Subscription = () => {
         <div className="w-full">
           <button
             onClick={() => setQuantity("1")}
-            className={`${quantity === "1" ? "bg-[#ff4500] text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-end justify-between gap-3`}
+            className={`${quantity === "1" ? "bg-black text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-end justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji1} alt="" />
@@ -273,8 +258,8 @@ const Subscription = () => {
           </button>
           <button
             onClick={() => setQuantity("2")}
-            className={`${quantity === "2" ? "bg-[#ff4500] text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-[#ff4500] w-full flex items-end justify-between gap-3`}
+            className={`${quantity === "2" ? "bg-black text-white" : ""
+              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-end justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji2} alt="" />
@@ -302,9 +287,9 @@ const Subscription = () => {
           <div
             onClick={() => (quantity === "1" ? setSetected("S1") : "")}
             className={`${setected === "S1"
-              ? "bg-[#ff4500] text-white"
-              : quantity === "2" && "bg-[#ff4500] text-white"
-              } duration-200 my-2 border  rounded-lg hover:border-[#ff4500] w-full flex flex-col gap-3`}
+              ? "bg-black text-white"
+              : quantity === "2" && "bg-black text-white"
+              } duration-200 my-2 border  rounded-lg hover:border-black w-full flex flex-col gap-3`}
           >
             <img
               className="w-full rounded-t-lg bg-white"
@@ -319,9 +304,9 @@ const Subscription = () => {
           <div
             onClick={() => (quantity === "1" ? setSetected("S2") : "")}
             className={`${setected === "S2"
-              ? "bg-[#ff4500] text-white"
-              : quantity === "2" && "bg-[#ff4500] text-white"
-              } duration-200 my-2 border rounded-lg hover:border-[#ff4500] w-full flex flex-col gap-3`}
+              ? "bg-black text-white"
+              : quantity === "2" && "bg-black text-white"
+              } duration-200 my-2 border rounded-lg hover:border-black w-full flex flex-col gap-3`}
           >
             <img
               className="w-full rounded-t-lg"

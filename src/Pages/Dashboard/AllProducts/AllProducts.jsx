@@ -1,6 +1,8 @@
 import React from "react";
 import logo from "../../../assets/Navlogo.png";
 import Swal from "sweetalert2";
+import { FaSearch, FaTrashAlt } from "react-icons/fa";
+import { HiPencil } from "react-icons/hi";
 const AllProducts = () => {
   const products = [
     {
@@ -59,94 +61,93 @@ const AllProducts = () => {
     { value: "delete", label: "Delete" },
   ];
   return (
-    <div className="md:mx-auto w-full overflow-x-auto bg-orange-50">
-      <div className="p-4">
-        <h1 className="text-center text-xl font-extrabold p-3">
-          Your All Products
-        </h1>
-        <div className="flex items-center justify-center">
-          <img className="h-10 ms-1 rounded-sm -me-1" src={logo} alt="" />
-        </div>
+    <div className="">
+      <h1 className="text-center text-xl font-extrabold p-3">
+        Your All Products
+      </h1>
+      <div className="relative mx-auto w-[80%] flex justify-center my-8">
+        <input
+          type="text"
+          name="search_text"
+          placeholder="search here..."
+          className="bg-white py-3 w-full pl-14 border-2 rounded-full outline-none border-stone-300 text-black"
+        />
+        <button
+          type="submit"
+          className="absolute top-1/2 -translate-y-1/2 left-5 text-stone-300"
+        >
+          <FaSearch></FaSearch>
+        </button>
       </div>
-      <div className="flex w-full justify-center overflow-x-auto">
-        <table className="table w-[1700px] my-2 ">
+      <div className="overflow-x-auto">
+        <table className="table">
           {/* head */}
           <thead className="">
-            <tr className="!text-[18px] md:text-2xl text-white bg-[#FF4500]">
+            <tr className="">
+              <th className="text-center">#</th>
               <th className="text-center">Product Image</th>
               <th className="text-center">Product Name</th>
-              <th className="text-center">Size</th>
-              <th className="text-center ">Style</th>
+
               <th className="text-center ">Available quantity</th>
               <th className="text-center">Already Sell</th>
               <th className="text-center">Product States</th>
               <th className="text-center">Action</th>
             </tr>
           </thead>
-          <tbody className="">
-            {products.map((product, index) => (
-              <tr
-                key={index}
-                className={`${
-                  index % 2 === 0
-                    ? "text-orange-800 bg-slate-300"
-                    : "text-black bg-red-300"
-                } my-auto`}
-              >
-                <div className="h-[100px] mb-1 my-auto flex justify-center items-center mt-1">
-                  <img src={product?.Image} className="h-full" alt="" />
-                </div>
-                <td className="">{product.product_name}</td>
-                <td className="">
-                  {product.size.map((a) => {
-                    return (
-                      <span key={a} className="border mx-1 p-1 rounded">
-                        {a}
-                      </span>
-                    );
-                  })}
-                </td>
-                <td className="">
-                  {product.style.map((a) => {
-                    return (
-                      <p key={a} className="border mx-1 p-1 rounded mb-1">
-                        {a}
-                      </p>
-                    );
-                  })}
-                </td>
-                <td className="text-center">{product.available_quantity}</td>
-                <td className="text-center">{product.previous_price}</td>
-                <td className={`text-center`}>
-                  <span
-                    className={`${
-                      product.in_stock == true
-                        ? "bg-black text-white"
-                        : "bg-red-700 text-white"
-                    }  px-2 py-1 rounded`}
-                  >
-                    {product.in_stock == true ? "in stock" : "stock out"}
-                  </span>
-                </td>
+
+          {products.map((product, i) => {
+            const {
+              _id,
+              Image,
+              product_name,
+              size,
+              style,
+              available_quantity,
+              already_sell,
+              previous_price,
+              price,
+              in_stock,
+            } = product;
+            return (
+              <tr key={i} className="text-center">
+                <th>{i + 1}</th>
                 <td>
-                  <select
-                    onChange={(e) =>
-                      updateOrderStatus(e.target.value, product?._id)
-                    }
-                    className="px-4 py-2 border bg-none"
-                    name=""
-                    id=""
-                  >
-                    {options.map((option, i) => (
-                      <option key={i} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="flex items-center justify-center space-x-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle w-12 h-12">
+                        <img src={Image} alt="Avatar Tailwind CSS Component" />
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>{product_name} </td>
+
+                <td>{available_quantity}</td>
+                <td>{already_sell}</td>
+                <td>
+                  {available_quantity <= 0 ? (
+                    <span className="bg-red-400 p-1 rounded-lg text-white">
+                      Out of Stock
+                    </span>
+                  ) : (
+                    <span className="bg-green-500 p-1 rounded-lg text-white">
+                      in Stock
+                    </span>
+                  )}
+                </td>
+                <td className="">
+                  <div className="flex justify-center items-center gap-5 text-xl">
+                    <span className="cursor-pointer">
+                      <HiPencil></HiPencil>
+                    </span>
+                    <span className="cursor-pointer">
+                      <FaTrashAlt></FaTrashAlt>
+                    </span>
+                  </div>
                 </td>
               </tr>
-            ))}
-          </tbody>
+            );
+          })}
         </table>
       </div>
     </div>

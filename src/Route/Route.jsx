@@ -26,6 +26,7 @@ import Cart from "../Pages/Main/Cart/Cart";
 import EmailMarketing from "../Pages/Dashboard/EmailMarketing/EmailMarketing";
 import NumberMarketing from "../Pages/Dashboard/NumberMarketing/NumberMarketing";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import ErrorPage from "../Sheard/ErrorPage/ErrorPage";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -87,6 +89,7 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard></Dashboard>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/dashboard",

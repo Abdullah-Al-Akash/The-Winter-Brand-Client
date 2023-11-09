@@ -4,7 +4,7 @@ import ReactStars from 'react-rating-star-with-type';
 const ReviewForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [star, setStar] = useState(5);
+    const [star, setStar] = useState(null);
     const [review, setReview] = useState('');
 
     const onRatingChange = (nextValue) => {

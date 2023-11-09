@@ -4,7 +4,7 @@ const OfferSection = () => {
   return (
     <div>
       <marquee
-        className="bg-black p-2 brand-color font-bold"
+        className="bg-black p-2 text-white"
         behavior=""
         direction=""
       >

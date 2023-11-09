@@ -7,12 +7,12 @@ const AboutComponent = () => {
     return (
         <div className="container mx-auto p-4 md:p-0">
             <h1 className="text-center text-3xl font-semibold my-10">About The <span className="brand-color">Winter Brand</span></h1>
-            <div className="md:px-16 p-2 bg-orange-50 py-4">
+            <div className="md:px-16 p-2 bg-orange-50 py-4 md:mx-24 mx-2">
                 <p className='text-center'>Welcome to The Winter Brand, your go-to destination for high-quality, stylish beanies that keep you warm and comfortable throughout the cold season.</p>
                 <p className='text-center mt-6'>At TWB, We believe the season should be celebrated, not endured. We’re passionate about creating premium beanies that are both functional and fashionable, so you can stay cozy and stylish no matter what the temperature is.</p>
                 <p className='text-center mt-6'>Our mission is to provide our customers with the best possible beanies that are both are durable and stylish. We believe in using only the finest materials to create our products, so you can trust that your beanie will last for many seasons to come. We’re committed to customer satisfaction and strive to provide an exceptional shopping experience, from browsing our website to receiving your order.</p>
             </div>
-            <div className="my-10 bg-[#141414] py-10 shadow-2xl rounded-lg">
+            <div className="my-10 bg-[#141414] py-10 shadow-2xl rounded-lg md:mx-24 mx-2">
                 <div className="grid md:grid-cols-2 gap-4">
                     <div className="flex justify-center items-center">
                         <h2 className="text-white font-semibold text-3xl">Our Values</h2>

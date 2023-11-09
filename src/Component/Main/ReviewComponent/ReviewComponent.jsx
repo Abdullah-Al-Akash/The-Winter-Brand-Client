@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReviewForm from "./ReviewForm";
 
 const ReviewComponent = () => {
   const [displayReview, setDisplayReview] = useState(false);
@@ -12,7 +13,7 @@ const ReviewComponent = () => {
   };
   return (
     <div className="container mx-auto py-10 md:px-10 px-4">
-      <div>
+      {/* <div>
         <h1 className="text-3xl text-center py-6 font-semibold">
           <span className="brand-color text-center">Winter Brand</span>{" "}
           Subscription Reviews
@@ -26,8 +27,8 @@ const ReviewComponent = () => {
           the ultimate sock of the month club. Say goodbye to boring socks, and
           Say it with a Sock!
         </p>
-      </div>
-      <div></div>
+      </div> */}
+      <ReviewForm></ReviewForm>
     </div>
   );
 };

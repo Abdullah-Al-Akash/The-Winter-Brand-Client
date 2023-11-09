@@ -15,7 +15,7 @@ const AboutComponent = () => {
             <div className="my-10 bg-[#141414] py-10 shadow-2xl rounded-lg">
                 <div className="grid md:grid-cols-2 gap-4">
                     <div className="flex justify-center items-center">
-                        <h2 className="brand-color font-semibold text-3xl">Our Values</h2>
+                        <h2 className="text-white font-semibold text-3xl">Our Values</h2>
                     </div>
                     <div className="text-white flex justify-center items-center">
                         <div>

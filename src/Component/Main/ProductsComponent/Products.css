@@ -54,20 +54,20 @@
 }
 
 .swiper-button-prev {
-  color: orangered !important;
+  color: black !important;
   font-weight: bold !important;
   font-size: 12px !important;
 }
 
 .swiper-button-prev,
 .swiper-button-next {
-  color: orangered !important;
+  color: black !important;
   font-weight: bold !important;
   font-size: 12px !important;
 }
 
 .swiper-pagination-progressbar-fill {
-  background-color: orangered !important;
+  background-color: black !important;
   width: 100% !important;
 }
 
@@ -83,8 +83,8 @@
 
 .swiper-button-next:after,
 .swiper-rtl .swiper-button-prev:after {
-  border: 2px solid orangered !important;
-  background-color: orangered;
+  border: 2px solid black !important;
+  background-color: black;
   color: #fff;
   padding: 5px 10px;
   border-radius: 50%;
@@ -92,8 +92,8 @@
 
 .swiper-button-prev:after,
 .swiper-button-next:after {
-  border: 2px solid orangered !important;
-  background-color: orangered;
+  border: 2px solid black !important;
+  background-color: black;
   color: #fff;
   padding: 5px 10px;
   border-radius: 50%;

@@ -88,7 +88,7 @@ const Dashboard = () => {
       <div
         className={` ${
           open ? "w-72" : "w-20"
-        } bg-dark-purple sticky top-0 p-5 bg-gray-300  pt-8  duration-300 border-r`}
+        } bg-dark-purple  p-5 h-full  bg-gray-300  pt-8 relative duration-300 border-r`}
       >
         <img
           src={controllerIcon}
@@ -129,13 +129,11 @@ const Dashboard = () => {
               </NavLink>
             ))}
           </ul>
-          <button
-            className={`${
-              open ? "" : "text-[8px]"
-            } brand-bg btn hover:bg-black hover:text-[#fff]`}
-          >
-            LogOut
-          </button>
+          <div className="my-8">
+            <button className="hover:bg-orange-600 w-full btn bg-black text-white ">
+              LogOut
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex-1 p-7">

@@ -10,7 +10,7 @@ import {
   AccordionItemPanel,
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
-import { AiOutlineRight } from "react-icons/ai";
+import './Accordian.css'
 
 const AccordionSection = () => {
   const { isOpen, setIsOpen, toggleDrawer } = useContext(AuthContext);
@@ -35,13 +35,13 @@ const AccordionSection = () => {
         "We always want our subscribers to LOVE their socks. If you don't for any reason, send us a message and as part of our happiness guarantee, we'll send you a free replacement pair with your next shipment. Only active subscribers can request replacement socks, and you can only do so once every 6 months. If your subscription is canceled or expired, you won't be able to exchange your socks.",
     },
   ];
-  const handleDrop = (_id, isOpen) => {};
+  const handleDrop = (_id, isOpen) => { };
   console.log(drop);
   return (
     <div className="container mx-auto md:px-24 grid md:grid-cols-2 gap-4 py-12 p-4">
       <div className="text-center md:text-start">
         <h3 className="brand-color font-semibold">Got Questions?</h3>
-        <h1 className="md:text-5xl text-xl font-semibold mt-4">
+        <h1 className="md:text-4xl text-xl font-semibold mt-4">
           We’ve Got You Covered!
         </h1>
         <h5 className="font-semibold text-xl mt-2">Chat Now</h5>
@@ -51,7 +51,7 @@ const AccordionSection = () => {
             Get The Bundle
           </button>
         </div>
-        <p className="brand-color">Subscriptions start from $6.50</p>
+        <p className="brand-color">Subscriptions start from $39 only</p>
       </div>
       <div>
         <Accordion allowZeroExpanded className="border-0">

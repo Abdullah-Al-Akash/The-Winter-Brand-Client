@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProductsCard from "./ProductsCard";
 import { BsArrowRightCircleFill, BsCartPlus } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -10,10 +10,11 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 const ProductsComponent = () => {
   const [products, setProducts] = useState([]);
-
+  const { handleTop } = useContext(AuthContext);
   useEffect(() => {
     fetch("./products.json")
       .then((res) => res.json())
@@ -21,10 +22,6 @@ const ProductsComponent = () => {
         setProducts(data);
       });
   }, []);
-
-  const handleTop = () => {
-    window.scrollTo(0, 0);
-  };
 
   return (
     <div className="container mx-auto">

@@ -15,7 +15,7 @@ import {
   MdSensorDoor,
   MdOutlinePayment,
 } from "react-icons/md";
-import { FaQuoteRight } from "react-icons/fa";
+import { FaQuoteRight, FaUsers } from "react-icons/fa";
 import { PiSignpostFill } from "react-icons/pi";
 
 const Dashboard = () => {
@@ -23,10 +23,16 @@ const Dashboard = () => {
   const Menus = [
     { title: "Dashboard", src: <BiSolidDashboard />, link: "/dashboard/" },
     {
+      title: "Users",
+      src: <FaUsers />,
+      link: "/dashboard/all-users",
+    },
+    {
       title: "Add Product",
       src: <HiViewGridAdd />,
       link: "/dashboard/add-product",
     },
+
     {
       title: "All Product ",
       src: <AiFillProfile />,
@@ -80,8 +86,9 @@ const Dashboard = () => {
   return (
     <div className="flex">
       <div
-        className={` ${open ? "w-72" : "w-20"
-          } bg-dark-purple  p-5 h-full  bg-gray-300  pt-8 relative duration-300 border-r`}
+        className={` ${
+          open ? "w-72" : "w-20"
+        } bg-dark-purple  p-5 h-full  bg-gray-300  pt-8 relative duration-300 border-r`}
       >
         <img
           src={controllerIcon}
@@ -113,8 +120,9 @@ const Dashboard = () => {
               >
                 {Menu.src}
                 <span
-                  className={`${!open && "hidden"
-                    } whitespace-nowrap origin-left duration-200`}
+                  className={`${
+                    !open && "hidden"
+                  } whitespace-nowrap origin-left duration-200`}
                 >
                   {Menu.title}
                 </span>
@@ -128,7 +136,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="h-screen flex-1 p-7">
+      <div className="flex-1 p-7">
         <Outlet />
       </div>
     </div>

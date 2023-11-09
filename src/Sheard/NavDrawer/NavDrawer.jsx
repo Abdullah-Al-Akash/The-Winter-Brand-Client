@@ -19,15 +19,8 @@ const NavDrawer = () => {
   const location = useLocation();
   const currentPath = location.pathname;
   const path = currentPath.split("/")[1];
-  const {
-    isOpen,
-    NavIsOpen,
-    setNavIsOpen,
-    setIsOpen,
-    NavToggleDrawer,
-    nevActive,
-    setNevActive,
-  } = useContext(AuthContext);
+  const { NavIsOpen, NavToggleDrawer, nevActive, setNevActive, handleTop } =
+    useContext(AuthContext);
   const menu = (
     <>
       <Link
@@ -35,6 +28,7 @@ const NavDrawer = () => {
           nevActive === "home" && path == false ? "text-[#FF4500]" : ""
         } flex items-center justify-center gap-2`}
         onClick={() => {
+          handleTop();
           NavToggleDrawer();
           setNevActive("home");
         }}
@@ -49,6 +43,7 @@ const NavDrawer = () => {
             : ""
         } flex items-center justify-center gap-2`}
         onClick={() => {
+          handleTop();
           NavToggleDrawer();
           setNevActive("about");
         }}
@@ -64,6 +59,7 @@ const NavDrawer = () => {
             : ""
         }  flex items-center justify-center gap-2`}
         onClick={() => {
+          handleTop();
           NavToggleDrawer();
           setNevActive("contact");
         }}
@@ -79,6 +75,7 @@ const NavDrawer = () => {
             : ""
         }  flex items-center justify-center gap-2`}
         onClick={() => {
+          handleTop();
           NavToggleDrawer();
           setNevActive("reviews");
         }}
@@ -92,6 +89,7 @@ const NavDrawer = () => {
           nevActive === "faq" || (path == "faq") == true ? "text-[#FF4500]" : ""
         }  flex items-center justify-center gap-2`}
         onClick={() => {
+          handleTop();
           NavToggleDrawer();
           setNevActive("faq");
         }}
@@ -103,6 +101,7 @@ const NavDrawer = () => {
       <Link
         className=" flex items-center justify-center gap-2"
         onClick={() => {
+          handleTop();
           NavToggleDrawer();
           setNevActive("home");
         }}

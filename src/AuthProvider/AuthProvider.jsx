@@ -49,6 +49,9 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     return signOut(auth);
   };
+  const handleTop = () => {
+    window.scrollTo(0, 0);
+  };
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -104,6 +107,7 @@ const AuthProvider = ({ children }) => {
     setNavIsOpen,
     nevActive,
     setNevActive,
+    handleTop
   };
 
   return (

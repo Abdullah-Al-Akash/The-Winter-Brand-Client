@@ -10,9 +10,14 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import NavDrawer from "../NavDrawer/NavDrawer";
 
 const Navbar = () => {
-  const { isOpen, setIsOpen, toggleDrawer, NavToggleDrawer, setNevActive } =
-    useContext(AuthContext);
-
+  const {
+    isOpen,
+    setIsOpen,
+    toggleDrawer,
+    NavToggleDrawer,
+    setNevActive,
+    handleTop,
+  } = useContext(AuthContext);
   return (
     <div className="border-b md:py-2 max-h-16 md:max-h-20">
       <div className="max-w-[1200px] mx-auto">
@@ -31,7 +36,13 @@ const Navbar = () => {
               </div>
             </div>
             <div className="flex justify-center items-center ms-12">
-              <Link to="/" onClick={() => setNevActive("home")}>
+              <Link
+                to="/"
+                onClick={() => {
+                  handleTop();
+                  setNevActive("home");
+                }}
+              >
                 <img
                   src={Navlogo}
                   className="h-[40px] cursor-pointer md:h-[50px]"
@@ -41,10 +52,10 @@ const Navbar = () => {
             </div>
             <div className="md:flex justify-center items-center gap-5">
               <div className="md:flex justify-center items-center gap-5 hidden">
-                <Link className="text-3xl" to={"/login"}>
+                <Link className="text-3xl" to={"/login"} onClick={handleTop}>
                   <FcBusinessman></FcBusinessman>
                 </Link>
-                <Link className="text-2xl" to={"/cart"}>
+                <Link className="text-2xl" to={"/cart"} onClick={handleTop}>
                   <FiShoppingCart></FiShoppingCart>
                 </Link>
               </div>

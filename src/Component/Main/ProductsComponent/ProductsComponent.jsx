@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import Messenger from "../Messenger/Messenger";
 
 const ProductsComponent = () => {
   const [products, setProducts] = useState([]);
@@ -45,13 +46,13 @@ const ProductsComponent = () => {
       <div className="md:grid lg:grid-cols-3 md:grid-cols-2 gap-4 md:py-14 px-8 hidden lg:px-24">
         {location.pathname === "/"
           ? products
-              .slice(0, 6)
-              ?.map((product) => (
-                <ProductsCard key={product.id} product={product}></ProductsCard>
-              ))
-          : products?.map((product) => (
+            .slice(0, 6)
+            ?.map((product) => (
               <ProductsCard key={product.id} product={product}></ProductsCard>
-            ))}
+            ))
+          : products?.map((product) => (
+            <ProductsCard key={product.id} product={product}></ProductsCard>
+          ))}
       </div>
       <div className="py-8 block md:hidden ">
         <Swiper

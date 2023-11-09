@@ -1,6 +1,6 @@
 import React from "react";
 import errorImg from "../../assets/images/404.svg";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 const ErrorPage = () => {
   return (
     <div className="flex flex-col justify-center items-center h-[80vh]">

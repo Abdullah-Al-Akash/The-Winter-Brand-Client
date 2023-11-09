@@ -60,7 +60,7 @@ const Navbar = () => {
                 </Link>
               </div>
               <button
-                className="bg-black text-white transition-all ease-in-out duration-200 hover:text-black hover:bg-white border-2 border-black md:px-12 md:text-xl px-6 font-semibold py-3 rounded-[50px]"
+                className="bg-black text-white transition-all ease-in-out duration-200 hover:text-black hover:bg-white border-2 border-black md:px-12 md:text-xl px-6 font-semibold md:py-3 py-2 rounded-[50px]"
                 onClick={toggleDrawer}
               >
                 Join

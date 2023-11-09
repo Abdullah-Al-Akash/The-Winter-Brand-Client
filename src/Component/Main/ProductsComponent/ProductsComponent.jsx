@@ -29,6 +29,18 @@ const ProductsComponent = () => {
       <h2 className="md:text-3xl text-xl text-center font-semibold brand-color py-8">
         See Our Beanie Bundle
       </h2>
+
+      <div className="md:grid lg:grid-cols-3 md:grid-cols-2 gap-4 md:py-14 px-8 hidden lg:px-24">
+        {location.pathname === "/"
+          ? products
+            .slice(0, 6)
+            ?.map((product) => (
+              <ProductsCard key={product.id} product={product}></ProductsCard>
+            ))
+          : products?.map((product) => (
+            <ProductsCard key={product.id} product={product}></ProductsCard>
+          ))}
+      </div>
       {location.pathname === "/" ? (
         <Link onClick={handleTop} to="/all-product">
           <div className="flex items-center justify-end px-8 md:pe-24 mb-4">
@@ -43,17 +55,6 @@ const ProductsComponent = () => {
       ) : (
         ""
       )}
-      <div className="md:grid lg:grid-cols-3 md:grid-cols-2 gap-4 md:py-14 px-8 hidden lg:px-24">
-        {location.pathname === "/"
-          ? products
-            .slice(0, 6)
-            ?.map((product) => (
-              <ProductsCard key={product.id} product={product}></ProductsCard>
-            ))
-          : products?.map((product) => (
-            <ProductsCard key={product.id} product={product}></ProductsCard>
-          ))}
-      </div>
       <div className="py-8 block md:hidden ">
         <Swiper
           pagination={{

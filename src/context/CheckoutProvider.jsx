@@ -7,9 +7,10 @@ import axios from "axios";
 
 
 const CheckoutProvider = ({ children }) => {
-
+    const [checkoutData, setCheckoutData] = useState({})
     const checkoutInfo = {
-
+        checkoutData,
+        setCheckoutData
     };
 
     return (

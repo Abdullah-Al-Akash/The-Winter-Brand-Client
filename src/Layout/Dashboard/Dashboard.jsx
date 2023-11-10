@@ -18,9 +18,13 @@ import {
 import { FaQuoteRight, FaUsers } from "react-icons/fa";
 import { PiSignpostFill } from "react-icons/pi";
 import AdminOnly from "../../private/AdminOnly";
+import { useEffect } from "react";
 
 const Dashboard = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+
+
+
   const Menus = [
     { title: "Dashboard", src: <BiSolidDashboard className="text-base" />, link: "/dashboard/" },
     {

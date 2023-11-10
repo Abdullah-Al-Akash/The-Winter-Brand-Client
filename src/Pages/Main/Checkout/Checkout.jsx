@@ -5,6 +5,7 @@ import { PiWarningCircle } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
+import { useCheckoutData } from "../../../context/CheckoutProvider";
 
 const Checkout = () => {
   const [selectedCountry, setSelectedCountry] = useState("United States");
@@ -13,9 +14,11 @@ const Checkout = () => {
   const [numberMassage, setNumberMassage] = useState(false);
   const [emailMassage, setEmailMassage] = useState(false);
   const [stripePromise, setStripePromise] = useState(null)
-
+  const { checkoutData } = useCheckoutData()
+  console.log(checkoutData)
   useEffect(() => {
     setStripePromise(loadStripe(import.meta.env.VITE_Publishable_key))
+
   }, [])
 
   const countries = {

@@ -1,8 +1,12 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 
+const img_hosting_Token = import.meta.env.VITE_IMAGE_UPLOAD;
+
 const AddFeature = () => {
+  const imgHostingUrl = `https://api.imgbb.com/1/upload?key=${img_hosting_Token}`;
   const [loadImage, setLoadImage] = useState(false);
   const handleFileUpload = (e) => {
     const selectedFile = e.target.files[0];

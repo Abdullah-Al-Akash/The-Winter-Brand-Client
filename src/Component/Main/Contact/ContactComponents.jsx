@@ -66,7 +66,7 @@ const ContactComponents = () => {
               className="outline-none bg-gray-200 w-full py-3 px-2"
             ></textarea>
           </div>
-          <button className="bg-[#ff4500] text-white transition-all ease-in-out duration-500 hover:text-[#ff4500] hover:bg-black md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px]">
+          <button className="brand-btn text-white transition-all ease-in-out duration-500 md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px]">
             Send Message
           </button>
         </div>

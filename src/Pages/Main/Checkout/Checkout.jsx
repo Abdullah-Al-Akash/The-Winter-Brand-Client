@@ -3,6 +3,8 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { FiSmartphone } from "react-icons/fi";
 import { PiWarningCircle } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+import { useEffect } from "react";
 
 const Checkout = () => {
   const [selectedCountry, setSelectedCountry] = useState("United States");
@@ -10,6 +12,12 @@ const Checkout = () => {
   const [offer, setOffer] = useState(false);
   const [numberMassage, setNumberMassage] = useState(false);
   const [emailMassage, setEmailMassage] = useState(false);
+  const [stripePromise, setStripePromise] = useState(null)
+
+  useEffect(() => {
+    setStripePromise(loadStripe(import.meta.env.VITE_Publishable_key))
+  }, [])
+
   const countries = {
     "United States": [
       [
@@ -123,6 +131,8 @@ const Checkout = () => {
     };
     console.log(obj);
   };
+
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
       <div className="border-t border-r border-gray-500">
@@ -321,6 +331,9 @@ const Checkout = () => {
                   </div>
                 </div>
                 <h2 className="text-xl font-semibold">Payment</h2>
+
+
+                {/* TODO  */}
               </div>
               <input
                 type="submit"

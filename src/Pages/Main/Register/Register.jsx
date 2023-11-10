@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { AuthContext, useAuth } from "../../../AuthProvider/AuthProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+
 const Register = () => {
 
   const { user } = useAuth()
@@ -41,7 +42,6 @@ const Register = () => {
           axiosSecure.post("/user-registration", {
             name: name,
             email: saveUser.email,
-            firebaseUId: saveUser.uid
           })
             .then((data) => {
               if (data.data.success) {
@@ -150,7 +150,7 @@ const Register = () => {
               </div>
             </div>
             <input
-              className="border w-full mx-auto my-5 bg-black text-white py-2"
+              className="border cursor-default w-full mx-auto my-5 bg-black text-white py-2"
               type="submit"
               value="Create account"
             />

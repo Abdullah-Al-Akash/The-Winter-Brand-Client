@@ -4,6 +4,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import { useState } from "react";
 import { useContext } from "react";
+import axios from "axios";
+import { baseURL } from "../../../hooks/useAxiosSecure";
 const Login = () => {
   const [toggleIcon, setToggleIcon] = useState(true);
   const { login } = useContext(AuthContext);
@@ -21,10 +23,14 @@ const Login = () => {
     const passwordField = form.password.value;
     login(emailField, passwordField)
       .then((result) => {
+
         const loggedUser = result.user;
+        axios.post(baseURL + "/login-user", {
+          email: loggedUser.email
+        }).then(res => "")
         setSuccessMassage("login successful");
         setErrorMassage("");
-        navigate("/habits", { replace: true });
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         setSuccessMassage("");

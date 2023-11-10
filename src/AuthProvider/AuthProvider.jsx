@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-
+import Cookies from 'universal-cookie';
 export const AuthContext = createContext(null);
 import {
   GithubAuthProvider,
@@ -13,6 +13,12 @@ import {
 } from "firebase/auth";
 import axios from "axios";
 import { app } from "../firebase/firebase.config";
+import { baseURL } from "../hooks/useAxiosSecure";
+export const cookies = new Cookies()
+export const cookiesOptions = {
+  secure: false
+}
+// TODO make it true 
 
 const githubProvider = new GithubAuthProvider();
 const AuthProvider = ({ children }) => {
@@ -55,22 +61,18 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      if (currentUser?.email) {
+        axios.post(baseURL + "/login-user", {
+          email: currentUser.email
+        })
+          .then(res => {
+            if (res?.data?.accessToken) {
+              cookies.set("accessToken", res.data.accessToken, cookiesOptions)
+            }
 
-      if (currentUser) {
-        // console.log("data");
-        axios
-          .post("http://localhost:5000/api/v1/", {
-            email: currentUser.email,
           })
-          .then((data) => {
-            localStorage.setItem("access-token", data.data.token);
-            setLoading(false);
-            setReload(false);
-          });
-      } else {
-        localStorage.removeItem("access-token");
-        setLoading(false);
       }
+
       setLoading(false);
       setReload(false);
     });

@@ -19,7 +19,7 @@ const Navbar = () => {
     handleTop,
   } = useContext(AuthContext);
   return (
-    <div className="border-b md:py-2 max-h-16 md:max-h-20">
+    <div className="border-b md:py-1 max-h-16 md:max-h-20">
       <div className="max-w-[1200px] mx-auto">
         <div className="navbar bg-base-100">
           <div className="flex justify-between items-center w-full">
@@ -45,7 +45,7 @@ const Navbar = () => {
               >
                 <img
                   src={Navlogo}
-                  className="h-[40px] cursor-pointer md:h-[50px]"
+                  className="md:h-[40px] cursor-pointer h-[25px]"
                   alt=""
                 />
               </Link>
@@ -60,7 +60,7 @@ const Navbar = () => {
                 </Link>
               </div>
               <button
-                className="bg-[#ff4500] text-white transition-all ease-in-out duration-500 hover:text-[#ff4500] hover:bg-black md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px]"
+                className="bg-black text-white transition-all ease-in-out duration-200 hover:text-black hover:bg-white border-2 border-black md:px-12 md:text-xl px-6 font-semibold md:py-3 py-2 rounded-[50px]"
                 onClick={toggleDrawer}
               >
                 Join

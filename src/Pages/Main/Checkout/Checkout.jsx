@@ -6,20 +6,38 @@ import { Link } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
 import { useCheckoutData } from "../../../context/CheckoutProvider";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm";
 
 const Checkout = () => {
+  const { axiosSecure } = useAxiosSecure()
   const [selectedCountry, setSelectedCountry] = useState("United States");
   const [selectedState, setSelectedState] = useState("");
   const [offer, setOffer] = useState(false);
   const [numberMassage, setNumberMassage] = useState(false);
   const [emailMassage, setEmailMassage] = useState(false);
   const [stripePromise, setStripePromise] = useState(null)
+  const [clientSecret, setClientSecret] = useState(null)
+  const [amount, setAmount] = useState(0)
   const { checkoutData } = useCheckoutData()
   console.log(checkoutData)
   useEffect(() => {
     setStripePromise(loadStripe(import.meta.env.VITE_Publishable_key))
+    if (checkoutData) {
+      const amount = Math.round(checkoutData.price * 100)
+      setAmount(amount)
+    }
+  }, [checkoutData])
 
-  }, [])
+  useEffect(() => {
+    axiosSecure.post("/payment", {
+      amount
+    })
+      .then(res => {
+        setClientSecret(res?.data?.data?.client_secret)
+      })
+  }, [amount, checkoutData])
 
   const countries = {
     "United States": [
@@ -334,7 +352,13 @@ const Checkout = () => {
                   </div>
                 </div>
                 <h2 className="text-xl font-semibold">Payment</h2>
+                {
+                  clientSecret && stripePromise && (
+                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                      <CheckoutForm />
+                    </Elements>)
 
+                }
 
                 {/* TODO  */}
               </div>

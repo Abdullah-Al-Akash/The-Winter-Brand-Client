@@ -386,7 +386,8 @@ const Subscription = () => {
         > */}
 
         {sub === "gift" && <p className="text-red-700"><span className="font-bold">Note:</span> Gift Option is required</p>}
-        <button disabled={sub === "gift" && !giftRecipientEmail || !giftMessageDate || !giftMessage || !shippingDate} className={`${sub === "gift" && !giftRecipientEmail || !giftMessageDate || !giftMessage || !shippingDate ? "cursor-not-allowed bg-opacity-50" : "cursor-pointer"} w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center`} onClick={handleSubmit}>Continue to checkout</button>
+        {sub === "me" && <button className={`w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center`} onClick={handleSubmit}>Continue to checkout</button>}
+        {sub === "gift" && <button disabled={sub === "gift" && giftRecipientEmail === null || giftMessageDate === null || giftMessage === null || shippingDate === null} className={`${sub === "gift" && giftRecipientEmail === null || giftMessageDate === null || giftMessage === null || shippingDate === null ? "cursor-not-allowed bg-opacity-50" : "cursor-pointer"} w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center`} onClick={handleSubmit}>Continue to checkout</button>}
         {/* </Link> */}
       </div>
     </>

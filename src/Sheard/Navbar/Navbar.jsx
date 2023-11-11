@@ -56,7 +56,7 @@ const Navbar = () => {
                 </span>
               </div>
             </div>
-            <div className="flex justify-center items-center ms-12">
+            <div className="md:flex md:justify-center items-center ms-12">
               <Link
                 to="/"
                 onClick={() => {
@@ -70,6 +70,34 @@ const Navbar = () => {
                   alt=""
                 />
               </Link>
+            </div>
+            <div className="ms-auto pe-2 gap-5 md:hidden">
+              <div>
+                {
+                  user ? <div className="dropdown dropdown-end bg-white z-10">
+                    <label tabIndex={0} className="w-full h-full rounded-full cursor-pointer">
+                      <img className="h-[42px] w-[42px]" src={`${user?.photoURL ? user?.photoURL : defaultProfile}`} alt="" />
+                    </label>
+                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                      <li>
+                        <Link className="text-sm flex items-center hover:bg-gray-100" to={"/profile"} onClick={handleTop}>
+                          <FaRegUserCircle></FaRegUserCircle> <span className="ms-2 text-sm">My Profile</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="text-sm flex items-center hover:bg-gray-100" to={"/cart"} onClick={handleTop}>
+                          <FiShoppingCart></FiShoppingCart> <span className="ms-2 text-sm">My Cart</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <h3 onClick={handleLogOut}><FaSignOutAlt></FaSignOutAlt> <span className="ms-2 text-sm">Logout</span></h3>
+                      </li>
+                    </ul>
+                  </div>
+                    :
+                    <Link to="/login">Login</Link>
+                }
+              </div>
             </div>
             <div className="md:flex justify-center items-center gap-5">
               <div className="md:flex justify-center items-center gap-5 hidden">

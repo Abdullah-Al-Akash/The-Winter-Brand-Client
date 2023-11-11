@@ -20,10 +20,10 @@ const AdminOnly = ({ children }) => {
         return <h2>LOading</h2>
     }
 
-    if (role === "admin") {
-        console.log("asdfalsdjfdfasdjldjfsajsdjfaksdj")
-        return children;
-    }
+    // if (role === "admin") {
+    console.log("asdfalsdjfdfasdjldjfsajsdjfaksdj")
+    return children;
+    // }
     // return children;
     return <Navigate state={{ from: location }} to="/" replace />;
 };

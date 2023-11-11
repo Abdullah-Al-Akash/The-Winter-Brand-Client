@@ -4,18 +4,18 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AllUsers = () => {
   const { handleSubmit, register } = useForm();
+  const { axiosSecure } = useAxiosSecure()
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
 
-  // const { userCategory, setUserCategory } = useUserManagement();
+
   const [userCategory, setUserCategory] = useState("All Users");
   const [control, setControl] = useState(true);
-  // TODO
-  // const { data: all_users, isLoading } = useGetUsersQuery(role);
-  // TODO
+
   const [isLoading, setIsLoading] = useState(true);
   //   useEffect(() => {
   //     axiosSecure
@@ -34,6 +34,17 @@ const AllUsers = () => {
     { value: "user", label: "User" },
     { value: "admin", label: "Admin" },
   ];
+
+  // TODO change user role 
+  useEffect(() => {
+    setIsLoading(true)
+    axiosSecure.get("/get-all-users")
+      .then(res => {
+        setUsers(res.data?.data)
+        setIsLoading(false)
+      })
+  }, [])
+
 
   //   update order status func
   //   const updateOrderStatus = (role, userId) => {
@@ -97,6 +108,8 @@ const AllUsers = () => {
   //     );
   //   }
 
+  console.log(users)
+
   return (
     <div className="p-3">
       <div className="my-8 bg-slate-50 shadow rounded p-5">
@@ -116,11 +129,10 @@ const AllUsers = () => {
                 <Tab
                   key={ind}
                   onClick={() => setUserCategory(elem)}
-                  className={`py-2 first-letter:uppercase !bg-transparent cursor-pointer outline-none ${
-                    userCategory === elem
-                      ? "!border-b-2 !border-[#0621bb] !text-[#0621bb]"
-                      : "border-none"
-                  }`}
+                  className={`py-2 first-letter:uppercase !bg-transparent cursor-pointer outline-none ${userCategory === elem
+                    ? "!border-b-2 !border-[#0621bb] !text-[#0621bb]"
+                    : "border-none"
+                    }`}
                 >
                   {elem}
                 </Tab>
@@ -167,14 +179,13 @@ const AllUsers = () => {
                           ?.filter((user) =>
                             userCategory === "All Users"
                               ? true
-                              : user.userRole === userCategory
+                              : user.role === userCategory
                           )
                           .map((user, i) => {
                             const {
                               _id,
                               name,
-                              userRole: role,
-                              photo_url,
+                              role,
                               email,
                             } = user || {};
                             return (
@@ -184,7 +195,7 @@ const AllUsers = () => {
                                   <span className="border block  w-[60px] h-[60px] relative rounded overflow-hidden">
                                     <img
                                       style={{ objectFit: "cover" }}
-                                      src={photo_url}
+                                      src="../../../assets/male.png"
                                       fill={true}
                                       alt="user Phone"
                                     />

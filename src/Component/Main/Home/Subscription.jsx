@@ -7,8 +7,11 @@ import size3 from "./../../../assets/size3.png";
 import size4 from "./../../../assets/size4.png";
 import size5 from "./../../../assets/size5.png";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import { useCheckoutData } from "../../../context/CheckoutProvider";
+import { Navigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const sizes = [
   {
@@ -24,13 +27,58 @@ const sizes = [
 ];
 
 const Subscription = () => {
+  const navigate = useNavigate();
   const { toggleDrawer } = useContext(AuthContext);
+  const { setCheckoutData } = useCheckoutData()
   const [sub, setSub] = useState("me");
   const [gender, setGender] = useState("male");
   const [plan, setPlan] = useState("plan1");
-  const [sizeName, setSizeName] = useState("XL");
+  const [sizeName, setSizeName] = useState("Adult");
   const [quantity, setQuantity] = useState("1");
   const [setected, setSetected] = useState("S1");
+  const [giftRecipientEmail, setGiftRecipientEmail] = useState(null)
+  const [giftMessageDate, setGiftMessageDate] = useState(null)
+  const [giftMessage, setGiftMessage] = useState(null)
+  const [shippingDate, setShippingDate] = useState(null)
+
+  const handleSubmit = () => {
+
+
+
+
+    if (sub === "me") {
+
+    }
+    const data = sub === "me" ? {
+      type: sub === "me" && "personal",
+      gender: gender,
+      size: sizeName,
+      duration: plan === "plan1" ? "payment" : "subscription",
+      quantity: quantity === "1" ? "bundle_one" : "bundle_two",
+      price: quantity === "1" ? 49 : 90,
+      setected: setected === "S1" ? ["Neutral Color"] : ["Neutral Color", "Wild and Colorful"]
+    } : {
+      type: "gift",
+      gender: gender,
+      size: sizeName,
+      gift_recipient_email: giftRecipientEmail,
+      gift_message_date: giftMessageDate,
+      gift_message: giftMessage,
+      shipping_date: shippingDate,
+      duration: plan === "plan1" ? "payment" : "subscription",
+      quantity: quantity === "1" ? "bundle_one" : "bundle_two",
+      price: quantity === "1" ? 49 : 90,
+      setected: setected === "S1" ? ["Neutral Color"] : ["Neutral Color", "Wild and Colorful"]
+    }
+    setCheckoutData(data)
+
+
+
+    toggleDrawer()
+    return navigate("/checkout")
+
+
+  }
   return (
     <>
       <div className="mt-5 mb-3">
@@ -74,29 +122,35 @@ const Subscription = () => {
             </p>
             <div className="my-3">
               <label className="block text-[14px] font-bold my-2" htmlFor="">
-                Gift Recipient Email Address
+                Gift Recipient Email Address <span className="text-red-600">*</span>
               </label>
               <input
                 className="px-4 py-2 rounded-lg outline-none border w-full"
                 type="text"
                 name=""
+                value={giftRecipientEmail}
+                onChange={(e) => setGiftRecipientEmail(e.target.value)}
                 placeholder="Gift Recipient Email Address"
+                required
               />
             </div>
             <div className="my-3">
               <label className="block text-[14px] font-bold my-2" htmlFor="">
-                Date to Email Gift Message
+                Date to Email Gift Message <span className="text-red-600">*</span>
               </label>
               <input
                 className="px-4 py-2 rounded-lg outline-none border w-full"
                 type="date"
                 name=""
+                value={giftMessageDate}
+                onChange={(e) => setGiftMessageDate(e.target.value)}
                 placeholder="Date to Email Gift Message"
+                required
               />
             </div>
             <div className="my-3">
               <label className="block text-[14px] font-bold mt-2" htmlFor="">
-                Gift Message
+                Gift Message <span className="text-red-600">*</span>
               </label>
               <span className="text-slate-400 text-[12px]">
                 Required. Remember to let them know who it's from
@@ -105,18 +159,24 @@ const Subscription = () => {
                 className="px-4 py-2 rounded-lg outline-none border w-full"
                 type="text"
                 name=""
+                value={giftMessage}
+                onChange={(e) => setGiftMessage(e.target.value)}
                 placeholder="you are toe-tally awesome. Enjoy the socks!"
+                required
               />
             </div>
             <div className="my-3">
               <label className="block text-[14px] font-bold my-2" htmlFor="">
-                Shipping Date
+                Shipping Date <span className="text-red-600">*</span>
               </label>
               <input
                 className="px-4 py-2 rounded-lg outline-none border w-full"
                 type="date"
                 name=""
+                value={shippingDate}
+                onChange={(e) => setShippingDate(e.target.value)}
                 placeholder="Shipping Date"
+                required
               />
             </div>
           </form>
@@ -319,13 +379,16 @@ const Subscription = () => {
             </div>
           </div>
         </div>
-        <Link
+        {/* <Link
           onClick={toggleDrawer}
-          className=" w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center"
-          to="/checkout"
-        >
-          <button>Continue to checkout</button>
-        </Link>
+          className=" "
+          to="/"
+        > */}
+
+        {sub === "gift" && <p className="text-red-700"><span className="font-bold">Note:</span> Gift Option is required</p>}
+        {sub === "me" && <button className={`w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center`} onClick={handleSubmit}>Continue to checkout</button>}
+        {sub === "gift" && <button disabled={sub === "gift" && giftRecipientEmail === null || giftMessageDate === null || giftMessage === null || shippingDate === null} className={`${sub === "gift" && giftRecipientEmail === null || giftMessageDate === null || giftMessage === null || shippingDate === null ? "cursor-not-allowed bg-opacity-50" : "cursor-pointer"} w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center`} onClick={handleSubmit}>Continue to checkout</button>}
+        {/* </Link> */}
       </div>
     </>
   );

@@ -27,6 +27,7 @@ import EmailMarketing from "../Pages/Dashboard/EmailMarketing/EmailMarketing";
 import NumberMarketing from "../Pages/Dashboard/NumberMarketing/NumberMarketing";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import ErrorPage from "../Sheard/ErrorPage/ErrorPage";
+import UserProfile from "../Component/Main/UserProfile/UserProfile";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/profile",
+        element: <UserProfile></UserProfile>,
       },
       {
         path: "/about",

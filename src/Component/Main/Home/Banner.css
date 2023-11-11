@@ -2,3 +2,10 @@
     background-size: cover;
     height: 80vh;
 }
+
+
+
+
+.swiper-slide{
+   background: none!important;
+}

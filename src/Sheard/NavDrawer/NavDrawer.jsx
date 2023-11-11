@@ -24,9 +24,8 @@ const NavDrawer = () => {
   const menu = (
     <>
       <Link
-        className={`${
-          nevActive === "home" && path == false ? "text-[#FF4500]" : ""
-        } flex items-center justify-center gap-2`}
+        className={`${nevActive === "home" && path == false ? "text-[#FF4500]" : ""
+          } flex items-center justify-center gap-2`}
         onClick={() => {
           handleTop();
           NavToggleDrawer();
@@ -37,11 +36,10 @@ const NavDrawer = () => {
         <AiOutlineHome></AiOutlineHome> <span>Home</span>
       </Link>
       <Link
-        className={`${
-          nevActive === "about" || (path === "about") == true
-            ? "text-[#FF4500]"
-            : ""
-        } flex items-center justify-center gap-2`}
+        className={`${nevActive === "about" || (path === "about") == true
+          ? "text-[#FF4500]"
+          : ""
+          } flex items-center justify-center gap-2`}
         onClick={() => {
           handleTop();
           NavToggleDrawer();
@@ -53,11 +51,10 @@ const NavDrawer = () => {
         <span>About US</span>
       </Link>
       <Link
-        className={`${
-          nevActive === "contact" || (path == "contact") == true
-            ? "text-[#FF4500]"
-            : ""
-        }  flex items-center justify-center gap-2`}
+        className={`${nevActive === "contact" || (path == "contact") == true
+          ? "text-[#FF4500]"
+          : ""
+          }  flex items-center justify-center gap-2`}
         onClick={() => {
           handleTop();
           NavToggleDrawer();
@@ -69,11 +66,10 @@ const NavDrawer = () => {
         <span>Contact</span>
       </Link>
       <Link
-        className={`${
-          nevActive === "reviews" || (path == "reviews") == true
-            ? "text-[#FF4500]"
-            : ""
-        }  flex items-center justify-center gap-2`}
+        className={`${nevActive === "reviews" || (path == "reviews") == true
+          ? "text-[#FF4500]"
+          : ""
+          }  flex items-center justify-center gap-2`}
         onClick={() => {
           handleTop();
           NavToggleDrawer();
@@ -85,9 +81,8 @@ const NavDrawer = () => {
         <span>Reviews</span>
       </Link>
       <Link
-        className={`${
-          nevActive === "faq" || (path == "faq") == true ? "text-[#FF4500]" : ""
-        }  flex items-center justify-center gap-2`}
+        className={`${nevActive === "faq" || (path == "faq") == true ? "text-[#FF4500]" : ""
+          }  flex items-center justify-center gap-2`}
         onClick={() => {
           handleTop();
           NavToggleDrawer();
@@ -105,7 +100,8 @@ const NavDrawer = () => {
           NavToggleDrawer();
           setNevActive("home");
         }}
-        to={""}
+        target="_blank"
+        to={"https://thewinterbrand.com/"}
       >
         <TbPlayerTrackNext></TbPlayerTrackNext>
         <span>Daily Shopping</span>

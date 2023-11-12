@@ -1,23 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiFillCheckSquare } from "react-icons/ai";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import Loading from "../../../Sheard/Loading/Loading";
 
 const AllFeature = () => {
   const [loading, setLoading] = useState(true);
   const [control, setControl] = useState(false);
   const [selectedImage, setSelectedImage] = useState([]);
-
+  const { axiosSecure } = useAxiosSecure();
   const [images, setImages] = useState([]);
   useEffect(() => {
     // Fetch images from the server when the component mounts
-    axios
-      .get("https://ollyo-task-server.vercel.app/all_images")
+    axiosSecure
+      .get("/get-featured-images")
       .then((res) => {
-        const checkedImages = res.data.filter(
+        const checkedImages = res?.data?.data.filter(
           (data) => data?.isChecked === true
         );
-        setSelectedImage(checkedImages);
-        setImages(res.data);
+        setSelectedImage(checkedImages || []);
+        setImages(res?.data?.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -32,33 +35,21 @@ const AllFeature = () => {
       isChecked: e.target.checked,
     };
 
-    axios
-      .patch(
-        `https://ollyo-task-server.vercel.app/update_uploaded_images/${id}`,
-        uploadedObj
-      )
+    axiosSecure
+      .put(`/update-featured/${id}`, uploadedObj)
       .then((res) => {
         if (res.data?.matchedCount) {
-          setSelectedImage((prevSelected) => {
-            const updatedSelected = [...prevSelected];
-            setControl(!control);
-
-            return updatedSelected;
-          });
+          setControl(!control);
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   const handleDeleteFiles = () => {
     // Handle file deletion
-    axios
-      .delete(
-        "https://ollyo-task-server.vercel.app/delete_images",
-        selectedImage
-      )
+    axiosSecure
+      .delete("/delete-multiple-images", selectedImage)
       .then((res) => {
         if (res.data?.result?.deletedCount) {
           Swal.fire({
@@ -76,10 +67,13 @@ const AllFeature = () => {
         console.log(err);
       });
   };
+  if (loading) {
+    return <Loading></Loading>;
+  }
   return (
     <div>
       <h2 className="text-center text-2xl">All feature Image</h2>
-      {selectedImage.length <= 0 ? (
+      {selectedImage?.length <= 0 ? (
         <div className="max-w-[1200px] lg:mx-auto mx-5 my-4">
           <h1 className="text-2xl font-bold ps-5 md:ps-0">Feature Gallery</h1>
         </div>
@@ -90,7 +84,7 @@ const AllFeature = () => {
               <span className="text-[#4674ff]">
                 <AiFillCheckSquare></AiFillCheckSquare>
               </span>
-              <span>{selectedImage.length} Files Selected</span>
+              <span>{selectedImage?.length} Files Selected</span>
             </h1>
             <button
               onClick={handleDeleteFiles}
@@ -105,7 +99,7 @@ const AllFeature = () => {
       <div className="max-w-[1200px] lg:mx-auto mx-5 my-4">
         <div>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
-            {images.map((image) => {
+            {images?.map((image) => {
               return (
                 <div
                   key={image._id}

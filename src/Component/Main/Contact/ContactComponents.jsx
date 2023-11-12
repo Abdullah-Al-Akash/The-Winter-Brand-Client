@@ -1,6 +1,30 @@
 import React from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ContactComponents = () => {
+  const { axiosSecure } = useAxiosSecure();
+  const handleContact = (e) => {
+    e.preventDefault();
+    const from = e.target;
+    const name = from?.name?.value;
+    const email = from?.email?.value;
+    const needDate = from?.need?.value;
+    const message = from?.message?.value;
+    const postedContactObject = {
+      name: name,
+      email: email,
+      need: needDate,
+      message: message,
+    };
+    axiosSecure
+      .post("/create-contact", postedContactObject)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="md:max-w-[700px] md:mx-auto my-10 md:my-[100px] mx-5">
       <div className="flex flex-col justify-center  w-full md:w-[80%] mx-auto items-center md:gap-10 gap-5">
@@ -11,7 +35,7 @@ const ContactComponents = () => {
           as soon as o can.
         </p>
       </div>
-      <div className="contactForm-Shadow">
+      <form onSubmit={handleContact} className="contactForm-Shadow">
         <div className="p-10 border mt-5 flex flex-col gap-4 contactForm-OverlayShadow  ">
           <div className="flex flex-col">
             <label htmlFor="name" className="mb-1 text-slate-500 font-semibold">
@@ -66,11 +90,14 @@ const ContactComponents = () => {
               className="outline-none bg-gray-200 w-full py-3 px-2"
             ></textarea>
           </div>
-          <button className="brand-btn text-white transition-all ease-in-out duration-500 md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px]">
-            Send Message
-          </button>
+
+          <input
+            className="brand-btn text-white transition-all ease-in-out duration-500 md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px]"
+            type="submit"
+            value=" Send Message"
+          />
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -47,7 +47,7 @@ const Register = () => {
               if (data.data.success) {
                 toast("Register successful!");
                 form.reset();
-                navigate("/", { replace: true });
+                navigate(from, { replace: true });
                 setErrorMassage("");
                 setSuccessMessage("");
               }

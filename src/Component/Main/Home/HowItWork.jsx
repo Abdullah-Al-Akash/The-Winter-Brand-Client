@@ -6,7 +6,7 @@ import "./HowItWork.css";
 
 const HowItWork = () => {
   return (
-    <div className="container mx-auto py-16 px-8 md:px-24">
+    <div className="container ">
       <h1 className="text-center brand-color my-8 text-3xl font-semibold">
         How It Work?
       </h1>

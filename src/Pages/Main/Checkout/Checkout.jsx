@@ -10,20 +10,24 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 
+const stripePromise = loadStripe(import.meta.env.VITE_Publishable_key)
+
 const Checkout = () => {
   const { axiosSecure } = useAxiosSecure()
+  const [stripe, setStripe] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState("United States");
   const [selectedState, setSelectedState] = useState("");
   const [offer, setOffer] = useState(false);
   const [numberMassage, setNumberMassage] = useState(false);
   const [emailMassage, setEmailMassage] = useState(false);
-  const [stripePromise, setStripePromise] = useState(null)
+  // const [stripePromise, setStripePromise] = useState(null)
   const [clientSecret, setClientSecret] = useState(null)
   const [amount, setAmount] = useState(0)
   const { checkoutData } = useCheckoutData()
+
   console.log(checkoutData)
   useEffect(() => {
-    setStripePromise(loadStripe(import.meta.env.VITE_Publishable_key))
+    // setStripePromise()
     if (checkoutData) {
       const amount = Math.round(checkoutData.price * 100)
       setAmount(amount)
@@ -132,8 +136,8 @@ const Checkout = () => {
     const apartment = from?.apartment?.value || "";
     const post_code = from.post_code.value;
     const city = from.city.value;
-    const phone = from.phone.value || "";
-    const mobile_number = from.mobile_number.value || "";
+    const phone = from?.phone?.value || "";
+    const mobile_number = from?.mobile_number?.value || "";
     const obj = {
       email: email,
       country: selectedCountry,
@@ -355,7 +359,7 @@ const Checkout = () => {
                 {
                   clientSecret && stripePromise && (
                     <Elements stripe={stripePromise} options={{ clientSecret }}>
-                      <CheckoutForm />
+                      <CheckoutForm setStripe={setStripe} />
                     </Elements>)
 
                 }
@@ -365,7 +369,8 @@ const Checkout = () => {
               <input
                 type="submit"
                 value="Summit"
-                className="bg-[#FF4500] text-white transition-all ease-in-out duration-500 hover:text-[#FF4500] hover:bg-black md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px] cursor-pointer"
+                disabled={!stripe}
+                className={`${!stripe && "cursor-not-allowed"} bg-[#FF4500] text-white transition-all ease-in-out duration-500 hover:text-[#FF4500] hover:bg-black md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px] cursor-pointer`}
               />
             </form>
           </div>

@@ -13,6 +13,7 @@ const AddProduct = () => {
   const image = watch("image"); // watch the 'image' input
   const { axiosSecure } = useAxiosSecure();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   const handelAddProduct = (e) => {
     e.preventDefault();
     const from = e.target;
@@ -22,7 +23,6 @@ const AddProduct = () => {
     const quantity = from?.quantity?.value;
     const discount = from?.discount?.value;
     const product_description = from?.product_description?.value;
-    const navigate = useNavigate();
 
     if (!parseFloat(price) == true) {
       return setError("price is not a number");
@@ -53,7 +53,7 @@ const AddProduct = () => {
           const updateImageFile = {
             product_name,
             product_description,
-            price,
+            price: price,
             product_image: imgURL,
             quantity,
           };
@@ -63,7 +63,7 @@ const AddProduct = () => {
             .then((res) => {
               if (res?.data?.success) {
                 Swal.fire({
-                  position: "top-center",
+                  position: "center",
                   icon: "success",
                   title: "Upload successfully",
                   showConfirmButton: false,
@@ -120,6 +120,7 @@ const AddProduct = () => {
               <input
                 id="product_name"
                 type="text"
+                autoComplete="off"
                 className="border outline-none px-2 py-3 mt-1 bg-gray-200"
                 placeholder="Enter Product Name"
                 name="product_name"
@@ -129,7 +130,9 @@ const AddProduct = () => {
               <label htmlFor="price">price</label>
               <input
                 id="price"
-                type="text"
+                min={0}
+                type="number"
+                autoComplete="off"
                 placeholder="Enter Product Price"
                 className="border outline-none px-2 py-3 mt-1 bg-gray-200"
                 name="price"
@@ -141,7 +144,9 @@ const AddProduct = () => {
               <label htmlFor="quantity">Quantity</label>
               <input
                 id="quantity"
-                type="text"
+                type="number"
+                min={0}
+                autoComplete="off"
                 className="border outline-none px-2 py-3 mt-1 bg-gray-200"
                 name="quantity"
                 placeholder="Enter Product Quantity"
@@ -151,7 +156,9 @@ const AddProduct = () => {
               <label htmlFor="discount">Discount</label>
               <input
                 id="discount"
-                type="text"
+                type="number"
+                min={0}
+                autoComplete="off"
                 placeholder="Enter Product Discount"
                 className="border outline-none px-2 py-3 mt-1 bg-gray-200"
                 name="discount"
@@ -163,6 +170,7 @@ const AddProduct = () => {
             <textarea
               name="product_description"
               id="product_description"
+              autoComplete="off"
               cols="30"
               className="border outline-none px-2 py-3 mt-1 bg-gray-200"
               rows="10"
@@ -174,7 +182,7 @@ const AddProduct = () => {
           <input
             type="submit"
             value="Uplaod Product"
-            className="brand-btn px-7 mt-5 py-2"
+            className="brand-btn px-7 mt-5 py-2 cursor-pointer"
           />
         </div>
       </form>

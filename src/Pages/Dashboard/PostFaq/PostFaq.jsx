@@ -1,16 +1,40 @@
 import React from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const PostFaq = () => {
+  const { axiosSecure } = useAxiosSecure();
   const handlePostFaq = (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
     const description = form.description.value;
     const postObjectFAQ = {
-      heading: title,
-      content: description,
+      type: "FAQ",
+      faq: {
+        question: title,
+        body: description,
+      },
     };
-    console.log(postObjectFAQ);
+    axiosSecure
+      .post("/create-layout", postObjectFAQ)
+      .then((res) => {
+        console.log(res);
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "FAQ Upload successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          form.reset();
+          setError("");
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
   return (
     <div className="max-w-[1200px] mx-auto">

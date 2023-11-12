@@ -51,19 +51,19 @@ const Faq = () => {
           return (
             <AccordionItem
               className={`${
-                item.indexNumber == 1
+                i + 1 == 1
                   ? "border-l-[10px] px-2 border-green-400"
-                  : item.indexNumber == 2
+                  : i + 1 == 2
                   ? "border-l-[10px] px-2 border-blue-400"
-                  : item.indexNumber == 3
+                  : i + 1 == 3
                   ? "border-l-[10px] px-2 border-red-400"
-                  : item.indexNumber == 4
+                  : i + 1 == 4
                   ? "border-l-[10px] px-2 border-yellow-400"
-                  : item.indexNumber % 4 === 1
+                  : (i + 1) % 4 === 1
                   ? "border-l-[10px] px-2 border-amber-800"
-                  : item.indexNumber % 4 === 2
+                  : (i + 1) % 4 === 2
                   ? "border-l-[10px] px-2 border-blue-800"
-                  : item.indexNumber % 4 === 3
+                  : (i + 1) % 4 === 3
                   ? "border-green-400"
                   : "border-red-400"
               } md:text-2xl`}

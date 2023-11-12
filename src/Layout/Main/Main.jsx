@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Navbar from "../../Sheard/Navbar/Navbar";
 import Footer from "../../Sheard/Footer.jsx/Footer";
 import Messenger from "../../Component/Main/Messenger/Messenger";
+import Loading from "../../Sheard/Loading/Loading";
 
 const Main = () => {
   const [loading, setLoading] = useState(true);
@@ -13,11 +14,7 @@ const Main = () => {
     }, 1000);
   }, []);
   if (loading) {
-    return (
-      <div className="h-screen w-full flex justify-center items-center">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
+    return <Loading></Loading>;
   }
   return (
     <div className="overflow-x-hidden">

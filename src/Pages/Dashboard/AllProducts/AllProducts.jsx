@@ -6,24 +6,27 @@ import { HiPencil } from "react-icons/hi";
 import { useState } from "react";
 import { useEffect } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import UpdateProductModal from "../../../Component/Dashboard/UpdateProductModal/UpdateProductModal";
+import Loading from "../../../Sheard/Loading/Loading";
 const AllProducts = () => {
-  const [products, setProducts] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const { axiosSecure } = useAxiosSecure()
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [updatedProduct, setUpdatedProduct] = useState(false);
+  const { axiosSecure } = useAxiosSecure();
+  const [control, setControl] = useState(false);
   useEffect(() => {
-    setIsLoading(true)
-    axiosSecure.get("/get-all-products")
-      .then(res => {
-        setProducts(res?.data?.date)
-        setIsLoading(false)
+    setIsLoading(true);
+    axiosSecure
+      .get("/get-all-products")
+      .then((res) => {
+        setProducts(res?.data?.data);
+        setIsLoading(false);
       })
-      .catch(error => {
-        console.log(error.message)
-      })
-  }, [])
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, [control]);
 
-
-  console.log(24, products)
   // const products = [
   //   {
   //     _id: 1,
@@ -35,6 +38,7 @@ const AllProducts = () => {
   //     already_sell: 10,
   //     previous_price: 98,
   //     price: 58,
+  //     discount: 10,
   //     in_stock: true,
   //   },
   //   {
@@ -47,40 +51,61 @@ const AllProducts = () => {
   //     already_sell: 10,
   //     previous_price: 98,
   //     price: 58,
+  //     discount: 10,
   //     in_stock: false,
   //   },
   // ];
-  const updateOrderStatus = (status, productId) => {
-    console.log(status);
+
+  // delete function
+  const handleDeleteProduct = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `${status == "update"
-        ? "You are Update Product Status"
-        : "Are you sure Delete This Product"
-        }`,
+      text: "You won't be delete this product!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: `${status == "update" ? "Yes Update it" : "Yes Delete it"
-        }`,
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const data = {
-          status,
-          productId,
-        };
-        // console.log(data);
+        axiosSecure
+          .delete(`/delete-product/${id}`)
+          .then((res) => {
+            console.log(res);
+            if (res?.data?.success) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your product has been deleted successful.",
+                icon: "success",
+              });
+              setControl(!control);
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `Something is wrong`,
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
       }
     });
   };
-  const options = [
-    { value: "update", label: "Update" },
-    { value: "delete", label: "Delete" },
-  ];
+  // update function
+  const handleUpdateProduct = (id) => {
+    const product = products.find((p) => p?._id == id);
+    setUpdatedProduct(product);
+  };
+
   // TODO SET LOADING
   if (isLoading) {
-    return "loading"
+    return (
+      <>
+        <Loading></Loading>
+      </>
+    );
   }
 
   return (
@@ -112,6 +137,7 @@ const AllProducts = () => {
               <th className="text-center">Product Name</th>
 
               <th className="text-center ">Price</th>
+              <th className="text-center ">Discount Price</th>
               <th className="text-center ">Available quantity</th>
               <th className="text-center">Already Sell</th>
               <th className="text-center">Product States</th>
@@ -119,57 +145,75 @@ const AllProducts = () => {
             </tr>
           </thead>
 
-          {products && products.map((product, i) => {
-            const {
-              _id,
-              product_image,
-              product_name,
-              quantity,
-              already_sell,
-              price,
-            } = product || {};
-            return (
-              <tr key={i} className="text-center">
-                <th>{i + 1}</th>
-                <td>
-                  <div className="flex items-center justify-center space-x-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img src={product_image} alt="Avatar Tailwind CSS Component" />
+          {products &&
+            products.map((product, i) => {
+              const {
+                _id,
+                product_image,
+                product_name,
+                quantity,
+                already_sell,
+                price,
+                discount,
+              } = product || {};
+              return (
+                <tr key={i} className="text-center">
+                  <th>{i + 1}</th>
+                  <td>
+                    <div className="flex items-center justify-center space-x-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
+                          <img
+                            src={product_image}
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </td>
-                <td>{product_name} </td>
-                <td>{price} </td>
-                <td>{quantity}</td>
-                <td>{already_sell}</td>
-                <td>
-                  {quantity <= 0 ? (
-                    <span className="bg-red-400 p-1 rounded-lg text-white">
-                      Out of Stock
-                    </span>
-                  ) : (
-                    <span className="bg-green-500 p-1 rounded-lg text-white">
-                      in Stock
-                    </span>
-                  )}
-                </td>
-                <td className="">
-                  <div className="flex justify-center items-center gap-5 text-xl">
-                    <span className="cursor-pointer">
-                      <HiPencil></HiPencil>
-                    </span>
-                    <span className="cursor-pointer">
-                      <FaTrashAlt></FaTrashAlt>
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
+                  </td>
+                  <td>{product_name} </td>
+                  <td>{price} </td>
+                  <td>{discount} </td>
+                  <td>{quantity}</td>
+                  <td>{already_sell}</td>
+                  <td>
+                    {quantity <= 0 ? (
+                      <span className="bg-red-400 p-1 rounded-lg text-white">
+                        Out of Stock
+                      </span>
+                    ) : (
+                      <span className="bg-green-500 p-1 rounded-lg text-white">
+                        in Stock
+                      </span>
+                    )}
+                  </td>
+                  <td className="">
+                    <div className="flex justify-center items-center gap-5 text-xl">
+                      <label
+                        htmlFor="my_modal_6"
+                        onClick={() => handleUpdateProduct(_id)}
+                        className="cursor-pointer"
+                      >
+                        <HiPencil></HiPencil>
+                      </label>
+                      <span
+                        onClick={() => handleDeleteProduct(_id)}
+                        className="cursor-pointer"
+                      >
+                        <FaTrashAlt></FaTrashAlt>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
         </table>
       </div>
+      <UpdateProductModal
+        updatedProduct={updatedProduct}
+        setControl={setControl}
+        control={control}
+      ></UpdateProductModal>
     </div>
   );
 };

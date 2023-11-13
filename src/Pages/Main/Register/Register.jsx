@@ -9,23 +9,22 @@ import { AuthContext, useAuth } from "../../../AuthProvider/AuthProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Register = () => {
-
-  const { user } = useAuth()
-  console.log(13, user)
+  const { user } = useAuth();
+  console.log(13, user);
   const [toggleIcon, setToggleIcon] = useState(true);
   const [errorMassage, setErrorMassage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { signUp } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const { axiosSecure } = useAxiosSecure()
+  const { axiosSecure } = useAxiosSecure();
   const from = location.state?.from?.pathname || "/";
 
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e?.target;
     const email = form?.email?.value;
-    const name = form?.name?.value
+    const name = form?.name?.value;
     const password = form?.password?.value;
     if (password < 6) {
       setErrorMassage("Minimum six characters provide your password");
@@ -37,14 +36,15 @@ const Register = () => {
     } else {
       signUp(email, password)
         .then((result) => {
-          const saveUser = result.user
-          console.log(saveUser)
-          axiosSecure.post("/user-registration", {
-            name: name,
-            email: saveUser.email,
-          })
+          const saveUser = result.user;
+          console.log(saveUser);
+          axiosSecure
+            .post("/user-registration", {
+              name: name,
+              email: saveUser.email,
+            })
             .then((data) => {
-              if (data.data.success) {
+              if (data?.data?.success) {
                 toast("Register successful!");
                 form.reset();
                 navigate(from, { replace: true });
@@ -54,6 +54,7 @@ const Register = () => {
             });
         })
         .catch((err) => {
+          console.log(err.message);
           setErrorMassage(err.message);
           setSuccessMessage("");
         });

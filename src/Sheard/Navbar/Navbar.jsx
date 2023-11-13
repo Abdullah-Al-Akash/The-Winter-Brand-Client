@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import NavDrawer from "../NavDrawer/NavDrawer";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import defaultProfile from '../../assets/profile.png'
+import defaultProfile from "../../assets/profile.png";
 import { FaRegUserCircle, FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = () => {
@@ -20,25 +20,27 @@ const Navbar = () => {
     NavToggleDrawer,
     setNevActive,
     handleTop,
-    user, logout
+    user,
+    logout,
   } = useContext(AuthContext);
-  const { axiosSecure } = useAxiosSecure()
+  const { axiosSecure } = useAxiosSecure();
   console.log(user);
   const handleLogOut = () => {
     logout()
-      .then(res => {
-        axiosSecure.get(`/logout?email=${user.email}`)
-          .then(response => {
+      .then((res) => {
+        axiosSecure
+          .get(`/logout?email=${user.email}`)
+          .then((response) => {
             console.log(response);
           })
-          .catch(error => {
+          .catch((error) => {
             console.log("Error from 33", error);
-          })
+          });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
-  }
+      });
+  };
   return (
     <div className="border-b md:py-1 max-h-16 md:max-h-20">
       <div className="max-w-[1200px] mx-auto">
@@ -73,59 +75,112 @@ const Navbar = () => {
             </div>
             <div className="ms-auto pe-2 gap-5 md:hidden">
               <div>
-                {
-                  user ? <div className="dropdown dropdown-end bg-white z-10">
-                    <label tabIndex={0} className="w-full h-full rounded-full cursor-pointer">
-                      <img className="h-[42px] w-[42px]" src={`${user?.photoURL ? user?.photoURL : defaultProfile}`} alt="" />
+                {user ? (
+                  <div className="dropdown dropdown-end bg-white z-10">
+                    <label
+                      tabIndex={0}
+                      className="w-full h-full rounded-full cursor-pointer"
+                    >
+                      <img
+                        className="h-[42px] w-[42px]"
+                        src={`${
+                          user?.photoURL ? user?.photoURL : defaultProfile
+                        }`}
+                        alt=""
+                      />
                     </label>
-                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                    >
                       <li>
-                        <Link className="text-sm flex items-center hover:bg-gray-100" to={"/profile"} onClick={handleTop}>
-                          <FaRegUserCircle></FaRegUserCircle> <span className="ms-2 text-sm">My Profile</span>
+                        <Link
+                          className="text-sm flex items-center hover:bg-gray-100"
+                          to={"/profile"}
+                          onClick={handleTop}
+                        >
+                          <FaRegUserCircle></FaRegUserCircle>{" "}
+                          <span className="ms-2 text-sm">My Profile</span>
                         </Link>
                       </li>
                       <li>
-                        <Link className="text-sm flex items-center hover:bg-gray-100" to={"/cart"} onClick={handleTop}>
-                          <FiShoppingCart></FiShoppingCart> <span className="ms-2 text-sm">My Cart</span>
+                        <Link
+                          className="text-sm flex items-center hover:bg-gray-100"
+                          to={"/cart"}
+                          onClick={handleTop}
+                        >
+                          <FiShoppingCart></FiShoppingCart>{" "}
+                          <span className="ms-2 text-sm">My Cart</span>
                         </Link>
                       </li>
                       <li>
-                        <h3 onClick={handleLogOut}><FaSignOutAlt></FaSignOutAlt> <span className="ms-2 text-sm">Logout</span></h3>
+                        <h3 onClick={handleLogOut}>
+                          <FaSignOutAlt></FaSignOutAlt>{" "}
+                          <span className="ms-2 text-sm">Logout</span>
+                        </h3>
                       </li>
                     </ul>
                   </div>
-                    :
-                    <Link to="/login">Login</Link>
-                }
+                ) : (
+                  <Link to="/login">Login</Link>
+                )}
               </div>
             </div>
             <div className="md:flex justify-center items-center gap-5">
               <div className="md:flex justify-center items-center gap-5 hidden">
-                {
-                  user ? <div className="dropdown dropdown-end bg-white z-10">
-                    <label tabIndex={0} className="w-full h-full rounded-full cursor-pointer">
-                      <img className="h-[42px] w-[42px]" src={`${user?.photoURL ? user?.photoURL : defaultProfile}`} alt="" />
+                {user ? (
+                  <div className="dropdown dropdown-end bg-white z-10">
+                    <label
+                      tabIndex={0}
+                      className="w-full h-full rounded-full cursor-pointer"
+                    >
+                      <img
+                        className="h-[42px] w-[42px]"
+                        src={`${
+                          user?.photoURL ? user?.photoURL : defaultProfile
+                        }`}
+                        alt=""
+                      />
                     </label>
-                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                    >
                       <li>
-                        <Link className="text-sm flex items-center hover:bg-gray-100" to={"/profile"} onClick={handleTop}>
-                          <FaRegUserCircle></FaRegUserCircle> <span className="ms-2 text-sm">My Profile</span>
+                        <Link
+                          className="text-sm flex items-center hover:bg-gray-100"
+                          to={"/profile"}
+                          onClick={handleTop}
+                        >
+                          <FaRegUserCircle></FaRegUserCircle>{" "}
+                          <span className="ms-2 text-sm">My Profile</span>
                         </Link>
                       </li>
                       <li>
-                        <Link className="text-sm flex items-center hover:bg-gray-100" to={"/cart"} onClick={handleTop}>
-                          <FiShoppingCart></FiShoppingCart> <span className="ms-2 text-sm">My Cart</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <h3 onClick={handleLogOut}><FaSignOutAlt></FaSignOutAlt> <span className="ms-2 text-sm">Logout</span></h3>
+                        <h3 onClick={handleLogOut}>
+                          <FaSignOutAlt></FaSignOutAlt>{" "}
+                          <span className="ms-2 text-sm">Logout</span>
+                        </h3>
                       </li>
                     </ul>
                   </div>
-                    :
-                    <Link to="/login">Login</Link>
-                }
+                ) : (
+                  <Link to="/login">Login</Link>
+                )}
               </div>
+              {user && (
+                <li className="list-none md:flex justify-center items-center gap-5 hidden">
+                  <Link
+                    className="text-sm flex items-center"
+                    to={"/cart"}
+                    onClick={handleTop}
+                  >
+                    <span className="text-3xl">
+                      <FiShoppingCart></FiShoppingCart>
+                    </span>
+                  </Link>
+                </li>
+              )}
               <button
                 className="bg-black text-white transition-all ease-in-out duration-200 hover:text-black hover:bg-white border-2 border-black md:px-12 md:text-xl px-6 font-semibold md:py-3 py-2 rounded-[50px]"
                 onClick={toggleDrawer}

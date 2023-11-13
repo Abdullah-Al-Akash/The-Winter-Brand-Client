@@ -16,6 +16,7 @@ import Messenger from "../Messenger/Messenger";
 const ProductsComponent = () => {
   const [products, setProducts] = useState([]);
   const { handleTop } = useContext(AuthContext);
+  // TODO products api 
   useEffect(() => {
     fetch("./products.json")
       .then((res) => res.json())
@@ -64,10 +65,10 @@ const ProductsComponent = () => {
           modules={[Pagination, Navigation]}
           className="mySwiper"
         >
-          {products?.map((product) => {
+          {products?.map((product, i) => {
             const { name, sale_price, regular_price, img } = product || {};
             return (
-              <SwiperSlide>
+              <SwiperSlide key={i}>
                 <div className="flex justify-center lg:w-96 lg:mx-auto  border relative mt-5 mx-5">
                   <span className="absolute top-0 left-0 px-2 brand-bg">
                     For Sell
@@ -75,10 +76,7 @@ const ProductsComponent = () => {
                   <div className="border-none shadow-xl flex flex-col justify-between w-full">
                     <div className="flex justify-center">
                       <img
-                        style={{
-                          height: "300px",
-                          width: "350px",
-                        }}
+
                         className="px-8 w-full"
                         src={img}
                         alt="Beanie"

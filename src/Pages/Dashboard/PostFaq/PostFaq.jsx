@@ -20,9 +20,9 @@ const PostFaq = () => {
       .post("/create-layout", postObjectFAQ)
       .then((res) => {
         console.log(res);
-        if (res.data.insertedId) {
+        if (res.data.success) {
           Swal.fire({
-            position: "top-center",
+            position: "center",
             icon: "success",
             title: "FAQ Upload successfully",
             showConfirmButton: false,

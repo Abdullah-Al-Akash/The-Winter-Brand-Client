@@ -23,36 +23,7 @@ const Banner = () => {
 
     const { isOpen, setIsOpen, toggleDrawer } = useContext(AuthContext);
     return (
-        <div className="banner-content">
-            {/* <div className="flex justify-center items-center h-[80vh]">
-                <div className="">
-                    <h1 className='md:text-4xl text-xl font-semibold '>Elevate Your <span className="brand-color font-bold md:text-5xl text-xl">Winter Style</span> <br />  </h1>
-                    <h1 className='md:text-4xl text-xl font-semibold mt-2'>with Our</h1>
-                    <h1 className='md:text-4xl text-xl mt-3'>Cozy <span className="brand-color font-semibold">Beanie Bundle</span>!</h1>
-                    <h3 className='text-gray-300 text-xl mt-5'>Everything in one Bundle: Unparalleled Quality, Unbeatable Price, and Fashion Forward</h3>
-                    <div className='mt-3'>
-                        <span className='bg-black brand-color p-2 rounded text-lg font-semibold'>
-                            <TypeAnimation
-                                sequence={[
-                                    'Black Friday Special: ',
-                                    1000,
-                                    'Black Friday Special: Now only $39',
-                                    1000,
-                                    'Black Friday Special: Now only $39',
-                                    1000,
-                                    'Black Friday Special: Now only $39',
-                                    1000,
-                                ]}
-                                speed={50}
-                                repeat={Infinity}
-                            />
-                        </span>
-                    </div>
-                    <div className='mt-5'>
-                        <button onClick={toggleDrawer} className='btn brand-btn font-bold'>Get The Bundle</button>
-                    </div>
-                </div>
-            </div> */}
+        <div className="banner-content h-full py-5 md:py-0">
             <Swiper
                 spaceBetween={30}
                 centeredSlides={true}
@@ -174,7 +145,7 @@ const Banner = () => {
                         </div>
                     </div>
                 </SwiperSlide>
-                {/* <SwiperSlide>Slide 2</SwiperSlide> */}
+
             </Swiper>
             <DrawerComponent></DrawerComponent>
         </div >

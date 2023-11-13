@@ -1,11 +1,10 @@
-.banner-content{
+.banner-content {
     background-size: cover;
-    height: 80vh;
 }
 
 
 
 
-.swiper-slide{
-   background: none!important;
+.swiper-slide {
+    background: none !important;
 }

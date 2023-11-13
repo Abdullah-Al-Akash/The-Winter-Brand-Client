@@ -10,7 +10,6 @@ const AddProduct = () => {
   const imgHostingUrl = `https://api.imgbb.com/1/upload?key=${img_hosting_Token}`;
   const [loadImage, setLoadImage] = useState(false);
   const { register, watch } = useForm();
-  const image = watch("image"); // watch the 'image' input
   const { axiosSecure } = useAxiosSecure();
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -95,22 +94,34 @@ const AddProduct = () => {
     <div className="max-w-[1200px] mx-auto">
       <h1 className="text-center my-5 md:text-5xl text-xl">Add Product</h1>
       <form onSubmit={handelAddProduct}>
-        <div className="relative mx-auto h-full border-2 border-gray-400 bg-gray-200 border-dashed rounded-[20px]  text-gray-500 ">
-          <label
-            htmlFor="file-upload"
-            className="h-[50vh] cursor-pointer  flex justify-center items-center flex-col"
-          >
-            <span className="text-3xl flex items-center gap-1">
-              + <BsFillImageFill></BsFillImageFill>
-            </span>
-            <span className="mt-2">Add Product Image</span>
-          </label>
-          <input
-            id="file-upload"
-            type="file"
-            className="custom-file-input"
-            name="image"
-          />
+        <div
+          className={`${"relative mx-auto h-full border-2 border-gray-400 bg-gray-200 border-dashed rounded-[20px] text-gray-500 flex items-center justify-center"}`}
+        >
+          {watch("image") ? (
+            <img
+              src={URL.createObjectURL(watch("image")[0])}
+              alt="Product Preview"
+              className="flex justify-center items-center rounded-[20px]"
+            />
+          ) : (
+            <>
+              <label
+                htmlFor="file-upload"
+                className="h-[50vh] cursor-pointer  flex justify-center items-center flex-col"
+              >
+                <span className="text-3xl flex items-center gap-1">
+                  + <BsFillImageFill></BsFillImageFill>
+                </span>
+                <span className="mt-2">Add Product Image</span>
+              </label>
+              <input
+                id="file-upload"
+                {...register("image", { required: true })}
+                type="file"
+                className="custom-file-input"
+              />{" "}
+            </>
+          )}
         </div>
         <div className="mt-5">
           <h1 className="my-5 md:text-1xl text-xl">Add Info</h1>

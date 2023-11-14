@@ -15,7 +15,7 @@ const NumberMarketing = () => {
   // ];
   useEffect(() => {
     axiosSecure
-      .get("/get-email-marketing-data")
+      .get("/get-phone-marketing-data")
       .then((res) => {
         setItems(res?.data?.data || []);
         setLoading(false);
@@ -38,17 +38,17 @@ const NumberMarketing = () => {
           <thead className="text-center">
             <tr>
               <th>#</th>
+              <th>Name</th>
               <th>Number</th>
-              <th>UserId</th>
             </tr>
           </thead>
           <tbody>
             {items?.map((item, i) => {
               return (
-                <tr className="text-center">
+                <tr key={i} className="text-center">
                   <th>{i + 1}</th>
-                  <td>{item?.promotions?.number}</td>
-                  <td>{item?.Name}</td>
+                  <td>{item?.name}</td>
+                  <td>{item?.promotions?.phone_number}</td>
                 </tr>
               );
             })}

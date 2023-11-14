@@ -70,8 +70,8 @@ const Subscription = () => {
       price: quantity === "1" ? 49 : 90,
       setected: setected === "S1" ? ["Neutral Color"] : ["Neutral Color", "Wild and Colorful"]
     }
-    setCheckoutData(data)
 
+    localStorage.setItem("checkout", JSON.stringify(data))
 
 
     toggleDrawer()

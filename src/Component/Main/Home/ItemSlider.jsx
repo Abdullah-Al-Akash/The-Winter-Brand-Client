@@ -31,17 +31,27 @@ const ItemSlider = () => {
   return (
     <div className="pt-12">
       <Slider {...settings} className="border-none">
-        {images?.map((image, i) => {
+        {images.length > 0
+          ? images?.map((image, i) => {
               return (
                 <img
                   key={i}
-                  className="h-full mx-auto"
+                  className="h-[300px] w-[300px] object-contain mx-auto"
                   src={image?.image_url}
                   alt=""
                 />
               );
             })
-          }
+          : defaultImage?.map((image, i) => {
+              return (
+                <img
+                  key={i}
+                  className="h-[300px] w-[300px] object-contain mx-auto"
+                  src={img1}
+                  alt=""
+                />
+              );
+            })}
       </Slider>
     </div>
   );

@@ -1,45 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion, AccordionItem } from "@szhsin/react-accordion";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Faq = () => {
-  const items = [
-    {
-      header: "What is Lorem Ipsum?",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do  eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      indexNumber: 1,
-    },
-    {
-      header: "Where does it come from?",
-      content:
-        "Quisque eget luctus mi, vehicula mollis lorem. Proin fringilla vel erat quis sodales. Nam ex enim, eleifend venenatis lectus vitae, accumsan auctor mi..",
-      indexNumber: 2,
-    },
-    {
-      header: "Why do we use it?",
-      content:
-        " Suspendisse massa risus, pretium id interdum in, dictum sit amet ante.Fusce vulputate purus sed tempus feugiat.",
-      indexNumber: 3,
-    },
-    {
-      header: "What is Lorem Ipsum?",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do  eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      indexNumber: 4,
-    },
-    {
-      header: "Where does it come from?",
-      content:
-        "Quisque eget luctus mi, vehicula mollis lorem. Proin fringilla vel erat quis sodales. Nam ex enim, eleifend venenatis lectus vitae, accumsan auctor mi..",
-      indexNumber: 5,
-    },
-    {
-      header: "Why do we use it?",
-      content:
-        " Suspendisse massa risus, pretium id interdum in, dictum sit amet ante.Fusce vulputate purus sed tempus feugiat.",
-      indexNumber: 6,
-    },
-  ];
+  const { axiosSecure } = useAxiosSecure();
+  const [items, setItems] = useState([]);
+  // const items = [
+  //   {
+  //     header: "What is Lorem Ipsum?",
+  //     content:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do  eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     indexNumber: 1,
+  //   },
+  //   {
+  //     header: "Where does it come from?",
+  //     content:
+  //       "Quisque eget luctus mi, vehicula mollis lorem. Proin fringilla vel erat quis sodales. Nam ex enim, eleifend venenatis lectus vitae, accumsan auctor mi..",
+  //     indexNumber: 2,
+  //   },
+  //   {
+  //     header: "Why do we use it?",
+  //     content:
+  //       " Suspendisse massa risus, pretium id interdum in, dictum sit amet ante.Fusce vulputate purus sed tempus feugiat.",
+  //     indexNumber: 3,
+  //   },
+  //   {
+  //     header: "What is Lorem Ipsum?",
+  //     content:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do  eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //     indexNumber: 4,
+  //   },
+  //   {
+  //     header: "Where does it come from?",
+  //     content:
+  //       "Quisque eget luctus mi, vehicula mollis lorem. Proin fringilla vel erat quis sodales. Nam ex enim, eleifend venenatis lectus vitae, accumsan auctor mi..",
+  //     indexNumber: 5,
+  //   },
+  //   {
+  //     header: "Why do we use it?",
+  //     content:
+  //       " Suspendisse massa risus, pretium id interdum in, dictum sit amet ante.Fusce vulputate purus sed tempus feugiat.",
+  //     indexNumber: 6,
+  //   },
+  // ];
+  useEffect(() => {
+    axiosSecure.get("get-faqs").then((res) => {
+      setItems(res?.data?.data);
+    });
+  }, []);
+  console.log(items);
   return (
     <div className="lg:max-w-[1200px] container md:mx-auto mx-5 my-10 md:my-[100px]">
       <div className="text-center">
@@ -67,12 +76,9 @@ const Faq = () => {
                   ? "border-green-400"
                   : "border-red-400"
               } md:text-2xl`}
-              header={item?.header}
+              header={item?.question}
             >
-              <span className="md:text-[18px] text-[12px]">
-                {" "}
-                {item?.content}
-              </span>
+              <span className="md:text-[18px] text-[12px]"> {item?.body}</span>
             </AccordionItem>
           );
         })}

@@ -31,32 +31,10 @@ const ItemSlider = () => {
     <div className="pt-12">
       <Slider {...settings} className="border-none">
         <img className="h-full mx-auto" src={img1} alt="" />
-
-        <img className="h-full mx-auto" src={img2} alt="" />
-
-        <img className="h-full mx-auto" src={img3} alt="" />
-
-        <img className="h-full mx-auto" src={img4} alt="" />
-
-        <img className="h-full mx-auto" src={img5} alt="" />
-
-        <img className="h-full mx-auto" src={img6} alt="" />
-
-        <img className="h-full mx-auto" src={img7} alt="" />
-
-        <img className="h-full mx-auto" src={img8} alt="" />
-
-        <img className="h-full mx-auto" src={img9} alt="" />
-
-        <img className="h-full mx-auto" src={img10} alt="" />
-
-        <img className="h-full mx-auto" src={img11} alt="" />
-
-        <img className="h-full mx-auto" src={img12} alt="" />
-
-        <img className="h-full mx-auto" src={img13} alt="" />
-
-        <img className="h-full mx-auto" src={img14} alt="" />
+        <img className="h-full mx-auto" src={img1} alt="" />
+        <img className="h-full mx-auto" src={img1} alt="" />
+        <img className="h-full mx-auto" src={img1} alt="" />
+        <img className="h-full mx-auto" src={img1} alt="" />
       </Slider>
     </div>
   );

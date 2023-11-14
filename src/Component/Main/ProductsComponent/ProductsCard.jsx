@@ -1,8 +1,8 @@
 import React from "react";
 import { BsCartPlus } from "react-icons/bs";
 
-const ProductsCard = ({ product }) => {
-  const { name, sale_price, regular_price, img } = product;
+const ProductsCard = ({ product, handleAddToCard }) => {
+  const { product_name, discount, price, regular_price, product_image } = product;
   return (
     <div className="flex justify-center xxl:w-96 w-full lg:mx-auto  border relative">
       <span className="absolute top-0 left-0 px-2 brand-bg">For Sell</span>
@@ -11,20 +11,23 @@ const ProductsCard = ({ product }) => {
           <img
             style={{ height: "300px", width: "350px" }}
             className="px-8"
-            src={img}
+            src={product_image}
             alt="Beanie"
           />
         </div>
         <div className="card-body">
-          <h2 className="text-[16px] font-semibold">{name}</h2>
+          <h2 className="text-[16px] font-semibold">{product_name}</h2>
           <div className="flex justify-end my-2">
-            <p>
-              Regular Price: <strike>{regular_price}</strike>{" "}
+            <p >
+              Regular Price:
+              <span className={regular_price && 'line-through'}> {regular_price || price}{" "}</span>
             </p>
-            <p className="text-end brand-color">Offer Price: {sale_price} </p>
+            {
+              discount && <p className="text-end brand-color">Offer Price: {price} </p>
+            }
           </div>
         </div>
-        <button className="bg-black border text-white py-2 flex justify-center items-center gap-2">
+        <button onClick={() => handleAddToCard(product)} className="bg-black border text-white py-2 flex justify-center items-center gap-2">
           <BsCartPlus></BsCartPlus> <span className="mt-1">Add to Cart</span>
         </button>
       </div>

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import ReactStars from 'react-rating-star-with-type';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const ReviewForm = () => {
+    const { axiosSecure } = useAxiosSecure();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [star, setStar] = useState(null);
@@ -14,10 +17,36 @@ const ReviewForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission logic here, e.g., send data to server or perform other actions
-        console.log('Name:', name);
-        console.log('Email:', email);
-        console.log('Rating:', star);
-        console.log('Review:', review);
+        const newReview = {
+            rating: star,
+            name: name,
+            review: review,
+            email: email
+        }
+        axiosSecure.post('/create-review', newReview)
+            .then(res => {
+                if (res?.data?.success) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Review Done!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+                else {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Something Went Wrong!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
     };
 
     return (

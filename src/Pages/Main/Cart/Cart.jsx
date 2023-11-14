@@ -1,30 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useAuth } from "../../../AuthProvider/AuthProvider";
+import { useState } from "react";
 
 const Cart = () => {
-  const items = [
-    {
-      image: "image",
-      name: "Product Name",
-      description:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde quaerat porro quia inventore, id voluptatum dolorem. Ducimus fugiat et, iste ea recusandae similique eligendi cupiditate excepturi aliquid id cum in.",
-      available_quantity: 12,
-      price: 20,
-    },
-    {
-      image: "image",
-      name: "Product Name",
-      description:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde quaerat porro quia inventore, id voluptatum dolorem. Ducimus fugiat et, iste ea recusandae similique eligendi cupiditate excepturi aliquid id cum in.",
-      available_quantity: 12,
-      price: 20,
-    },
-  ];
+  const { axiosSecure } = useAxiosSecure();
+  const [items, setItems] = useState([]);
+  const { user } = useAuth();
+  // const items = [
+  //   {
+  //     image: "image",
+  //     name: "Product Name",
+  //     description:
+  //       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde quaerat porro quia inventore, id voluptatum dolorem. Ducimus fugiat et, iste ea recusandae similique eligendi cupiditate excepturi aliquid id cum in.",
+  //     available_quantity: 12,
+  //     price: 20,
+  //   },
+  //   {
+  //     image: "image",
+  //     name: "Product Name",
+  //     description:
+  //       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde quaerat porro quia inventore, id voluptatum dolorem. Ducimus fugiat et, iste ea recusandae similique eligendi cupiditate excepturi aliquid id cum in.",
+  //     available_quantity: 12,
+  //     price: 20,
+  //   },
+  // ];
 
-  const totalPrice = items.reduce(
-    (acc, item) => acc + item.price * item.available_quantity,
-    0
-  );
-
+  useEffect(() => {
+    axiosSecure
+      .get(`get-cart/${user.email}`)
+      .then((res) => {
+        items(res?.data?.data);
+        console.log(res?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err?.message);
+      });
+  }, []);
+  console.log(items);
   return (
     <div className="max-w-[1200px] mx-auto">
       <h2 className="my-10 md:text-5xl text-xl ms-2">My Cart Page</h2>
@@ -32,7 +45,7 @@ const Cart = () => {
         <div className="md:col-span-8 col-span-12 p-10">
           <div className="flex justify-between items-center">
             <span className="font-bold">{items?.length} item Added</span>
-            <span className="font-bold">Total: ${totalPrice}</span>
+            {/* <span className="font-bold">Total: ${totalPrice}</span> */}
           </div>
           {items.map((item, i) => {
             return (
@@ -61,7 +74,7 @@ const Cart = () => {
           <div>
             <div className="flex justify-between items-start">
               <p>Total Price</p>
-              <p>{totalPrice}</p>
+              {/* <p>{totalPrice}</p> */}
             </div>
             <div className="flex justify-between items-start">
               <p>Discount</p>
@@ -74,7 +87,7 @@ const Cart = () => {
             <hr />
             <div className="flex justify-between items-start mt-5">
               <p>Order Total</p>
-              <p>${totalPrice}</p>
+              {/* <p>${totalPrice}</p> */}
             </div>
             <button className="brand-btn mt-5 w-full py-1">Checkout</button>
           </div>

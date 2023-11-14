@@ -54,11 +54,11 @@ const ProductsComponent = () => {
       price: price,
       product_image: product_image,
       email: user?.email
-    }
+    };
     axiosSecure.post('/create-cart', newProduct)
       .then(res => {
         if (res?.data?.success) {
-          toast(`${product_name} Added in cart!`)
+          toast(`Product Added in cart!`)
         }
       })
       .catch(err => {

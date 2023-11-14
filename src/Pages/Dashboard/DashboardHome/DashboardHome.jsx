@@ -8,6 +8,9 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect } from "react";
 import { useState } from "react";
 import moment from "moment/moment";
+import { FaUsers } from "react-icons/fa";
+import { MdProductionQuantityLimits, MdPermContactCalendar } from "react-icons/md";
+import { AiFillStar } from "react-icons/ai";
 
 const DashboardHome = () => {
   const { axiosSecure } = useAxiosSecure()
@@ -26,19 +29,23 @@ const DashboardHome = () => {
       <section className="relative md:grid md:grid-cols-4 gap-5 w-full">
 
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
+          <FaUsers className="text-5xl" />
           <h4 className="text-lg">Total Customers</h4>
           <p className="text-3xl  font-bold">{totalCount.users || 0}</p>
         </div>
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
+          <MdProductionQuantityLimits className="text-5xl" />
           <h4 className="text-lg">Total Orders</h4>
           <p className="text-3xl  font-bold">{totalCount.orders || 0}</p>
         </div>
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
+          <AiFillStar className="text-5xl" />
           <h4 className="text-lg">Total Reviews</h4>
           <p className="text-3xl  font-bold">{totalCount.reviews || 0}</p>
         </div>
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
-          <h4 className="text-lg">Total Contacts</h4>
+
+          <MdPermContactCalendar className="text-5xl" /><h4 className="text-lg">Total Contacts</h4>
           <p className="text-3xl  font-bold">{totalCount.contacts || 0}</p>
         </div>
       </section>
@@ -47,7 +54,7 @@ const DashboardHome = () => {
           <h3 className="text-xl font-bold">Recent Orders</h3>
           <div className="border rounded-md mt-3">
             <div className="overflow-x-auto">
-              <table className="table table-md">
+              <table className="table w-[778px] table-md">
                 <thead>
                   <tr>
                     <th></th>
@@ -96,7 +103,7 @@ const DashboardHome = () => {
           <h3 className="text-xl font-bold">Recent Reviews</h3>
           <div className="border rounded-md mt-3">
             <div className="overflow-x-auto">
-              <table className="table table-md text">
+              <table className="table table-md w-[778px]">
                 <thead>
                   <tr>
                     <th></th>

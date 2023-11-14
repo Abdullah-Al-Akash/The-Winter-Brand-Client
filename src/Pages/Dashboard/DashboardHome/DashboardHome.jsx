@@ -4,65 +4,147 @@ import { FiPhoneCall } from "react-icons/fi";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { CgMail } from "react-icons/cg";
 import ProfileLogo from "../../../assets/admin-profile.png";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useEffect } from "react";
+import { useState } from "react";
+import moment from "moment/moment";
 
 const DashboardHome = () => {
-  return (
-    <div>
-      <div className="md:w-[100%] md:h-[90vh] flex justify-center items-center">
-        <div className="w-[400px]  border">
-          <div className="relative">
-            <div className="profile-content">
-              <div className="bg-[#FF4500] pt-[50px] pb-[100px] px-10 text-white">
-                <div className="flex justify-between items-start">
-                  <div className="space-y-3">
-                    <h2>Ashiqur Rahman Biplop</h2>
-                    <p className="flex items-center space-x-2">
-                      <CgMail></CgMail> <span>admin@gmail.com</span>
-                    </p>
-                    <p className="flex items-center space-x-2">
-                      <FiPhoneCall></FiPhoneCall> <span>+88 0130 665 9731</span>
-                    </p>
-                    <p className="flex items-center space-x-2">
-                      <MdOutlineLocationOn></MdOutlineLocationOn>
-                      <span>Dhaka Bangladesh</span>
-                    </p>
-                  </div>
+  const { axiosSecure } = useAxiosSecure()
+  const [totalCount, setTotalCount] = useState({})
+  const [orderAndReviews, setOrderAndReviews] = useState({})
 
-                  <div className="dropdown dropdown-end">
-                    <label
-                      tabIndex={0}
-                      className="font-bold text-2xl cursor-pointer"
-                    >
-                      <BsThreeDotsVertical></BsThreeDotsVertical>
-                    </label>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content  z-[1] menu p-2 shadow bg-[#b6532f] rounded-box w-52"
-                    >
-                      <li>
-                        <a>Update Profile</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+  useEffect(() => {
+    axiosSecure.get("/get-total-data-count")
+      .then(res => setTotalCount(res?.data?.data || {}))
+    axiosSecure.get("/get-recent-orders-reviews")
+      .then(res => setOrderAndReviews(res?.data?.data || {}))
+  }, [])
+  return (
+
+    <main>
+      <section className="relative md:grid md:grid-cols-4 gap-5 w-full">
+
+        <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
+          <h4 className="text-lg">Total Customers</h4>
+          <p className="text-3xl  font-bold">{totalCount.users || 0}</p>
+        </div>
+        <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
+          <h4 className="text-lg">Total Orders</h4>
+          <p className="text-3xl  font-bold">{totalCount.orders || 0}</p>
+        </div>
+        <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
+          <h4 className="text-lg">Total Reviews</h4>
+          <p className="text-3xl  font-bold">{totalCount.reviews || 0}</p>
+        </div>
+        <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
+          <h4 className="text-lg">Total Contacts</h4>
+          <p className="text-3xl  font-bold">{totalCount.contacts || 0}</p>
+        </div>
+      </section>
+      <section className="md:grid md:grid-cols-2 mt-5 gap-5">
+        <div>
+          <h3 className="text-xl font-bold">Recent Orders</h3>
+          <div className="border rounded-md mt-3">
+            <div className="overflow-x-auto">
+              <table className="table table-md">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Order Status</th>
+                    <th>Transaction Id</th>
+                    <th>Price</th>
+                    <th>Email</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    orderAndReviews?.orders?.map((order, i) => {
+                      const { name, transaction_id, products_price, contact_email, order_status, createdAt } = order
+                      return (
+                        <tr key={i}>
+                          <th>{i + 1}</th>
+                          <td>{name}</td>
+                          <td>{order_status}</td>
+                          <td>{transaction_id}</td>
+                          <td>{products_price}</td>
+                          <td>{contact_email}</td>
+                          <td>{moment(createdAt).fromNow()}</td>
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Order Status</th>
+                    <th>Transaction Id</th>
+                    <th>Price</th>
+                    <th>Email</th>
+
+                  </tr>
+                </tfoot>
+              </table>
             </div>
-            <div className="border w-[100px] absolute -bottom-10 bg-[#FEF08A] left-[38%] rounded-full">
-              <img src={ProfileLogo} alt="" />
-            </div>
-          </div>
-          <div className="pt-12 pb-5 px-5">
-            <h2 className="text-center pb-5 text-2xl">About me</h2>
-            <p className="text-justify">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Laboriosam excepturi maiores in. Vitae doloremque molestias libero
-              voluptas quod sapiente quam, accusamus facilis ad quaerat
-              distinctio natus explicabo quibusdam perferendis voluptate.
-            </p>
           </div>
         </div>
-      </div>
-    </div>
+        <div>
+          <h3 className="text-xl font-bold">Recent Reviews</h3>
+          <div className="border rounded-md mt-3">
+            <div className="overflow-x-auto">
+              <table className="table table-md text">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Rating</th>
+                    <th>review</th>
+                    <th>email</th>
+                    <th>Date</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    orderAndReviews?.reviews?.map((singleReview, i) => {
+                      const { rating, name, review, email, createdAt } = singleReview
+                      return (
+                        <tr key={i}>
+                          <th>{i + 1}</th>
+                          <td>{name}</td>
+                          <td>{rating}</td>
+                          <td>{review}</td>
+                          <td>{email}</td>
+                          <td>{moment(createdAt).fromNow()}</td>
+
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Rating</th>
+                    <th>review</th>
+                    <th>email</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    </main>
+
+
   );
 };
 

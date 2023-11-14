@@ -11,7 +11,6 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const Register = () => {
 
   const { user } = useAuth()
-  console.log(13, user)
   const [toggleIcon, setToggleIcon] = useState(true);
   const [errorMassage, setErrorMassage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -37,6 +36,7 @@ const Register = () => {
     } else {
       signUp(email, password)
         .then((result) => {
+          console.log(email, password);
           const saveUser = result.user
           console.log(saveUser)
           axiosSecure.post("/user-registration", {

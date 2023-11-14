@@ -16,22 +16,12 @@ const AddProduct = () => {
   const handelAddProduct = (e) => {
     e.preventDefault();
     const from = e.target;
-    const selectedFile = from?.image?.files[0];
+    const selectedFile = watch("image") && watch("image")[0];
     const product_name = from?.product_name?.value;
     const price = from?.price?.value;
     const quantity = from?.quantity?.value;
     const discount = from?.discount?.value;
     const product_description = from?.product_description?.value;
-
-    if (!parseFloat(price) == true) {
-      return setError("price is not a number");
-    }
-    if (!parseFloat(quantity) == true) {
-      return setError("Quantity is not a number");
-    }
-    if (!parseFloat(discount) == true) {
-      return setError("Discount is not a number");
-    }
     if (!selectedFile) {
       console.log("You haven't selected an image.");
       return;
@@ -49,14 +39,16 @@ const AddProduct = () => {
       .then((imgResponse) => {
         if (imgResponse.success) {
           const imgURL = imgResponse.data.url;
+          console.log(imgURL);
           const updateImageFile = {
             product_name,
             product_description,
             price: price,
             product_image: imgURL,
             quantity,
+            discount,
           };
-          console.log(updateImageFile);
+          console.log(imgURL);
           axiosSecure
             .post("/create-product", updateImageFile)
             .then((res) => {
@@ -69,7 +61,7 @@ const AddProduct = () => {
                   timer: 1500,
                 });
                 from.reset();
-                setLoadImage(false);
+                setLoadImage(false);navigate("/dashboard/all-products")
                 setError("");
               } else {
                 Swal.fire({
@@ -125,12 +117,13 @@ const AddProduct = () => {
         </div>
         <div className="mt-5">
           <h1 className="my-5 md:text-1xl text-xl">Add Info</h1>
-          <div className="flex justify-between items-center gap-5">
+          <div className="md:flex justify-between items-center gap-5">
             <div className="flex flex-col w-full">
               <label htmlFor="product_name">Name</label>
               <input
                 id="product_name"
                 type="text"
+                required
                 autoComplete="off"
                 className="border outline-none px-2 py-3 mt-1 bg-gray-200"
                 placeholder="Enter Product Name"
@@ -143,6 +136,7 @@ const AddProduct = () => {
                 id="price"
                 min={0}
                 type="number"
+                required
                 autoComplete="off"
                 placeholder="Enter Product Price"
                 className="border outline-none px-2 py-3 mt-1 bg-gray-200"
@@ -150,12 +144,13 @@ const AddProduct = () => {
               />
             </div>
           </div>
-          <div className="flex justify-between items-center gap-5">
+          <div className="md:flex justify-between items-center gap-5">
             <div className="flex flex-col w-full">
               <label htmlFor="quantity">Quantity</label>
               <input
                 id="quantity"
                 type="number"
+                required
                 min={0}
                 autoComplete="off"
                 className="border outline-none px-2 py-3 mt-1 bg-gray-200"
@@ -169,6 +164,7 @@ const AddProduct = () => {
                 id="discount"
                 type="number"
                 min={0}
+                max={100}
                 autoComplete="off"
                 placeholder="Enter Product Discount"
                 className="border outline-none px-2 py-3 mt-1 bg-gray-200"
@@ -183,6 +179,7 @@ const AddProduct = () => {
               id="product_description"
               autoComplete="off"
               cols="30"
+              required
               className="border outline-none px-2 py-3 mt-1 bg-gray-200"
               rows="10"
               placeholder="Enter Product Details"

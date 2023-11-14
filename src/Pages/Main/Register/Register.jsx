@@ -44,6 +44,7 @@ const Register = () => {
               email: saveUser.email,
             })
             .then((data) => {
+              // console.log(object);
               if (data?.data?.success) {
                 toast("Register successful!");
                 form.reset();
@@ -51,6 +52,9 @@ const Register = () => {
                 setErrorMassage("");
                 setSuccessMessage("");
               }
+            })
+            .catch((err) => {
+              console.log(err?.message);
             });
         })
         .catch((err) => {

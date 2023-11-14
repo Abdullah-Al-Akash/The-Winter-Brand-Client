@@ -10,6 +10,7 @@ const AllFeature = () => {
   const [control, setControl] = useState(false);
   const [selectedImage, setSelectedImage] = useState([]);
   const { axiosSecure } = useAxiosSecure();
+  const [deletedObj, setDeletedObj] = useState([]);
   const [images, setImages] = useState([]);
   useEffect(() => {
     // Fetch images from the server when the component mounts
@@ -19,6 +20,8 @@ const AllFeature = () => {
         const checkedImages = res?.data?.data.filter(
           (data) => data?.isChecked === true
         );
+        const images_id = checkedImages.map((checked) => checked?._id);
+        setDeletedObj(images_id);
         setSelectedImage(checkedImages || []);
         setImages(res?.data?.data);
         setLoading(false);
@@ -36,9 +39,9 @@ const AllFeature = () => {
     };
 
     axiosSecure
-      .put(`/update-featured/${id}`, uploadedObj)
+      .put(`/update-featured-image`, uploadedObj)
       .then((res) => {
-        if (res.data?.matchedCount) {
+        if (res.data?.success) {
           setControl(!control);
         }
       })
@@ -48,18 +51,21 @@ const AllFeature = () => {
   };
   const handleDeleteFiles = () => {
     // Handle file deletion
+    console.log({ images_id: deletedObj });
+
     axiosSecure
-      .delete("/delete-multiple-images", selectedImage)
+      .put("/delete-multiple-images", { images_id: deletedObj })
       .then((res) => {
-        if (res.data?.result?.deletedCount) {
+        if (res.data?.success) {
           Swal.fire({
-            position: "top-center",
+            position: "center",
             icon: "success",
-            title: `${res.data?.massage}`,
+            title: `Image deleted successfully`,
             showConfirmButton: false,
             timer: 1500,
           });
           setControl(!control);
+          setDeletedObj([]);
           setSelectedImage([]);
         }
       })
@@ -105,16 +111,18 @@ const AllFeature = () => {
                   key={image._id}
                   className={` itemsCustomStyle border w-full relative rounded-[20px] overflow-hidden 
                   flex justify-center items-center group cursor-grab
-                  ${images[0]?._id === image?._id &&
+                  ${
+                    images[0]?._id === image?._id &&
                     "md:col-span-2 md:row-span-2"
-                    }
+                  }
                   
                 `}
                 >
                   <img
                     style={{
-                      height: `${images[0]?._id == image?._id ? "100%" : "200px"
-                        }`,
+                      height: `${
+                        images[0]?._id == image?._id ? "100%" : "200px"
+                      }`,
                       objectFit: "contain",
                       width: "auto",
                       borderRadius: "20px",
@@ -124,10 +132,11 @@ const AllFeature = () => {
                     alt=""
                   />
                   <div
-                    className={`${image?.isChecked == true
+                    className={`${
+                      image?.isChecked == true
                         ? "bg-opacity-20 transition-all duration-500"
                         : "hidden bg-opacity-40"
-                      } group-hover:block items-center justify-center absolute inset-0 bg-black  transition-all  ease-out p-5`}
+                    } group-hover:block items-center justify-center absolute inset-0 bg-black  transition-all  ease-out p-5`}
                   >
                     <input
                       onChange={(e) => handleSelectedImage(e, image?._id)}

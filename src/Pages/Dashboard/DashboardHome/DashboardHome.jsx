@@ -13,21 +13,21 @@ import { MdProductionQuantityLimits, MdPermContactCalendar } from "react-icons/m
 import { AiFillStar } from "react-icons/ai";
 
 const DashboardHome = () => {
-  const { axiosSecure } = useAxiosSecure()
-  const [totalCount, setTotalCount] = useState({})
-  const [orderAndReviews, setOrderAndReviews] = useState({})
+  const { axiosSecure } = useAxiosSecure();
+  const [totalCount, setTotalCount] = useState({});
+  const [orderAndReviews, setOrderAndReviews] = useState({});
 
   useEffect(() => {
-    axiosSecure.get("/get-total-data-count")
-      .then(res => setTotalCount(res?.data?.data || {}))
-    axiosSecure.get("/get-recent-orders-reviews")
-      .then(res => setOrderAndReviews(res?.data?.data || {}))
-  }, [])
+    axiosSecure
+      .get("/get-total-data-count")
+      .then((res) => setTotalCount(res?.data?.data || {}));
+    axiosSecure
+      .get("/get-recent-orders-reviews")
+      .then((res) => setOrderAndReviews(res?.data?.data || {}));
+  }, []);
   return (
-
     <main>
       <section className="relative md:grid md:grid-cols-4 gap-5 w-full">
-
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
           <FaUsers className="text-5xl" />
           <h4 className="text-lg">Total Customers</h4>
@@ -63,26 +63,30 @@ const DashboardHome = () => {
                     <th>Transaction Id</th>
                     <th>Price</th>
                     <th>Email</th>
-
                   </tr>
                 </thead>
                 <tbody>
-                  {
-                    orderAndReviews?.orders?.map((order, i) => {
-                      const { name, transaction_id, products_price, contact_email, order_status, createdAt } = order
-                      return (
-                        <tr key={i}>
-                          <th>{i + 1}</th>
-                          <td>{name}</td>
-                          <td>{order_status}</td>
-                          <td>{transaction_id}</td>
-                          <td>{products_price}</td>
-                          <td>{contact_email}</td>
-                          <td>{moment(createdAt).fromNow()}</td>
-                        </tr>
-                      )
-                    })
-                  }
+                  {orderAndReviews?.orders?.map((order, i) => {
+                    const {
+                      name,
+                      transaction_id,
+                      products_price,
+                      contact_email,
+                      order_status,
+                      createdAt,
+                    } = order;
+                    return (
+                      <tr key={i}>
+                        <th>{i + 1}</th>
+                        <td>{name}</td>
+                        <td>{order_status}</td>
+                        <td>{transaction_id}</td>
+                        <td>{products_price}</td>
+                        <td>{contact_email}</td>
+                        <td>{moment(createdAt).fromNow()}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
                 <tfoot>
                   <tr>
@@ -92,7 +96,6 @@ const DashboardHome = () => {
                     <th>Transaction Id</th>
                     <th>Price</th>
                     <th>Email</th>
-
                   </tr>
                 </tfoot>
               </table>
@@ -112,46 +115,30 @@ const DashboardHome = () => {
                     <th>review</th>
                     <th>email</th>
                     <th>Date</th>
-
                   </tr>
                 </thead>
                 <tbody>
-                  {
-                    orderAndReviews?.reviews?.map((singleReview, i) => {
-                      const { rating, name, review, email, createdAt } = singleReview
-                      return (
-                        <tr key={i}>
-                          <th>{i + 1}</th>
-                          <td>{name}</td>
-                          <td>{rating}</td>
-                          <td>{review}</td>
-                          <td>{email}</td>
-                          <td>{moment(createdAt).fromNow()}</td>
-
-                        </tr>
-                      )
-                    })
-                  }
+                  {orderAndReviews?.reviews?.map((singleReview, i) => {
+                    const { rating, name, review, email, createdAt } =
+                      singleReview;
+                    return (
+                      <tr key={i}>
+                        <th>{i + 1}</th>
+                        <td>{name}</td>
+                        <td>{rating}</td>
+                        <td>{review}</td>
+                        <td>{email}</td>
+                        <td>{moment(createdAt).fromNow()}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Rating</th>
-                    <th>review</th>
-                    <th>email</th>
-                  </tr>
-                </tfoot>
               </table>
             </div>
           </div>
         </div>
       </section>
-
-
     </main>
-
-
   );
 };
 

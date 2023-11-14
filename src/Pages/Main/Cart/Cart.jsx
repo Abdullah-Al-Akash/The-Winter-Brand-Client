@@ -13,6 +13,7 @@ const Cart = () => {
   useEffect(() => {
     axiosSecure.get(`/get-cart/${user?.email}`)
       .then(res => {
+        console.log(res?.data?.data);
         setCartProduct(res?.data?.data);
       })
   }, [control])
@@ -24,6 +25,7 @@ const Cart = () => {
   );
 
   const handleQuantity = (id, type) => {
+    console.log('object');
     const updateQuantity = {
       id: id,
       type: type
@@ -61,7 +63,7 @@ const Cart = () => {
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <button onclick={() => handleQuantity(item._id, 'dec')} className="btn hover:bg-black btn-sm text-xl bg-black text-white" disabled={item?.quantity === 1}>-</button>
+                      <button onClick={() => handleQuantity(item._id, 'dec')} className="btn hover:bg-black btn-sm text-xl bg-black text-white" disabled={item.quantity === 1}>-</button>
                       <p>{item?.quantity}</p>
                       <button onClick={() => handleQuantity(item._id, 'inc')} className="btn hover:bg-black btn-sm text-xl bg-black text-white">+</button>
                     </div>

@@ -30,8 +30,13 @@ const ItemSlider = () => {
   const defaultImage = [1, 2, 3, 4, 5, 6];
   return (
     <div className="pt-12">
+      {images.length < 5 && (
+        <p className="text-center text-red-600 text-3xl">
+          Add atlist 5 featured product
+        </p>
+      )}
       <Slider {...settings} className="border-none">
-        {images.length > 0
+        {images.length >= 5
           ? images?.map((image, i) => {
               return (
                 <img

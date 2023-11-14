@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 export const AuthContext = createContext(null);
 import {
   GithubAuthProvider,
@@ -14,16 +14,18 @@ import {
 import axios from "axios";
 import { app } from "../firebase/firebase.config";
 import { baseURL } from "../hooks/useAxiosSecure";
-export const cookies = new Cookies()
+export const cookies = new Cookies();
 export const cookiesOptions = {
-  secure: false
-}
-// TODO make it true 
+  secure: false,
+};
+// TODO make it true
 
 const githubProvider = new GithubAuthProvider();
 const AuthProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [nevActive, setNevActive] = useState("home");
+  const [controlCart, setControlCart] = useState(false);
+
   const [NavIsOpen, setNavIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -62,15 +64,15 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser?.email) {
-        axios.post(baseURL + "/login-user", {
-          email: currentUser.email
-        })
-          .then(res => {
-            if (res?.data?.accessToken) {
-              cookies.set("accessToken", res.data.accessToken, cookiesOptions)
-            }
-
+        axios
+          .post(baseURL + "/login-user", {
+            email: currentUser.email,
           })
+          .then((res) => {
+            if (res?.data?.accessToken) {
+              cookies.set("accessToken", res.data.accessToken, cookiesOptions);
+            }
+          });
       }
 
       setLoading(false);
@@ -87,7 +89,6 @@ const AuthProvider = ({ children }) => {
       photoURL: PhotoUrl,
     });
   };
-
 
   const authInfo = {
     user,
@@ -110,7 +111,9 @@ const AuthProvider = ({ children }) => {
     setNavIsOpen,
     nevActive,
     setNevActive,
-    handleTop
+    handleTop,
+    controlCart,
+    setControlCart,
   };
 
   return (
@@ -119,8 +122,7 @@ const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => {
-  return useContext(AuthContext)
-}
-
+  return useContext(AuthContext);
+};
 
 export default AuthProvider;

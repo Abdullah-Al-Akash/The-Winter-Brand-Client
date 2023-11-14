@@ -1,7 +1,6 @@
 import React from "react";
 import Navlogo from "../../assets/Navlogo.png";
-import { Link, useLocation } from "react-router-dom";
-import { FcBusinessman } from "react-icons/fc";
+import { Link } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import DrawerComponent from "../Drawer/DrawerComponent";
@@ -12,6 +11,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import defaultProfile from "../../assets/profile.png";
 import { FaRegUserCircle, FaSignOutAlt } from "react-icons/fa";
 import useUserRole from "../../hooks/useUserRole";
+import UseGetCart from "../../hooks/UseGetCart";
 
 const Navbar = () => {
   const {
@@ -26,7 +26,7 @@ const Navbar = () => {
   } = useContext(AuthContext);
   const { axiosSecure } = useAxiosSecure();
   const { role } = useUserRole();
-  console.log(role);
+  const { cartProduct } = UseGetCart();
   console.log(user);
   const handleLogOut = () => {
     logout()
@@ -34,7 +34,7 @@ const Navbar = () => {
         axiosSecure
           .get(`/logout?email=${user.email}`)
           .then((response) => {
-            console.log(response);
+            // console.log(response);
           })
           .catch((error) => {
             console.log("Error from 33", error);
@@ -218,7 +218,7 @@ const Navbar = () => {
                 )}
               </div>
               {user && (
-                <li className="list-none md:flex justify-center items-center gap-5 hidden">
+                <li className="list-none md:flex justify-center items-center gap-5 hidden relative">
                   <Link
                     className="text-sm flex items-center"
                     to={"/cart"}
@@ -228,6 +228,11 @@ const Navbar = () => {
                       <FiShoppingCart></FiShoppingCart>
                     </span>
                   </Link>
+                  {cartProduct.length > 0 && (
+                    <p className="text-black font-bold absolute -top-3 -right-2">
+                      {cartProduct.length}
+                    </p>
+                  )}
                 </li>
               )}
               <button

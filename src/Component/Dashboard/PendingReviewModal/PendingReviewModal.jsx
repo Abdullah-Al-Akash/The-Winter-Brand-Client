@@ -5,7 +5,7 @@ const PendingReviewModal = ({ item }) => {
     <div>
       <dialog id="my_modal_4" className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
-          <h3 className="font-bold text-lg">{item?.Name} Review you</h3>
+          <h3 className="font-bold text-lg">{item?.name} Review you</h3>
           <p className="py-4">{item?.review}</p>
           <div className="modal-action">
             <form method="dialog">

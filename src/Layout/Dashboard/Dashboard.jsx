@@ -65,11 +65,11 @@ const Dashboard = () => {
       src: <FaQuoteRight className="text-base" />,
       link: "/dashboard/view-faq",
     },
-    {
-      title: "Pending Reviews ",
-      src: <MdReviews className="text-base" />,
-      link: "/dashboard/pending-review",
-    },
+    // {
+    //   title: "Pending Reviews ",
+    //   src: <MdReviews className="text-base" />,
+    //   link: "/dashboard/pending-review",
+    // },
     {
       title: "All Reviews ",
       src: <MdReviews className="text-base" />,

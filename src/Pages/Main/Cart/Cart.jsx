@@ -3,29 +3,25 @@ import { useAuth } from "../../../AuthProvider/AuthProvider";
 import { useEffect } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
+import { IoMdClose } from "react-icons/io";
+import UseGetCart from "../../../hooks/UseGetCart";
 
 const Cart = () => {
   const { user } = useAuth();
   const { axiosSecure } = useAxiosSecure();
 
-  const [cartProduct, setCartProduct] = useState([]);
-  const [control, setControl] = useState(false);
-  const [productQuantity, setProductQuantity] = useState({});
-  useEffect(() => {
-    axiosSecure.get(`/get-cart/${user?.email}`).then((res) => {
-      console.log(res?.data?.data);
-      setCartProduct(res?.data?.data);
-    });
-  }, [control]);
-
+  const { cartProduct } = UseGetCart();
+  const { controlCart, setControlCart } = useAuth();
+  const [availableQuantity, setAvailableQuantity] = useState({});
   const totalPrice = cartProduct.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-
+console.log(cartProduct);
   const handleQuantity = (id, type) => {
-    const product = cartProduct.find((p) => p?._id == id);
-    setProductQuantity(product);
+    console.log("object");
+    const product = cartProduct?.find((p) => p?._id == id);
+    setAvailableQuantity(product);
     const updateQuantity = {
       id: id,
       type: type,
@@ -34,12 +30,21 @@ const Cart = () => {
       .put("/update-cart-product-quantity", updateQuantity)
       .then((res) => {
         if (res?.data?.success) {
-          setControl(!control);
+          setControlCart(!controlCart);
         }
       })
       .catch((err) => {
         console.log(err.message);
       });
+  };
+
+  // Handle Delete:
+  const handleCartDelete = (id) => {
+    axiosSecure.delete(`/delete-cart/${id}`).then((res) => {
+      if (res.data.success) {
+        setControlCart(!controlCart);
+      }
+    });
   };
 
   return (
@@ -53,7 +58,7 @@ const Cart = () => {
           </div>
           {cartProduct.map((item, i) => {
             return (
-              <div key={i} className="p-2 border mt-4">
+              <div key={i} className="p-2 border mt-4 relative">
                 <div className="flex justify-between items-center">
                   <div className="flex justify-start items-start gap-2">
                     <img
@@ -83,12 +88,23 @@ const Cart = () => {
                       <button
                         onClick={() => handleQuantity(item._id, "inc")}
                         className="btn hover:bg-black btn-sm text-xl bg-black text-white"
-                        disabled={item.quantity >= productQuantity?.quantity}
+                        disabled={
+                          item?.quantity === 1 ||
+                          item?.quantity > availableQuantity?.quantity
+                        }
                       >
                         +
                       </button>
                     </div>
                   </div>
+                </div>
+                <div className="absolute -top-2 -right-2">
+                  <button
+                    onClick={() => handleCartDelete(item?._id)}
+                    className="p-2 bg-red-500 text-white rounded-full"
+                  >
+                    <IoMdClose />
+                  </button>
                 </div>
               </div>
             );
@@ -114,7 +130,14 @@ const Cart = () => {
               <p>Order Total</p>
               <p>${totalPrice}</p>
             </div>
-            <button className="brand-btn mt-5 w-full py-1">Checkout</button>
+            <button
+              className={`${
+                totalPrice === 0 ? "cursor-not-allowed" : ""
+              } brand-btn mt-5 w-full py-1`}
+              disabled={totalPrice === 0}
+            >
+              Checkout
+            </button>
           </div>
         </div>
       </div>

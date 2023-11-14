@@ -1,5 +1,6 @@
 import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const ContactComponents = () => {
   const { axiosSecure } = useAxiosSecure();
@@ -19,7 +20,14 @@ const ContactComponents = () => {
     axiosSecure
       .post("/create-contact", postedContactObject)
       .then((res) => {
-        console.log(res);
+        if (res?.data?.success) {
+          Swal.fire({
+            title: "Update!",
+            text: "Send Massage by admin successfully.",
+            icon: "success",
+          });
+          from.reset();
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -92,7 +100,7 @@ const ContactComponents = () => {
           </div>
 
           <input
-            className="brand-btn text-white transition-all ease-in-out duration-500 md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px]"
+            className="brand-btn text-white transition-all ease-in-out duration-500 md:px-14 md:text-xl cursor-pointer px-10 font-semibold py-3 rounded-[50px]"
             type="submit"
             value=" Send Message"
           />

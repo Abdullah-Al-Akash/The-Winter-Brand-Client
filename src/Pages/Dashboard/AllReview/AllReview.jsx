@@ -1,39 +1,54 @@
 import React, { useState } from "react";
 import { FaSearch, FaTrashAlt } from "react-icons/fa";
 import PendingReviewModal from "../../../Component/Dashboard/PendingReviewModal/PendingReviewModal";
+import { useEffect } from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AllReview = () => {
   const [item, setItem] = useState({});
-  const items = [
-    {
-      _id: 1,
-      rating: 5,
-      Name: "good review",
-      review: "this is a best product",
-      email: "test@gmail.com",
-    },
-    {
-      _id: 2,
-      rating: 5,
-      Name: "good review",
-      review: "this is a best product",
-      email: "test@gmail.com",
-    },
-    {
-      _id: 3,
-      rating: 5,
-      Name: "good review",
-      review: "this is a best product",
-      email: "test@gmail.com",
-    },
-    {
-      _id: 4,
-      rating: 5,
-      Name: "good review",
-      review: "this is a best product",
-      email: "test@gmail.com",
-    },
-  ];
+  const { axiosSecure } = useAxiosSecure();
+  const [items, setItems] = useState([]);
+  // const items = [
+  //   {
+  //     _id: 1,
+  //     rating: 5,
+  //     Name: "good review",
+  //     review: "this is a best product",
+  //     email: "test@gmail.com",
+  //   },
+  //   {
+  //     _id: 2,
+  //     rating: 5,
+  //     Name: "good review",
+  //     review: "this is a best product",
+  //     email: "test@gmail.com",
+  //   },
+  //   {
+  //     _id: 3,
+  //     rating: 5,
+  //     Name: "good review",
+  //     review: "this is a best product",
+  //     email: "test@gmail.com",
+  //   },
+  //   {
+  //     _id: 4,
+  //     rating: 5,
+  //     Name: "good review",
+  //     review: "this is a best product",
+  //     email: "test@gmail.com",
+  //   },
+  // ];
+  useEffect(() => {
+    axiosSecure
+      .get("/get-all-reviews")
+      .then((res) => {
+        console.log(res?.data?.data);
+        setItems(res?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err?.message);
+      });
+  }, []);
   const handleViewModal = (id) => {
     const singleUserContact = items.find((item) => item?._id == id);
     setItem(singleUserContact);
@@ -67,7 +82,7 @@ const AllReview = () => {
               <th>Email</th>
               <th>Rating</th>
               <th>Review</th>
-              <th>Action</th>
+              {/* <th>Action</th> */}
             </tr>
           </thead>
           <tbody>
@@ -75,7 +90,7 @@ const AllReview = () => {
               return (
                 <tr key={i}>
                   <th>{i + 1}</th>
-                  <td>{item?.Name}</td>
+                  <td>{item?.name}</td>
                   <td>{item?.email}</td>
                   <td>{item?.rating}</td>
                   <td>
@@ -89,11 +104,11 @@ const AllReview = () => {
                       view
                     </button>
                   </td>
-                  <td>
+                  {/* <td>
                     <div className="ms-3">
                       <FaTrashAlt></FaTrashAlt>
                     </div>
-                  </td>
+                  </td> */}
                 </tr>
               );
             })}

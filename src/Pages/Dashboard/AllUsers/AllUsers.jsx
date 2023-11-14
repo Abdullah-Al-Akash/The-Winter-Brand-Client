@@ -17,23 +17,6 @@ const AllUsers = () => {
   const [control, setControl] = useState(true);
 
   const [isLoading, setIsLoading] = useState(true);
-  //   useEffect(() => {
-  //     axiosSecure
-  //       .get("/all-user")
-  //       .then((data) => {
-  //         setUsers(data.data);
-  //         setIsLoading(false);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         setIsLoading(false);
-  //       });
-  //   }, [userCategory, control]);
-
-  const options = [
-    { value: "user", label: "User" },
-    { value: "admin", label: "Admin" },
-  ];
 
   // TODO change user role
   useEffect(() => {
@@ -44,69 +27,51 @@ const AllUsers = () => {
     });
   }, []);
 
-  //   update order status func
-  //   const updateOrderStatus = (role, userId) => {
-  //     Swal.fire({
-  //       title: "Are you sure?",
-  //       text: "You are changed User Role",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Yes, update it!",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         const data = {
-  //           role,
-  //           userId,
-  //         };
-  //         axiosSecure.patch("/admin/update-user-role", data).then((res) => {
-  //           if (res.data.modifiedCount > 0) {
-  //             Swal.fire({
-  //               position: "center",
-  //               icon: "success",
-  //               title: "User Role has Changed",
-  //               showConfirmButton: false,
-  //               timer: 1500,
-  //             });
-  //             setControl(!control);
-  //           }
-  //         });
-  //       }
-  //     });
-  //   };
+  // update order status func
+  const updateUserRole = (role, userId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You are changed User Role",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const data = {
+          id: userId,
+          role: role,
+        };
+        console.log(data);
+        axiosSecure
+          .put("/update-user-role", { data })
+          .then((res) => {
+            console.log(res);
+            if (res?.data?.success) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "user Update role successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err?.message);
+          });
+      }
+    });
+  };
 
-  //   search func
-  // const search = (data) => {
-  //   axiosSecure(`/admin/search-products?query=${data.search_text}`).then(
-  //     (res) => {
-  //       console.log(res);
-  //       setUsers(res.data);
-  //     }
-  //   );
-  // };
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
-  //   useEffect(() => {
-  //     axiosSecure
-  //       .get(`/admin/search-user/${search}`)
-  //       .then((res) => {
-  //         setUsers(res.data);
-  //         setIsLoading(false);
-  //       })
-  //       .catch((error) => console.log(error));
-  //   }, [search]);
-
-  //   if (isLoading) {
-  //     return (
-  //       <div className="h-screen border flex justify-between items-center">
-  //         <>Loading...</>
-  //       </div>
-  //     );
-  //   }
-
-  console.log(users);
+  const options = [
+    { value: "user", label: "User" },
+    { value: "admin", label: "Admin" },
+  ];
   if (isLoading) {
     return <Loading></Loading>;
   }
@@ -184,6 +149,7 @@ const AllUsers = () => {
                           )
                           .map((user, i) => {
                             const { _id, name, role, email } = user || {};
+                            console.log(_id);
                             return (
                               <tr key={_id}>
                                 <th>{i + 1}</th>
@@ -204,7 +170,7 @@ const AllUsers = () => {
                                   <select
                                     defaultValue={role}
                                     onChange={(e) =>
-                                      updateOrderStatus(e.target.value, _id)
+                                      updateUserRole(e.target.value, _id)
                                     }
                                     className="px-4 py-2 border bg-none"
                                     name=""

@@ -36,17 +36,17 @@ const EmailMarketing = () => {
           <thead className="text-center">
             <tr>
               <th>#</th>
-              <th>Number</th>
               <th>Name</th>
+              <th>Number</th>
             </tr>
           </thead>
           <tbody>
             {items?.map((item, i) => {
               return (
-                <tr className="text-center">
+                <tr key={i} className="text-center">
                   <th>{i + 1}</th>
+                  <td>{item?.name}</td>
                   <td>{item?.promotions?.email}</td>
-                  <td>{item?.Name}</td>
                 </tr>
               );
             })}

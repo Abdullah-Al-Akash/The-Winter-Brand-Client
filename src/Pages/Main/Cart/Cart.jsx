@@ -23,36 +23,22 @@ const Cart = () => {
     0
   );
 
-  const handleInc = (id) => {
+  const handleQuantity = (id, type) => {
     const updateQuantity = {
       id: id,
-      type: "inc"
+      type: type
     };
     axiosSecure.put('/update-cart-product-quantity', updateQuantity)
       .then(res => {
         if (res?.data?.success) {
-          setControl(true)
+          setControl(!control)
         }
       })
       .catch(err => {
         console.log(err.message);
       })
   }
-  const handleDec = (id) => {
-    const updateQuantity = {
-      id: id,
-      type: "dec"
-    };
-    axiosSecure.put('/update-cart-product-quantity', updateQuantity)
-      .then(res => {
-        if (res?.data?.success) {
-          setControl(true)
-        }
-      })
-      .catch(err => {
-        console.log(err.message);
-      })
-  }
+
   return (
     <div className="max-w-[1200px] mx-auto">
       <h2 className="my-10 md:text-5xl text-xl ms-2">My Cart Page</h2>
@@ -75,9 +61,9 @@ const Cart = () => {
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <button onclick={() => handleDec(item._id)} className="btn hover:bg-black btn-sm text-xl bg-black text-white" disabled={item?.quantity === 1}>-</button>
+                      <button onclick={() => handleQuantity(item._id, 'dec')} className="btn hover:bg-black btn-sm text-xl bg-black text-white" disabled={item?.quantity === 1}>-</button>
                       <p>{item?.quantity}</p>
-                      <button onClick={() => handleInc(item._id)} className="btn hover:bg-black btn-sm text-xl bg-black text-white">+</button>
+                      <button onClick={() => handleQuantity(item._id, 'inc')} className="btn hover:bg-black btn-sm text-xl bg-black text-white">+</button>
                     </div>
                   </div>
                 </div>

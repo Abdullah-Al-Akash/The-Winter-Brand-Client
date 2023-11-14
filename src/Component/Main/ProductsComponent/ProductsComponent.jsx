@@ -11,7 +11,6 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
-import Messenger from "../Messenger/Messenger";
 
 const ProductsComponent = () => {
   const [products, setProducts] = useState([]);

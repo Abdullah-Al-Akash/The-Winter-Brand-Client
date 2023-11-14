@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdOutlineLocationOn } from "react-icons/md";
@@ -15,7 +15,32 @@ const UserProfile = () => {
   const imgHostingUrl = `https://api.imgbb.com/1/upload?key=${img_hosting_Token}`;
   const [loadImage, setLoadImage] = useState(false);
   const { axiosSecure } = useAxiosSecure();
-  
+  const [userProfile, setUserProfile] = useState({});
+  const {
+    _id,
+    name,
+    email,
+    role,
+    createdAt,
+    updatedAt,
+    about,
+    avatar,
+    location,
+    phone_number,
+  } = userProfile || {};
+  const [control, setControl] = useState(false);
+  useEffect(() => {
+    axiosSecure
+      .get(`/get-user-profile/${user?.email}`)
+      .then((res) => {
+        setUserProfile(res?.data?.data);
+        console.log(res?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err?.message);
+      });
+  }, [control]);
+
   const handleUpdateUser = (e) => {
     e.preventDefault();
     const name = e.target.displayName.value;
@@ -60,6 +85,7 @@ const UserProfile = () => {
               if (res?.data?.success) {
                 toast("Update-successfully");
                 setLoadImage(false);
+                setControl(!control);
               }
             })
             .catch((err) => {
@@ -83,17 +109,25 @@ const UserProfile = () => {
             <div className="bg-black pt-[50px] pb-[100px] px-10 text-white">
               <div className="flex justify-between items-start">
                 <div className="space-y-3">
-                  <h2>{user?.displayName}</h2>
+                  <h2 className="capitalize">{name}</h2>
                   <p className="flex items-center space-x-2">
-                    <CgMail></CgMail> <span>{user?.email}</span>
+                    <CgMail></CgMail> <span>{email}</span>
                   </p>
-                  <p className="flex items-center space-x-2">
-                    <FiPhoneCall></FiPhoneCall> <span>+88 0130 665 9731</span>
-                  </p>
-                  <p className="flex items-center space-x-2">
-                    <MdOutlineLocationOn></MdOutlineLocationOn>
-                    <span>Dhaka Bangladesh</span>
-                  </p>
+                  {phone_number ? (
+                    <p className="flex items-center space-x-2">
+                      <FiPhoneCall></FiPhoneCall> <span>{phone_number}</span>
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                  {location ? (
+                    <p className="flex items-center space-x-2">
+                      <MdOutlineLocationOn></MdOutlineLocationOn>
+                      <span>{location}</span>
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="dropdown dropdown-end">
@@ -124,19 +158,19 @@ const UserProfile = () => {
           </div>
           <div className="border w-[100px] absolute -bottom-10 bg-[#FEF08A] left-[38%] rounded-full">
             <img
-              src={`${user?.photoURL ? user?.photoURL : defaultProfile}`}
+              className="rounded-full"
+              src={`${avatar ? avatar : defaultProfile}`}
               alt=""
             />
           </div>
         </div>
         <div className="pt-12 pb-5 px-5">
           <h2 className="text-center pb-5 text-2xl">About me</h2>
-          <p className="text-justify">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam
-            excepturi maiores in. Vitae doloremque molestias libero voluptas
-            quod sapiente quam, accusamus facilis ad quaerat distinctio natus
-            explicabo quibusdam perferendis voluptate.
-          </p>
+          {about ? (
+            <p className="text-justify">{about}</p>
+          ) : (
+            <p className="text-justify">No about info available</p>
+          )}
         </div>
       </div>
 
@@ -166,7 +200,7 @@ const UserProfile = () => {
                   id="email"
                   type="email"
                   placeholder="example@gmail.com"
-                  defaultValue={user?.email}
+                  defaultValue={email}
                   disabled
                   name="email"
                 />
@@ -181,6 +215,7 @@ const UserProfile = () => {
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="name"
+                  defaultValue={name}
                   type="text"
                   placeholder="Your Name"
                   name="displayName"
@@ -195,6 +230,7 @@ const UserProfile = () => {
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  defaultValue={phone_number}
                   id="name"
                   type="text"
                   placeholder="Your Phone Number"
@@ -210,6 +246,7 @@ const UserProfile = () => {
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  defaultValue={location}
                   id="location"
                   type="text"
                   placeholder="Your Location"
@@ -240,6 +277,7 @@ const UserProfile = () => {
                 </label>
                 <textarea
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  defaultValue={about}
                   id="about"
                   placeholder="Tell us about yourself..."
                   rows="4"

@@ -2,9 +2,6 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 export const CheckoutContext = createContext(null);
 
-import axios from "axios";
-
-
 
 const CheckoutProvider = ({ children }) => {
     const [checkoutData, setCheckoutData] = useState({})

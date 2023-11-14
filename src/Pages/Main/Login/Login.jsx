@@ -87,7 +87,7 @@ const Login = () => {
             </div>
           </div>
           <input
-            className="border w-full mx-auto my-5 bg-black text-white py-2"
+            className="brand-btn transition-all ease-in-out cursor-pointer w-full mx-auto my-5  py-2"
             type="submit"
             value="Login"
           />

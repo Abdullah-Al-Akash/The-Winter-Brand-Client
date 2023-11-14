@@ -11,6 +11,7 @@ import NavDrawer from "../NavDrawer/NavDrawer";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import defaultProfile from "../../assets/profile.png";
 import { FaRegUserCircle, FaSignOutAlt } from "react-icons/fa";
+import useUserRole from "../../hooks/useUserRole";
 
 const Navbar = () => {
   const {
@@ -24,6 +25,8 @@ const Navbar = () => {
     logout,
   } = useContext(AuthContext);
   const { axiosSecure } = useAxiosSecure();
+  const { role } = useUserRole();
+  console.log(role);
   console.log(user);
   const handleLogOut = () => {
     logout()
@@ -103,6 +106,29 @@ const Navbar = () => {
                           <span className="ms-2 text-sm">My Profile</span>
                         </Link>
                       </li>
+                      {role == "admin" ? (
+                        <li>
+                          <Link
+                            className="text-sm flex items-center hover:bg-gray-100"
+                            to={"/dashboard"}
+                            onClick={handleTop}
+                          >
+                            <FaRegUserCircle></FaRegUserCircle>{" "}
+                            <span className="ms-2 text-sm">Dashboard</span>
+                          </Link>
+                        </li>
+                      ) : (
+                        <li>
+                          <Link
+                            className="text-sm flex items-center hover:bg-gray-100"
+                            to={"/my-order"}
+                            onClick={handleTop}
+                          >
+                            <FaRegUserCircle></FaRegUserCircle>{" "}
+                            <span className="ms-2 text-sm">My Order</span>
+                          </Link>
+                        </li>
+                      )}
                       <li>
                         <Link
                           className="text-sm flex items-center hover:bg-gray-100"
@@ -156,6 +182,29 @@ const Navbar = () => {
                           <span className="ms-2 text-sm">My Profile</span>
                         </Link>
                       </li>
+                      {role == "admin" ? (
+                        <li>
+                          <Link
+                            className="text-sm flex items-center hover:bg-gray-100"
+                            to={"/dashboard"}
+                            onClick={handleTop}
+                          >
+                            <FaRegUserCircle></FaRegUserCircle>{" "}
+                            <span className="ms-2 text-sm">Dashboard</span>
+                          </Link>
+                        </li>
+                      ) : (
+                        <li>
+                          <Link
+                            className="text-sm flex items-center hover:bg-gray-100"
+                            to={"/my-order"}
+                            onClick={handleTop}
+                          >
+                            <FaRegUserCircle></FaRegUserCircle>{" "}
+                            <span className="ms-2 text-sm">My Order</span>
+                          </Link>
+                        </li>
+                      )}
                       <li>
                         <h3 onClick={handleLogOut}>
                           <FaSignOutAlt></FaSignOutAlt>{" "}

@@ -10,6 +10,7 @@ const Cart = () => {
 
   const [cartProduct, setCartProduct] = useState([]);
   const [control, setControl] = useState(false);
+  const [productQuantity, setProductQuantity] = useState({});
   useEffect(() => {
     axiosSecure.get(`/get-cart/${user?.email}`).then((res) => {
       console.log(res?.data?.data);
@@ -23,7 +24,8 @@ const Cart = () => {
   );
 
   const handleQuantity = (id, type) => {
-    console.log("object");
+    const product = cartProduct.find((p) => p?._id == id);
+    setProductQuantity(product);
     const updateQuantity = {
       id: id,
       type: type,
@@ -81,6 +83,7 @@ const Cart = () => {
                       <button
                         onClick={() => handleQuantity(item._id, "inc")}
                         className="btn hover:bg-black btn-sm text-xl bg-black text-white"
+                        disabled={item.quantity >= productQuantity?.quantity}
                       >
                         +
                       </button>

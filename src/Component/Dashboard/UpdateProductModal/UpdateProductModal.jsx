@@ -17,7 +17,7 @@ const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
     const price = from?.price?.value;
     const discount = from?.discount?.value;
     const description = from?.description?.value;
-    if (typeof parseFloat(price) === "number") {
+    if (!parseFloat(price)) {
       return setError("Please provide valid number");
     }
     // updated Product

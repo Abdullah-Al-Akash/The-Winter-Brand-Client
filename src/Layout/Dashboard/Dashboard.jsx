@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import controllerIcon from "./../../assets/control.png";
 import logo from "./../../assets/Navlogo.png";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
   BiSolidDashboard,
   BiSolidContact,
@@ -19,11 +19,43 @@ import { FaQuoteRight, FaUsers } from "react-icons/fa";
 import { PiSignpostFill } from "react-icons/pi";
 import AdminOnly from "../../private/AdminOnly";
 import { useEffect } from "react";
+import { useAuth } from "../../AuthProvider/AuthProvider";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
+  const { logout } = useAuth()
+  const navigate = useNavigate()
+  const { axiosSecure } = useAxiosSecure()
 
 
+
+  const signOut = () => {
+    logout()
+      .then(res => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "logout successful",
+          showConfirmButton: false,
+          timer: 1000
+        });
+
+        axiosSecure.get(`/logout?email=${user.email}`)
+          .then(() => { })
+
+          .catch(err => {
+            console.log(err.message)
+          })
+
+
+      })
+    navigate("/")
+      .catch(err => {
+        console.log(err.message)
+      })
+  }
 
   const Menus = [
     { title: "Dashboard", src: <BiSolidDashboard className="text-base" />, link: "/dashboard/" },
@@ -142,7 +174,7 @@ const Dashboard = () => {
 
           </div>
           <div className="my-8 absolute -bottom-5 left-0 right-0 mx-5">
-            <button className={`hover:bg-orange-600 btn text-base ${open && "w-full"} bg-black text-white `}>
+            <button onClick={signOut} className={`hover:bg-orange-600 btn text-base ${open && "w-full"} bg-black text-white `}>
               {open ? "LogOut" : <AiOutlineLogout />}
             </button>
           </div>

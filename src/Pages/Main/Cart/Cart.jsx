@@ -3,6 +3,8 @@ import { useAuth } from "../../../AuthProvider/AuthProvider";
 import { useEffect } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
+import { IoMdClose } from "react-icons/io";
+
 
 const Cart = () => {
   const { user } = useAuth();
@@ -39,6 +41,16 @@ const Cart = () => {
       .catch(err => {
         console.log(err.message);
       })
+  };
+
+  // Handle Delete:
+  const handleCartDelete = id => {
+    axiosSecure.delete(`/delete-cart/${id}`)
+      .then(res => {
+        if (res.data.success) {
+          setControl(!control)
+        }
+      })
   }
 
   return (
@@ -52,7 +64,7 @@ const Cart = () => {
           </div>
           {cartProduct.map((item, i) => {
             return (
-              <div key={i} className="p-2 border mt-4">
+              <div key={i} className="p-2 border mt-4 relative">
                 <div className="flex justify-between items-center">
                   <div className="flex justify-start items-start gap-2">
                     <img className="w-[100px]" src={item?.product_image} alt="image" />
@@ -69,6 +81,7 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
+                <div className="absolute -top-2 -right-2"><button onClick={() => handleCartDelete(item?._id)} className="p-2 bg-red-500 text-white rounded-full"><IoMdClose /></button></div>
               </div>
             );
           })}
@@ -85,7 +98,7 @@ const Cart = () => {
               <p>0</p>
             </div>
             <div className="flex justify-between items-start">
-              <p>Tex</p>
+              <p>Tax</p>
               <p>0</p>
             </div>
             <hr />
@@ -93,7 +106,7 @@ const Cart = () => {
               <p>Order Total</p>
               <p>${totalPrice}</p>
             </div>
-            <button className="brand-btn mt-5 w-full py-1">Checkout</button>
+            <button className={`${totalPrice === 0 ? 'cursor-not-allowed' : ''} brand-btn mt-5 w-full py-1`} disabled={totalPrice === 0}>Checkout</button>
           </div>
         </div>
       </div>

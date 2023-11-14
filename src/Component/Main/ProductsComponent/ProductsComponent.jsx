@@ -14,6 +14,7 @@ import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from "sweetalert2";
 
 const ProductsComponent = () => {
   const { axiosSecure } = useAxiosSecure();
@@ -29,9 +30,21 @@ const ProductsComponent = () => {
 
   const navigate = useNavigate();
   const handleAddToCard = product => {
-
     if (!user) {
-      navigate('/login')
+      Swal.fire({
+        title: "Please Login First!",
+        text: "",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login')
+        }
+      });
+
     }
     console.log(product);
     const { product_name, _id, price, discount, regular_price, product_image } = product;

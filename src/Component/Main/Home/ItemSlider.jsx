@@ -1,22 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "react-slick";
-import img1 from "../../../assets/images/sliderImage/1.jpg";
-import img2 from "../../../assets/images/sliderImage/2.jpg";
-import img3 from "../../../assets/images/sliderImage/3.jpg";
-import img4 from "../../../assets/images/sliderImage/4.jpg";
-import img5 from "../../../assets/images/sliderImage/5.jpg";
-import img6 from "../../../assets/images/sliderImage/6.jpg";
-import img7 from "../../../assets/images/sliderImage/7.jpg";
-import img8 from "../../../assets/images/sliderImage/8.jpg";
-import img9 from "../../../assets/images/sliderImage/9.jpg";
-import img10 from "../../../assets/images/sliderImage/10.jpg";
-import img11 from "../../../assets/images/sliderImage/11.jpg";
-import img12 from "../../../assets/images/sliderImage/12.jpg";
-import img13 from "../../../assets/images/sliderImage/13.jpg";
-import img14 from "../../../assets/images/sliderImage/14.jpg";
+import img1 from "../../../assets/images/default-image.jpg";
+
 import "./ItemSlider.css";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useState } from "react";
 
 const ItemSlider = () => {
+  const { axiosSecure } = useAxiosSecure();
+  const [images, setImages] = useState([]);
   var settings = {
     dots: false,
     infinite: true,
@@ -27,14 +19,39 @@ const ItemSlider = () => {
     autoplaySpeed: 2000,
     cssEase: "linear",
   };
+  useEffect(() => {
+    axiosSecure
+      .get("/get-featured-images")
+      .then((res) => setImages(res?.data?.data))
+      .catch((err) => {
+        console.log(err?.message);
+      });
+  }, []);
+  const defaultImage = [1, 2, 3, 4, 5, 6];
   return (
     <div className="pt-12">
       <Slider {...settings} className="border-none">
-        <img className="h-full mx-auto" src={img1} alt="" />
-        <img className="h-full mx-auto" src={img1} alt="" />
-        <img className="h-full mx-auto" src={img1} alt="" />
-        <img className="h-full mx-auto" src={img1} alt="" />
-        <img className="h-full mx-auto" src={img1} alt="" />
+        {images.length > 0
+          ? images?.map((image, i) => {
+            return (
+              <img
+                key={i}
+                className="h-[300px] w-[300px] object-contain mx-auto"
+                src={image?.image_url}
+                alt=""
+              />
+            );
+          })
+          : defaultImage?.map((image, i) => {
+            return (
+              <img
+                key={i}
+                className="h-[300px] w-[300px] object-contain mx-auto"
+                src={img1}
+                alt=""
+              />
+            );
+          })}
       </Slider>
     </div>
   );

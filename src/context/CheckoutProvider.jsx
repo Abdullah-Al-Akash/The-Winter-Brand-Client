@@ -12,7 +12,10 @@ const CheckoutProvider = ({ children }) => {
         checkoutData,
         setCheckoutData
     };
-
+    useEffect(() => {
+        const checkoutInformation = localStorage.getItem("checkout")
+        setCheckoutData(JSON.parse(checkoutInformation))
+    }, [])
     return (
         <CheckoutContext.Provider value={checkoutInfo}>{children}</CheckoutContext.Provider>
     );

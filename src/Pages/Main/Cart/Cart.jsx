@@ -5,13 +5,14 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import UseGetCart from "../../../hooks/UseGetCart";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const { user } = useAuth();
   const { axiosSecure } = useAxiosSecure();
 
   const { cartProduct } = UseGetCart();
-  const { controlCart, setControlCart } = useAuth();
+  const { controlCart, setControlCart, handleTop } = useAuth();
   const [availableQuantity, setAvailableQuantity] = useState({});
   const totalPrice = cartProduct?.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -57,22 +58,31 @@ const Cart = () => {
             <span className="font-bold">Total: ${totalPrice}</span>
           </div>
           {cartProduct?.map((item, i) => {
+            console.log(item);
             return (
               <div key={i} className="p-2 border mt-4 relative">
                 <div className="flex justify-between items-center">
-                  <div className="flex justify-start items-start gap-2">
+                  <div className="flex gap-2 ">
                     <img
-                      className="w-[100px]"
+                      className="w-[70px]"
                       src={item?.product_image}
                       alt="image"
                     />
-                    <div className="flex flex-col justify-center items-start ps-6 py-2">
-                      <h3 className="font-bold">
-                        {item?.product_name?.length > 54
-                          ? item?.product_name.slice(0, 54)
-                          : item?.product_name}
-                      </h3>
-                      <h2 className="mt-4">${item?.price}</h2>
+                    <div className="flex flex-col justify-between ps-3">
+                      <div>
+                        <h3 className="font-bold">
+                          {item?.product_name?.length > 54
+                            ? item?.product_name.slice(0, 54)
+                            : item?.product_name}
+                        </h3>
+                        <h2 className="">${item?.price}</h2>
+                      </div>
+                      <Link
+                        onClick={handleTop}
+                        to={`/product-details/${item?.product_id}`}
+                      >
+                        <button className="btn-link">Details</button>
+                      </Link>
                     </div>
                   </div>
                   <div>

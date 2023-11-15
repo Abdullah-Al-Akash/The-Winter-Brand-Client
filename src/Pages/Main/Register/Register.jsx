@@ -77,7 +77,7 @@ const Register = () => {
   const handlePassword = (e) => {
     const passwordHandle = e.target.value;
     // console.log(passwordHandle);
-    if (passwordHandle.length < 6) {
+    if (passwordHandle?.length < 6) {
       setErrorMassage("Minimum six characters provide your password");
       setSuccessMessage("");
       return;

@@ -152,7 +152,7 @@ const Navbar = () => {
                 )}
               </div>
             </div>
-            <div className="md:flex justify-center items-center gap-5">
+            <div className="md:flex z-[99999999999999] justify-center items-center gap-5">
               <div className="md:flex justify-center items-center gap-5 hidden">
                 {user ? (
                   <div className="dropdown dropdown-end bg-white z-10">
@@ -228,9 +228,9 @@ const Navbar = () => {
                       <FiShoppingCart></FiShoppingCart>
                     </span>
                   </Link>
-                  {cartProduct.length > 0 && (
+                  {cartProduct?.length > 0 && (
                     <p className="text-black font-bold absolute -top-3 -right-2">
-                      {cartProduct.length}
+                      {cartProduct?.length}
                     </p>
                   )}
                 </li>

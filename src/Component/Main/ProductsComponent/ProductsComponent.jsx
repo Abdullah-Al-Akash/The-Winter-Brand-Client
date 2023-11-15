@@ -128,8 +128,8 @@ const ProductsComponent = () => {
             console.log(_id);
             return (
               <SwiperSlide key={i}>
-                <Link onClick={handleTop} to={`/product-details/${_id}`}>
-                  <div className="flex justify-center lg:w-96 lg:mx-auto  border relative mt-5 mx-5">
+                <div className="flex flex-col justify-center lg:w-96 lg:mx-auto  border relative mt-5 mx-5">
+                  <Link onClick={handleTop} to={`/product-details/${_id}`}>
                     <span className="absolute top-0 left-0 px-2 brand-bg">
                       For Sell
                     </span>
@@ -160,16 +160,16 @@ const ProductsComponent = () => {
                           )}
                         </div>
                       </div>
-                      <button
-                        onClick={() => handleAddToCard(product)}
-                        className="bg-black text-white py-2 flex justify-center items-center gap-2"
-                      >
-                        <BsCartPlus></BsCartPlus>{" "}
-                        <span className="mt-1">Add to Cart</span>
-                      </button>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                  <button
+                    onClick={() => handleAddToCard(product)}
+                    className="bg-black text-white py-2 flex justify-center items-center gap-2"
+                  >
+                    <BsCartPlus></BsCartPlus>{" "}
+                    <span className="mt-1">Add to Cart</span>
+                  </button>
+                </div>
               </SwiperSlide>
             );
           })}

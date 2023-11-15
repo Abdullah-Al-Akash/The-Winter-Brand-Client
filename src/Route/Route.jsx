@@ -30,6 +30,7 @@ import ErrorPage from "../Sheard/ErrorPage/ErrorPage";
 import UserProfile from "../Component/Main/UserProfile/UserProfile";
 import MyOrder from "../Pages/Main/MyOrder/MyOrder";
 import ProductDetails from "../Pages/Main/ProductDetails/ProductDetails";
+import InvoicePDF from "../Pages/Main/invoicePDF/invoicePDF";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -97,6 +98,10 @@ export const router = createBrowserRouter([
       {
         path: "/product-details/:id",
         element: <ProductDetails></ProductDetails>,
+      },
+      {
+        path: "/invoice-details",
+        element: <InvoicePDF></InvoicePDF>,
       },
     ],
   },

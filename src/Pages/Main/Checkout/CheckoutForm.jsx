@@ -8,7 +8,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { FiSmartphone } from "react-icons/fi";
 import { PiWarningCircle } from "react-icons/pi";
 
-import "./checkout.css"
+import "./checkout.css";
 
 const countries = {
   "United States": [
@@ -93,7 +93,6 @@ const countries = {
   ],
 };
 
-
 const CheckoutForm = ({
   amount,
   clientSecret,
@@ -105,25 +104,31 @@ const CheckoutForm = ({
   post_code,
   city,
   phone,
-  mobile_number
-
+  mobile_number,
 }) => {
-
-
   const [selectedCountry, setSelectedCountry] = useState("United States");
   const [selectedState, setSelectedState] = useState("");
   const [offer, setOffer] = useState(false);
   const [numberMassage, setNumberMassage] = useState(false);
   const [emailMassage, setEmailMassage] = useState(false);
   const { axiosSecure } = useAxiosSecure();
-  const { checkoutData } = useCheckoutData()
+  const { checkoutData } = useCheckoutData();
   const stripe = useStripe();
   const elements = useElements();
-  console.log(10, checkoutData?.duration)
-  const isDisabled = !first_name || !last_name || !company || !address || !apartment || !post_code || !city || !phone || !mobile_number
+  console.log(10, checkoutData?.duration);
+  const isDisabled =
+    !first_name ||
+    !last_name ||
+    !company ||
+    !address ||
+    !apartment ||
+    !post_code ||
+    !city ||
+    !phone ||
+    !mobile_number;
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const from = e.target;
+    const from = event.target;
     const email = from.email.value;
     const first_name = from.first_name.value;
     const last_name = from.last_name.value;
@@ -135,29 +140,34 @@ const CheckoutForm = ({
     const phone = from?.phone?.value || "";
     const mobile_number = from?.mobile_number?.value || "";
     const obj = {
-      email: email,
-      country: selectedCountry,
-      state: selectedState,
-      first_name: first_name,
-      last_name: last_name,
+      name: `${first_name + last_name}`,
+      product_id: "65517147483b0431d17045a0",
+      transaction_id: "af5855ads5f5f4d544e5d4de5",
+      products_price: 50,
+      products_quantity: 2,
       company: company,
-      address: address,
-      apartment: apartment,
-      post_code: post_code,
-      city: city,
-      phone: phone,
-      mobile_number: mobile_number,
-      numberMassage: numberMassage,
-      emailMassage: emailMassage,
+      contact_email: email,
+      delivery_info: {
+        country: selectedCountry,
+        state: selectedState,
+        address: address,
+        postcode: post_code,
+        city: city,
+        phone: phone,
+        apartment: apartment,
+      },
+      promotions: {
+        phone_number: numberMassage ? mobile_number : null,
+        email: emailMassage ? email : null,
+      },
     };
 
+    console.log(obj);
 
-    axiosSecure.post("/create-order")
-      .then(res => {
-        if (res.data?.success) {
-
-        }
-      })
+    axiosSecure.post("/create-order").then((res) => {
+      if (res.data?.success) {
+      }
+    });
     if (!stripe || !elements) {
       return;
     }
@@ -186,8 +196,7 @@ const CheckoutForm = ({
           amount,
         });
 
-        console.log(response)
-
+        console.log(response);
       } else {
         const { paymentIntent, error: confirmError } =
           await stripe.confirmCardPayment(clientSecret, {
@@ -332,9 +341,7 @@ const CheckoutForm = ({
               {" "}
               <AiOutlinePlus></AiOutlinePlus>
             </span>
-            <span className="text-[12px]">
-              Add apartment, suite, etc.
-            </span>
+            <span className="text-[12px]">Add apartment, suite, etc.</span>
           </div>
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -355,9 +362,10 @@ const CheckoutForm = ({
         </div>
         <input
           className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
-          type="number"
+          type="text"
           name="phone"
-          placeholder="Phone (optional)"
+          required
+          placeholder="Phone "
         />
         <div className="flex justify-start items-center gap-3 mt-3 text-xs text-gray-500">
           <input
@@ -374,7 +382,7 @@ const CheckoutForm = ({
               <FiSmartphone></FiSmartphone>
               <input
                 className="w-full outline-none pt-2"
-                type="number"
+                type="text"
                 name="mobile_number"
               />
               <span className="absolute top-[6px] left-[28px] text-[10px]">
@@ -382,17 +390,14 @@ const CheckoutForm = ({
               </span>
             </div>
             <span className="text-[12px] text-justify ">
-              By signing up via text, you agree to receive recurring
-              automated marketing messages, including cart reminders, at
-              the phone number provided. Consent is not a condition of
-              purchase. Reply STOP to unsubscribe. Reply HELP for help.
-              Message frequency varies. Msg & data rates may apply
+              By signing up via text, you agree to receive recurring automated
+              marketing messages, including cart reminders, at the phone number
+              provided. Consent is not a condition of purchase. Reply STOP to
+              unsubscribe. Reply HELP for help. Message frequency varies. Msg &
+              data rates may apply
             </span>
           </div>
         )}
-
-
-
       </div>
       <h2 className="text-xl font-semibold text-left my-4">Payment</h2>
 
@@ -415,7 +420,10 @@ const CheckoutForm = ({
       />
 
       <div className="flex justify-end my-5">
-        <button className={` bg-[#FF4500] text-white transition-all ease-in-out duration-500 hover:text-[#FF4500] hover:bg-black md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px] cursor-pointer`} type="submit">
+        <button
+          className={` bg-[#FF4500] text-white transition-all ease-in-out duration-500 hover:text-[#FF4500] hover:bg-black md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px] cursor-pointer`}
+          type="submit"
+        >
           {checkoutData?.duration === "subscription" ? "Subscribe" : "Pay"}
         </button>
       </div>

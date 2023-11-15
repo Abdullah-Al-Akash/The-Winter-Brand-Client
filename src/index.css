@@ -67,3 +67,8 @@ input::placeholder {
     position: absolute;
     top: -9999px;
 }
+
+
+.CardField-input-wrapper {
+    background-color: red !important;
+}

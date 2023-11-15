@@ -55,16 +55,30 @@ const ProductsComponent = () => {
       product_image: product_image,
       email: user?.email,
     };
+
     axiosSecure
-      .post("/create-cart", newProduct)
+      .get(`/get-cart-is-exist?id=${_id}&email=${user?.email}`)
       .then((res) => {
         if (res?.data?.success) {
-          toast(`Product Added in cart!`);
-          setControlCart(!controlCart);
+          console.log(res?.data?.success, 63);
+          axiosSecure
+            .post("/create-cart", newProduct)
+            .then((res) => {
+              if (res?.data?.success) {
+                toast(`Product Added in cart!`);
+                setControlCart(!controlCart);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Warning",
+            text: "Product Already added by cart!",
+          });
         }
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 

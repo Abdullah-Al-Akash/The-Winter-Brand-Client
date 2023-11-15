@@ -24,7 +24,21 @@ const Checkout = () => {
   const [clientSecret, setClientSecret] = useState(null);
   const [amount, setAmount] = useState(0);
   const { checkoutData } = useCheckoutData();
-  const [isSubscription, setIsSubscription] = useState(true);
+
+
+
+  const [first_name, setFirst_name] = useState("")
+  const [last_name, setLast_name] = useState("")
+  const [company, setCompany] = useState("")
+  const [address, setAddress] = useState("")
+  const [apartment, setApartment] = useState("")
+  const [post_code, setPost_code] = useState("")
+  const [city, setCity] = useState("")
+  const [phone, setPhone] = useState("")
+  const [mobile_number, setMobile_number] = useState("")
+
+  // first_name, last_name, company, address, apartment, post_code, city, phone, mobile_number
+
   useEffect(() => {
     if (checkoutData) {
       const amount = Math.round(checkoutData.price * 100);
@@ -33,7 +47,7 @@ const Checkout = () => {
   }, [checkoutData]);
 
   useEffect(() => {
-    if (!isSubscription) {
+    if (checkoutData?.duration !== "subscription") {
       axiosSecure
         .post("/payment", {
           amount,
@@ -167,7 +181,7 @@ const Checkout = () => {
   };
   const handleUnsubscribe = async () => {
     const response = await axiosSecure.post("/unsubscribe", {
-      subscriptionId: "sub_1OCZbYKdkM5q6ytT67l4LAPO",
+      subscriptionId: "sub_1OCdv0Iq0mLIaueHQJBG2bjn",
     });
     console.log(response);
   };
@@ -178,230 +192,224 @@ const Checkout = () => {
           <p className="text-sm text-gray-400 text-center">Express checkout</p>
           <div className="divider">OR</div>
           <div className="contactFrom">
-            <form onSubmit={(e) => handleSubmit(e)} className="mt-[50px]">
-              <div>
-                <div className="flex justify-between items-center w-full my-2">
-                  <h2 className="text-xl font-semibold">Contact</h2>
-                  <span className="text-[12px] text-gray-500">
-                    Have an account?{" "}
-                    <Link className="border-b" to="/login">
-                      Login
-                    </Link>
-                  </span>
-                </div>
-                <input
-                  type="email"
-                  required
-                  className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
-                  name="email"
-                  placeholder="Email"
-                />
-                <div className="flex justify-start items-center gap-3 mt-3 text-xs text-gray-500">
-                  <input
-                    onClick={(e) => setEmailMassage(e.target.checked)}
-                    type="checkbox"
-                    name="massage_email"
-                  />
-                  <span>Email me with news and offers</span>
-                </div>
-              </div>
-              <div className="flex flex-col w-full gap-5 mt-[30px]">
-                <div>
-                  <label className="text-xl font-semibold ">Delivery :</label>
-                  <div className="border mt-5 py-3 pt-5  rounded-lg relative">
-                    <label
-                      htmlFor="Country"
-                      className="text-[10px] absolute top-[6px] left-5 z-50"
-                    >
-                      Country/Region
-                    </label>
-                    <select
-                      onChange={(e) => setSelectedCountry(e.target.value)}
-                      name="to"
-                      id="Country"
-                      className="w-full px-4 outline-none text-[14px]  focus:border-orange-600 relative bg-transparent"
-                    >
-                      {Object.keys(countries).map((division, index) => {
-                        return (
-                          <option key={index} value={division}>
-                            {division}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </div>
-                <div>
-                  <div className="border py-3 pt-5  rounded-lg relative">
-                    <label className="text-[11px] absolute top-[6px] left-5 z-50">
-                      Select State:
-                    </label>
-                    <select
-                      onChange={(e) => setSelectedState(e.target.value)}
-                      name=""
-                      className="w-full px-4 outline-none text-[14px]  focus:border-orange-600 relative bg-transparent"
-                    >
-                      {countries[selectedCountry][0]?.map((state, index) => {
-                        return (
-                          <option key={index} value={state}>
-                            {state}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <input
-                    type="text"
-                    name="first_name"
-                    placeholder="First Name"
-                    required
-                    className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
-                  />
-                  <input
-                    className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
-                    type="text"
-                    name="last_name"
-                    placeholder="Last Name"
-                    required
-                  />
-                </div>
-                <input
-                  className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
-                  type="text"
-                  name="company"
-                  placeholder="Company (Optional)"
-                />
-                <input
-                  className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
-                  required
-                  type="text"
-                  name="address"
-                  placeholder="Address"
-                />
-                {offer ? (
-                  <input
-                    className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
-                    type="text"
-                    name="apartment"
-                    placeholder="Apartment, Suite, etc. (Optional)"
-                  />
-                ) : (
-                  <div className="flex items-center gap-2 text-[12px]">
-                    <span
-                      onClick={() => setOffer(true)}
-                      className="font-bold cursor-pointer"
-                    >
-                      {" "}
-                      <AiOutlinePlus></AiOutlinePlus>
-                    </span>
-                    <span className="text-[12px]">
-                      Add apartment, suite, etc.
-                    </span>
-                  </div>
-                )}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <input
-                    type="text"
-                    name="post_code"
-                    required
-                    placeholder="Post Code"
-                    className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
-                  />
-                  <input
-                    className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
-                    type=""
-                    name="city"
-                    required
-                    placeholder="City"
-                  />
-                </div>
-                <input
-                  className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
-                  type="number"
-                  name="phone"
-                  placeholder="Phone (optional)"
-                />
-                <div className="flex justify-start items-center gap-3 mt-3 text-xs text-gray-500">
-                  <input
-                    onClick={(e) => setNumberMassage(e.target.checked)}
-                    type="checkbox"
-                    defaultValue={numberMassage}
-                    name="massage_number"
-                  />
-                  <span>Text me with news and offers</span>
-                </div>
-                {numberMassage == true && (
-                  <div>
-                    <div className="flex ps-2 items-center gap-1 py-3 border rounded-lg focus:border-orange-600 relative">
-                      <FiSmartphone></FiSmartphone>
-                      <input
-                        className="w-full outline-none pt-2"
-                        type="number"
-                        name="mobile_number"
-                      />
-                      <span className="absolute top-[6px] left-[28px] text-[10px]">
-                        Mobile Phone Number
-                      </span>
-                    </div>
-                    <span className="text-[12px] text-justify ">
-                      By signing up via text, you agree to receive recurring
-                      automated marketing messages, including cart reminders, at
-                      the phone number provided. Consent is not a condition of
-                      purchase. Reply STOP to unsubscribe. Reply HELP for help.
-                      Message frequency varies. Msg & data rates may apply
-                    </span>
-                  </div>
-                )}
-                <h2 className="text-xl font-semibold">Shipping method</h2>
-                <div className="bg-[#FEF6F6] border-[#fbe1e1] p-3 flex gap-2 items-start">
-                  <span className="text-red-500 mt-[4px]">
-                    <PiWarningCircle></PiWarningCircle>
-                  </span>
-                  <div className="flex flex-col gap-2">
-                    <h1>Shipping not available</h1>
-                    <p className="text-[12px]">
-                      Your order cannot be shipped to the selected address.
-                      Review your address to ensure it's correct and try again,
-                      or select a different address.
-                    </p>
-                  </div>
-                </div>
-                <h2 className="text-xl font-semibold">Payment</h2>
-                {/* {clientSecret && stripePromise && (
-                  <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckoutForm setStripe={setStripe} />
-                  </Elements>
-                )} */}
 
-                {/* TODO  */}
+            <div>
+              <div className="flex justify-between items-center w-full my-2">
+                <h2 className="text-xl font-semibold">Contact</h2>
+                <span className="text-[12px] text-gray-500">
+                  Have an account?{" "}
+                  <Link className="border-b" to="/login">
+                    Login
+                  </Link>
+                </span>
               </div>
               <input
-                type="submit"
-                value="Summit"
-                disabled={!stripe}
-                className={`${
-                  !stripe && "cursor-not-allowed"
-                } bg-[#FF4500] text-white transition-all ease-in-out duration-500 hover:text-[#FF4500] hover:bg-black md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px] cursor-pointer`}
+                type="email"
+                required
+                className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
+                name="email"
+                placeholder="Email"
               />
-            </form>
+              <div className="flex justify-start items-center gap-3 mt-3 text-xs text-gray-500">
+                <input
+                  onClick={(e) => setEmailMassage(e.target.checked)}
+                  type="checkbox"
+                  name="massage_email"
+                />
+                <span>Email me with news and offers</span>
+              </div>
+            </div>
+            <div className="flex flex-col w-full gap-5 mt-[30px]">
+              <div>
+                <label className="text-xl font-semibold ">Delivery :</label>
+                <div className="border mt-5 py-3 pt-5  rounded-lg relative">
+                  <label
+                    htmlFor="Country"
+                    className="text-[10px] absolute top-[6px] left-5 z-50"
+                  >
+                    Country/Region
+                  </label>
+                  <select
+                    onChange={(e) => setSelectedCountry(e.target.value)}
+                    name="to"
+                    id="Country"
+                    className="w-full px-4 outline-none text-[14px]  focus:border-orange-600 relative bg-transparent"
+                  >
+                    {Object.keys(countries).map((division, index) => {
+                      return (
+                        <option key={index} value={division}>
+                          {division}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <div className="border py-3 pt-5  rounded-lg relative">
+                  <label className="text-[11px] absolute top-[6px] left-5 z-50">
+                    Select State:
+                  </label>
+                  <select
+                    onChange={(e) => setSelectedState(e.target.value)}
+                    name=""
+                    className="w-full px-4 outline-none text-[14px]  focus:border-orange-600 relative bg-transparent"
+                  >
+                    {countries[selectedCountry][0]?.map((state, index) => {
+                      return (
+                        <option key={index} value={state}>
+                          {state}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <input
+                  type="text"
+                  name="first_name"
+                  placeholder="First Name"
+                  required
+                  className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
+                />
+                <input
+                  className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
+                  type="text"
+                  name="last_name"
+                  placeholder="Last Name"
+                  required
+                />
+              </div>
+              <input
+                className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
+                type="text"
+                name="company"
+                placeholder="Company (Optional)"
+              />
+              <input
+                className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
+                required
+                type="text"
+                name="address"
+                placeholder="Address"
+              />
+              {offer ? (
+                <input
+                  className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
+                  type="text"
+                  name="apartment"
+                  placeholder="Apartment, Suite, etc. (Optional)"
+                />
+              ) : (
+                <div className="flex items-center gap-2 text-[12px]">
+                  <span
+                    onClick={() => setOffer(true)}
+                    className="font-bold cursor-pointer"
+                  >
+                    {" "}
+                    <AiOutlinePlus></AiOutlinePlus>
+                  </span>
+                  <span className="text-[12px]">
+                    Add apartment, suite, etc.
+                  </span>
+                </div>
+              )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <input
+                  type="text"
+                  name="post_code"
+                  required
+                  placeholder="Post Code"
+                  className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
+                />
+                <input
+                  className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
+                  type=""
+                  name="city"
+                  required
+                  placeholder="City"
+                />
+              </div>
+              <input
+                className="px-4 py-3 w-full outline-none border rounded-lg focus:border-orange-600"
+                type="number"
+                name="phone"
+                placeholder="Phone (optional)"
+              />
+              <div className="flex justify-start items-center gap-3 mt-3 text-xs text-gray-500">
+                <input
+                  onClick={(e) => setNumberMassage(e.target.checked)}
+                  type="checkbox"
+                  defaultValue={numberMassage}
+                  name="massage_number"
+                />
+                <span>Text me with news and offers</span>
+              </div>
+              {numberMassage == true && (
+                <div>
+                  <div className="flex ps-2 items-center gap-1 py-3 border rounded-lg focus:border-orange-600 relative">
+                    <FiSmartphone></FiSmartphone>
+                    <input
+                      className="w-full outline-none pt-2"
+                      type="number"
+                      name="mobile_number"
+                    />
+                    <span className="absolute top-[6px] left-[28px] text-[10px]">
+                      Mobile Phone Number
+                    </span>
+                  </div>
+                  <span className="text-[12px] text-justify ">
+                    By signing up via text, you agree to receive recurring
+                    automated marketing messages, including cart reminders, at
+                    the phone number provided. Consent is not a condition of
+                    purchase. Reply STOP to unsubscribe. Reply HELP for help.
+                    Message frequency varies. Msg & data rates may apply
+                  </span>
+                </div>
+              )}
+              <h2 className="text-xl font-semibold">Shipping method</h2>
+              <div className="bg-[#FEF6F6] border-[#fbe1e1] p-3 flex gap-2 items-start">
+                <span className="text-red-500 mt-[4px]">
+                  <PiWarningCircle></PiWarningCircle>
+                </span>
+                <div className="flex flex-col gap-2">
+                  <h1>Shipping not available</h1>
+                  <p className="text-[12px]">
+                    Your order cannot be shipped to the selected address.
+                    Review your address to ensure it's correct and try again,
+                    or select a different address.
+                  </p>
+                </div>
+              </div>
+              <h2 className="text-xl font-semibold">Payment</h2>
+              <div className="p-4 text-center">
+                {stripePromise && (
+                  <Elements stripe={stripePromise}>
+                    <CheckoutForm
+                      amount={amount}
+                      clientSecret={clientSecret}
+                      first_name={first_name}
+                      last_name={last_name}
+                      company={company}
+                      address={address}
+                      apartment={apartment}
+                      post_code={post_code}
+                      city={city}
+                      phone={phone}
+                      mobile_number={mobile_number}
+                    />
+                  </Elements>
+                )}
+              </div>
+            </div>
+
             <button onClick={handleUnsubscribe}>Unsubscribe</button>
           </div>
         </div>
       </div>
       <div className="bg-[#F5F5F5] border-t border-gray-500 sticky top-[50px] z-10">
-        <div className="p-4 text-center">
-          {stripePromise && (
-            <Elements stripe={stripePromise}>
-              <CheckoutForm
-                amount={amount}
-                clientSecret={clientSecret}
-                isSubscription={isSubscription}
-              />
-            </Elements>
-          )}
-        </div>
+
         <div className="max-w-[600px] me-auto p-5 ">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nostrum
           dignissimos officia eos delectus? Sunt, ullam consequatur maiores

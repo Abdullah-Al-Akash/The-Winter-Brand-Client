@@ -28,6 +28,8 @@ import NumberMarketing from "../Pages/Dashboard/NumberMarketing/NumberMarketing"
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import ErrorPage from "../Sheard/ErrorPage/ErrorPage";
 import UserProfile from "../Component/Main/UserProfile/UserProfile";
+import MyOrder from "../Pages/Main/MyOrder/MyOrder";
+import ProductDetails from "../Pages/Main/ProductDetails/ProductDetails";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -90,7 +92,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/my-order",
-        element: <>my-order</>,
+        element: <MyOrder></MyOrder>,
+      },
+      {
+        path: "/product-details/:id",
+        element: <ProductDetails></ProductDetails>,
       },
     ],
   },

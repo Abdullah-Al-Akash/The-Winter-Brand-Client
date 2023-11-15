@@ -13,11 +13,11 @@ const Cart = () => {
   const { cartProduct } = UseGetCart();
   const { controlCart, setControlCart } = useAuth();
   const [availableQuantity, setAvailableQuantity] = useState({});
-  const totalPrice = cartProduct.reduce(
+  const totalPrice = cartProduct?.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-console.log(cartProduct);
+  console.log(cartProduct);
   const handleQuantity = (id, type) => {
     console.log("object");
     const product = cartProduct?.find((p) => p?._id == id);
@@ -56,7 +56,7 @@ console.log(cartProduct);
             <span className="font-bold">{cartProduct?.length} item Added</span>
             <span className="font-bold">Total: ${totalPrice}</span>
           </div>
-          {cartProduct.map((item, i) => {
+          {cartProduct?.map((item, i) => {
             return (
               <div key={i} className="p-2 border mt-4 relative">
                 <div className="flex justify-between items-center">
@@ -68,7 +68,7 @@ console.log(cartProduct);
                     />
                     <div className="flex flex-col justify-center items-start ps-6 py-2">
                       <h3 className="font-bold">
-                        {item?.product_name.length > 54
+                        {item?.product_name?.length > 54
                           ? item?.product_name.slice(0, 54)
                           : item?.product_name}
                       </h3>
@@ -115,7 +115,7 @@ console.log(cartProduct);
           <div>
             <div className="flex justify-between items-start">
               <p>Total Price</p>
-              <p>{totalPrice}</p>
+              <p>{totalPrice <= 0 ? "0" : totalPrice}</p>
             </div>
             <div className="flex justify-between items-start">
               <p>Discount</p>

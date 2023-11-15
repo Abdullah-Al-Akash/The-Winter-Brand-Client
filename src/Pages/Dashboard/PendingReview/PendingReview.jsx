@@ -40,7 +40,7 @@ const PendingReview = () => {
   };
   return (
     <div className="max-w-[1200px] mx-auto">
-      {items.length == 0 ? (
+      {items?.length == 0 ? (
         <p className="text-center flex h-[100vh] justify-center items-center">
           Pending review is empty
         </p>

@@ -123,49 +123,53 @@ const ProductsComponent = () => {
               discount,
               regular_price,
               product_image,
+              _id,
             } = product || {};
+            console.log(_id);
             return (
               <SwiperSlide key={i}>
-                <div className="flex justify-center lg:w-96 lg:mx-auto  border relative mt-5 mx-5">
-                  <span className="absolute top-0 left-0 px-2 brand-bg">
-                    For Sell
-                  </span>
-                  <div className="border-none shadow-xl flex flex-col justify-between w-full">
-                    <div className="flex justify-center">
-                      <img
-                        className="px-8 w-full"
-                        src={product_image}
-                        alt="Beanie"
-                      />
-                    </div>
-                    <div className="card-body">
-                      <h2 className="text-[16px] font-semibold">
-                        {product_name}
-                      </h2>
-                      <div className="flex justify-end my-2">
-                        <p>
-                          Regular Price:
-                          <span className={regular_price && "line-through"}>
-                            {" "}
-                            {regular_price || price}{" "}
-                          </span>
-                        </p>
-                        {discount && (
-                          <p className="text-end brand-color">
-                            Offer Price: {price}{" "}
-                          </p>
-                        )}
+                <Link onClick={handleTop} to={`/product-details/${_id}`}>
+                  <div className="flex justify-center lg:w-96 lg:mx-auto  border relative mt-5 mx-5">
+                    <span className="absolute top-0 left-0 px-2 brand-bg">
+                      For Sell
+                    </span>
+                    <div className="border-none shadow-xl flex flex-col justify-between w-full">
+                      <div className="flex justify-center">
+                        <img
+                          className="px-8 w-full"
+                          src={product_image}
+                          alt="Beanie"
+                        />
                       </div>
+                      <div className="card-body">
+                        <h2 className="text-[16px] font-semibold">
+                          {product_name}
+                        </h2>
+                        <div className="flex justify-end my-2">
+                          <p>
+                            Regular Price:
+                            <span className={regular_price && "line-through"}>
+                              {" "}
+                              {regular_price || price}{" "}
+                            </span>
+                          </p>
+                          {discount && (
+                            <p className="text-end brand-color">
+                              Offer Price: {price}{" "}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => handleAddToCard(product)}
+                        className="bg-black text-white py-2 flex justify-center items-center gap-2"
+                      >
+                        <BsCartPlus></BsCartPlus>{" "}
+                        <span className="mt-1">Add to Cart</span>
+                      </button>
                     </div>
-                    <button
-                      onClick={() => handleAddToCard(product)}
-                      className="bg-black text-white py-2 flex justify-center items-center gap-2"
-                    >
-                      <BsCartPlus></BsCartPlus>{" "}
-                      <span className="mt-1">Add to Cart</span>
-                    </button>
                   </div>
-                </div>
+                </Link>
               </SwiperSlide>
             );
           })}

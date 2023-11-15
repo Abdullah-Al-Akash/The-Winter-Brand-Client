@@ -174,7 +174,7 @@ const Checkout = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
       <div className="border-t border-r border-gray-500">
-        <div className="max-w-[600px] ms-auto p-5 pe-20">
+        <div className="max-w-[600px] ms-auto p-5 md:pe-20">
           <p className="text-sm text-gray-400 text-center">Express checkout</p>
           <div className="divider">OR</div>
           <div className="contactFrom">

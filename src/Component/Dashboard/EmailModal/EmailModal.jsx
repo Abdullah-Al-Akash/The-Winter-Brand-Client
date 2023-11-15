@@ -6,14 +6,13 @@ const EmailModal = ({ items, title }) => {
       <dialog id="my_modal_4" className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-lg">{title}</h3>
-          {items.map((item) => {
+          {items.map((item, i) => {
             return (
-              <span>
-                {` ${
-                  item?.promotions?.email
-                    ? item?.promotions?.email
-                    : item?.promotions?.phone_number
-                }`}
+              <span key={i}>
+                {` ${item?.promotions?.email
+                  ? item?.promotions?.email
+                  : item?.promotions?.phone_number
+                  }`}
                 ,
               </span>
             );

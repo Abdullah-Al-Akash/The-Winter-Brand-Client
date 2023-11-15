@@ -81,42 +81,40 @@ const ViewFaq = () => {
           return (
             <div
               key={i}
-              className={`${
-                i + 1 == 1
+              className={`${i + 1 == 1
                   ? " border-green-400 border-b"
                   : i + 1 == 2
-                  ? " border-blue-400 border-b"
-                  : i + 1 == 3
-                  ? " border-red-400 border-b"
-                  : i + 1 == 4
-                  ? " border-yellow-400 border-b"
-                  : (i + 1) % 4 === 1
-                  ? " border-amber-800 border-b"
-                  : (i + 1) % 4 === 2
-                  ? " border-blue-800 border-b"
-                  : (i + 1) % 4 === 3
-                  ? "border-green-400 border-b"
-                  : "border-red-400 border-b"
-              }  flex justify-between items-center`}
+                    ? " border-blue-400 border-b"
+                    : i + 1 == 3
+                      ? " border-red-400 border-b"
+                      : i + 1 == 4
+                        ? " border-yellow-400 border-b"
+                        : (i + 1) % 4 === 1
+                          ? " border-amber-800 border-b"
+                          : (i + 1) % 4 === 2
+                            ? " border-blue-800 border-b"
+                            : (i + 1) % 4 === 3
+                              ? "border-green-400 border-b"
+                              : "border-red-400 border-b"
+                }  flex justify-between items-center`}
             >
               <AccordionItem
-                className={`${
-                  i + 1 == 1
+                className={`${i + 1 == 1
                     ? "border-l-[10px] px-2 border-green-400"
                     : i + 1 == 2
-                    ? "border-l-[10px] px-2 border-blue-400"
-                    : i + 1 == 3
-                    ? "border-l-[10px] px-2 border-red-400"
-                    : i + 1 == 4
-                    ? "border-l-[10px] px-2 border-yellow-400"
-                    : (i + 1) % 4 === 1
-                    ? "border-l-[10px] px-2 border-amber-800"
-                    : (i + 1) % 4 === 2
-                    ? "border-l-[10px] px-2 border-blue-800"
-                    : (i + 1) % 4 === 3
-                    ? "border-green-400"
-                    : "border-red-400"
-                } md:text-2xl`}
+                      ? "border-l-[10px] px-2 border-blue-400"
+                      : i + 1 == 3
+                        ? "border-l-[10px] px-2 border-red-400"
+                        : i + 1 == 4
+                          ? "border-l-[10px] px-2 border-yellow-400"
+                          : (i + 1) % 4 === 1
+                            ? "border-l-[10px] px-2 border-amber-800"
+                            : (i + 1) % 4 === 2
+                              ? "border-l-[10px] px-2 border-blue-800"
+                              : (i + 1) % 4 === 3
+                                ? "border-green-400"
+                                : "border-red-400"
+                  } md:text-2xl`}
                 header={item?.question}
               >
                 <span className="md:text-[18px] text-[12px]">
@@ -124,7 +122,7 @@ const ViewFaq = () => {
                   {item?.body}
                 </span>
               </AccordionItem>
-              <button onClick={() => handleDeleteFAQ(item?.err_id)}>
+              <button onClick={() => handleDeleteFAQ(item?._id)}>
                 <BsTrash></BsTrash>
               </button>
             </div>

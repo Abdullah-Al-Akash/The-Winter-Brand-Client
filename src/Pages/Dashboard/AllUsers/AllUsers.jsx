@@ -6,6 +6,8 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loading from "../../../Sheard/Loading/Loading";
+import userImage from '../../../assets/male.png';
+
 
 const AllUsers = () => {
   const { handleSubmit, register } = useForm();
@@ -25,7 +27,7 @@ const AllUsers = () => {
       setUsers(res.data?.data);
       setIsLoading(false);
     });
-  }, []);
+  }, [control]);
 
   // update order status func
   const updateUserRole = (role, userId) => {
@@ -45,7 +47,7 @@ const AllUsers = () => {
         };
         console.log(data);
         axiosSecure
-          .put("/update-user-role", { data })
+          .put("/update-user-role", data)
           .then((res) => {
             console.log(res);
             if (res?.data?.success) {
@@ -56,6 +58,7 @@ const AllUsers = () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
+              setControl(!control)
             }
           })
           .catch((err) => {
@@ -89,16 +92,15 @@ const AllUsers = () => {
               "flex gap-5 items-stretch my-5 border-b border-[#0621bb6b]"
             }
           >
-            {["All Users", "User", "admin"].map((elem, ind) => {
+            {["All Users", "user", "admin"].map((elem, ind) => {
               return (
                 <Tab
                   key={ind}
                   onClick={() => setUserCategory(elem)}
-                  className={`py-2 first-letter:uppercase !bg-transparent cursor-pointer outline-none ${
-                    userCategory === elem
-                      ? "!border-b-2 !border-[#0621bb] !text-[#0621bb]"
-                      : "border-none"
-                  }`}
+                  className={`py-2 first-letter:uppercase !bg-transparent cursor-pointer outline-none ${userCategory === elem
+                    ? "!border-b-2 !border-[#0621bb] !text-[#0621bb]"
+                    : "border-none"
+                    }`}
                 >
                   {elem}
                 </Tab>
@@ -106,25 +108,11 @@ const AllUsers = () => {
             })}
           </TabList>
 
-          {["All Users", "User", "admin"].map((elem, ind) => {
+          {["All Users", "user", "admin"].map((elem, ind) => {
             return (
               <TabPanel key={ind}>
                 {/* search inp */}
-                <div className="relative mx-auto w-[80%] flex justify-center my-8">
-                  <input
-                    type="text"
-                    onChange={handleSearch}
-                    name="search_text"
-                    placeholder="search here..."
-                    className="bg-white py-3 w-full pl-14 border-2 rounded-full outline-none border-stone-300 text-black"
-                  />
-                  <button
-                    type="submit"
-                    className="absolute top-1/2 -translate-y-1/2 left-5 text-stone-300"
-                  >
-                    <FaSearch></FaSearch>
-                  </button>
-                </div>
+
                 {/* Table */}
                 <div className="overflow-x-auto mt-10">
                   <table className="table">
@@ -148,7 +136,7 @@ const AllUsers = () => {
                               : user.role === userCategory
                           )
                           .map((user, i) => {
-                            const { _id, name, role, email } = user || {};
+                            const { _id, name, avatar, role, email } = user || {};
                             console.log(_id);
                             return (
                               <tr key={_id}>
@@ -157,7 +145,7 @@ const AllUsers = () => {
                                   <span className="border block  w-[60px] h-[60px] relative rounded overflow-hidden">
                                     <img
                                       style={{ objectFit: "cover" }}
-                                      src="../../../assets/male.png"
+                                      src={avatar ? avatar : userImage}
                                       fill={true}
                                       alt="user Phone"
                                     />

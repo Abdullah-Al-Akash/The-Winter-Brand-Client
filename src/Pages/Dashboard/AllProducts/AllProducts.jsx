@@ -113,20 +113,7 @@ const AllProducts = () => {
       <h1 className="text-center text-xl font-extrabold p-3">
         Your All Products
       </h1>
-      <div className="relative mx-auto w-[80%] flex justify-center my-8">
-        <input
-          type="text"
-          name="search_text"
-          placeholder="search here..."
-          className="bg-white py-3 w-full pl-14 border-2 rounded-full outline-none border-stone-300 text-black"
-        />
-        <button
-          type="submit"
-          className="absolute top-1/2 -translate-y-1/2 left-5 text-stone-300"
-        >
-          <FaSearch></FaSearch>
-        </button>
-      </div>
+
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}

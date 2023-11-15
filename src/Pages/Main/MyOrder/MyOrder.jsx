@@ -1,5 +1,6 @@
 import React from "react";
 import { FaDownload, FaEye } from "react-icons/fa";
+import { IoIosStar } from "react-icons/io";
 
 const MyOrder = () => {
   // Todo When My Order Zero Handle You have no order yet!
@@ -18,6 +19,7 @@ const MyOrder = () => {
               <th className="text-center">Address</th>
               <th className="text-center">Order Date</th>
               <th className="text-center ">Order Status</th>
+              <th className="text-center ">Review</th>
               <th className="text-center ">Invoice</th>
             </tr>
           </thead>
@@ -29,6 +31,15 @@ const MyOrder = () => {
             <td>Mymensingh</td>
             <td>Order Status </td>
             <td>Transaction Id</td>
+            <td>
+              {" "}
+              <button className="rounded btn-sm bg-black text-white flex items-center mx-auto">
+                Add Review
+                <span className="ps-1">
+                  <IoIosStar></IoIosStar>
+                </span>{" "}
+              </button>
+            </td>
             <td className="">
               <button className="rounded btn-sm bg-black text-white flex items-center mx-auto">
                 See invoice{" "}

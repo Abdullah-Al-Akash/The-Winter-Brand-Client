@@ -16,7 +16,6 @@ const InvoicePDF = () => {
         <div className="admin-info flex flex-col gap-2">
           <p>The Winter Brand</p>
           <p>1225 richards st Joliet Illinois</p>
-          <p>Add Phone Number</p>
           <p>info@thewinterbrand.com</p>
         </div>
         <div className="customer-info flex justify-between items-start">

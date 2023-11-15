@@ -29,26 +29,21 @@ const sizes = [
 const Subscription = () => {
   const navigate = useNavigate();
   const { toggleDrawer } = useContext(AuthContext);
-  const { setCheckoutData } = useCheckoutData()
+  const { setControl, control } = useCheckoutData()
   const [sub, setSub] = useState("me");
   const [gender, setGender] = useState("male");
   const [plan, setPlan] = useState("plan1");
   const [sizeName, setSizeName] = useState("Adult");
   const [quantity, setQuantity] = useState("1");
-  const [setected, setSetected] = useState("S1");
+  const [selected, setSelected] = useState("S1");
   const [giftRecipientEmail, setGiftRecipientEmail] = useState(null)
   const [giftMessageDate, setGiftMessageDate] = useState(null)
   const [giftMessage, setGiftMessage] = useState(null)
   const [shippingDate, setShippingDate] = useState(null)
 
+
   const handleSubmit = () => {
 
-
-
-
-    if (sub === "me") {
-
-    }
     const data = sub === "me" ? {
       type: sub === "me" && "personal",
       gender: gender,
@@ -56,7 +51,7 @@ const Subscription = () => {
       duration: plan === "plan1" ? "payment" : "subscription",
       quantity: quantity === "1" ? "bundle_one" : "bundle_two",
       price: quantity === "1" ? 49 : 90,
-      setected: setected === "S1" ? ["Neutral Color"] : ["Neutral Color", "Wild and Colorful"]
+      selected: selected === "S1" ? ["Neutral Color"] : ["Neutral Color", "Wild and Colorful"]
     } : {
       type: "gift",
       gender: gender,
@@ -68,17 +63,20 @@ const Subscription = () => {
       duration: plan === "plan1" ? "payment" : "subscription",
       quantity: quantity === "1" ? "bundle_one" : "bundle_two",
       price: quantity === "1" ? 49 : 90,
-      setected: setected === "S1" ? ["Neutral Color"] : ["Neutral Color", "Wild and Colorful"]
+      selected: selected === "S1" ? ["Neutral Color"] : ["Neutral Color", "Wild and Colorful"]
     }
+
 
     localStorage.setItem("checkout", JSON.stringify(data))
 
+    setControl(!control)
 
     toggleDrawer()
     return navigate("/checkout")
 
 
   }
+
   return (
     <>
       <div className="mt-5 mb-3">
@@ -345,8 +343,8 @@ const Subscription = () => {
         </h3>
         <div className="w-full flex gap-3">
           <div
-            onClick={() => (quantity === "1" ? setSetected("S1") : "")}
-            className={`${setected === "S1"
+            onClick={() => (quantity === "1" ? setSelected("S1") : "")}
+            className={`${selected === "S1"
               ? "bg-black text-white"
               : quantity === "2" && "bg-black text-white"
               } duration-200 my-2 border  rounded-lg hover:border-black w-full flex flex-col gap-3`}
@@ -362,8 +360,8 @@ const Subscription = () => {
             </div>
           </div>
           <div
-            onClick={() => (quantity === "1" ? setSetected("S2") : "")}
-            className={`${setected === "S2"
+            onClick={() => (quantity === "1" ? setSelected("S2") : "")}
+            className={`${selected === "S2"
               ? "bg-black text-white"
               : quantity === "2" && "bg-black text-white"
               } duration-200 my-2 border rounded-lg hover:border-black w-full flex flex-col gap-3`}

@@ -1,71 +1,90 @@
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
+const CheckoutForm = ({ amount, clientSecret, isSubscription }) => {
+  const { axiosSecure } = useAxiosSecure();
+  const stripe = useStripe();
+  const elements = useElements();
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-// import {CardElement, Elements, useElements, useStripe} from '../../src';
+    if (!stripe || !elements) {
+      return;
+    }
 
-// import '../styles/common.css';
-import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
-import { useEffect } from 'react';
+    const cardElement = elements.getElement(CardElement);
 
-const CheckoutForm = ({ setStripe }) => {
-    const stripe = useStripe();
-    const elements = useElements();
-    useEffect(() => {
-        setStripe(stripe)
-    }, [stripe])
-    const handleSubmit = async (event) => {
-        // Block native form submission.
-        event.preventDefault();
-
-        if (!stripe || !elements) {
-            // Stripe.js has not loaded yet. Make sure to disable
-            // form submission until Stripe.js has loaded.
-            return;
-        }
-
-        // Get a reference to a mounted CardElement. Elements knows how
-        // to find your CardElement because there can only ever be one of
-        // each type of element.
-        const card = elements.getElement(CardElement);
-
-        if (card == null) {
-            return;
-        }
-
-        // Use your card Element with other Stripe.js APIs
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card,
+    if (cardElement == null) {
+      return;
+    }
+    try {
+      if (isSubscription) {
+        const { paymentMethod, error } = await stripe.createPaymentMethod({
+          type: "card",
+          card: cardElement,
         });
 
         if (error) {
-            console.log('[error]', error);
-        } else {
-            console.log('[PaymentMethod]', paymentMethod);
+          console.error("Error creating payment method:", error);
+          return;
         }
-    };
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <CardElement
-                options={{
-                    style: {
-                        base: {
-                            fontSize: '16px',
-                            color: '#424770',
-                            '::placeholder': {
-                                color: '#aab7c4',
-                            },
-                        },
-                        invalid: {
-                            color: '#9e2146',
-                        },
-                    },
-                }}
-            />
+        const response = await axiosSecure.post("/subscribe", {
+          name: "babu",
+          email: "babubhaiya@gmail.com",
+          paymentMethod: paymentMethod.id,
+          amount,
+        });
 
-        </form>
-    );
+      } else {
+        const { paymentIntent, error: confirmError } =
+          await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                name: "babu",
+                email: "babubhaiya@gmail.com",
+              },
+            },
+          });
+
+        if (confirmError) {
+          console.error("Error confirming card payment:", confirmError);
+          return;
+        }
+
+        console.log("PaymentIntent:", paymentIntent);
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <CardElement
+        options={{
+          style: {
+            base: {
+              fontSize: "16px",
+              color: "#424770",
+              "::placeholder": {
+                color: "#aab7c4",
+              },
+            },
+            invalid: {
+              color: "#9e2146",
+            },
+          },
+        }}
+      />
+
+      <button className="btn btn-info btn-sm mt-5 text-white" type="submit">
+        {isSubscription ? "Subscribe" : "Pay"}
+      </button>
+    </form>
+  );
 };
 
-export default CheckoutForm
+export default CheckoutForm;

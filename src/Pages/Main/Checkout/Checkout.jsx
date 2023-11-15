@@ -10,38 +10,39 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 
-const stripePromise = loadStripe(import.meta.env.VITE_Publishable_key)
+const stripePromise = loadStripe(import.meta.env.VITE_Publishable_key);
 
 const Checkout = () => {
-  const { axiosSecure } = useAxiosSecure()
-  const [stripe, setStripe] = useState(null)
+  const { axiosSecure } = useAxiosSecure();
+  const [stripe, setStripe] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState("United States");
   const [selectedState, setSelectedState] = useState("");
   const [offer, setOffer] = useState(false);
   const [numberMassage, setNumberMassage] = useState(false);
   const [emailMassage, setEmailMassage] = useState(false);
   // const [stripePromise, setStripePromise] = useState(null)
-  const [clientSecret, setClientSecret] = useState(null)
-  const [amount, setAmount] = useState(0)
-  const { checkoutData } = useCheckoutData()
-
-  console.log(checkoutData)
+  const [clientSecret, setClientSecret] = useState(null);
+  const [amount, setAmount] = useState(0);
+  const { checkoutData } = useCheckoutData();
+  const [isSubscription, setIsSubscription] = useState(true);
   useEffect(() => {
-    // setStripePromise()
     if (checkoutData) {
-      const amount = Math.round(checkoutData.price * 100)
-      setAmount(amount)
+      const amount = Math.round(checkoutData.price * 100);
+      setAmount(amount);
     }
-  }, [checkoutData])
+  }, [checkoutData]);
 
   useEffect(() => {
-    axiosSecure.post("/payment", {
-      amount
-    })
-      .then(res => {
-        setClientSecret(res?.data?.data?.client_secret)
-      })
-  }, [amount, checkoutData])
+    if (!isSubscription) {
+      axiosSecure
+        .post("/payment", {
+          amount,
+        })
+        .then((res) => {
+          setClientSecret(res?.data?.data?.client_secret);
+        });
+    }
+  }, [amount, checkoutData]);
 
   const countries = {
     "United States": [
@@ -156,8 +157,12 @@ const Checkout = () => {
     };
     console.log(obj);
   };
-
-
+  const handleUnsubscribe = async () => {
+    const response = await axiosSecure.post("/unsubscribe", {
+      subscriptionId: "sub_1OCZbYKdkM5q6ytT67l4LAPO",
+    });
+    console.log(response);
+  };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
       <div className="border-t border-r border-gray-500">
@@ -356,13 +361,11 @@ const Checkout = () => {
                   </div>
                 </div>
                 <h2 className="text-xl font-semibold">Payment</h2>
-                {
-                  clientSecret && stripePromise && (
-                    <Elements stripe={stripePromise} options={{ clientSecret }}>
-                      <CheckoutForm setStripe={setStripe} />
-                    </Elements>)
-
-                }
+                {/* {clientSecret && stripePromise && (
+                  <Elements stripe={stripePromise} options={{ clientSecret }}>
+                    <CheckoutForm setStripe={setStripe} />
+                  </Elements>
+                )} */}
 
                 {/* TODO  */}
               </div>
@@ -370,13 +373,27 @@ const Checkout = () => {
                 type="submit"
                 value="Summit"
                 disabled={!stripe}
-                className={`${!stripe && "cursor-not-allowed"} bg-[#FF4500] text-white transition-all ease-in-out duration-500 hover:text-[#FF4500] hover:bg-black md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px] cursor-pointer`}
+                className={`${
+                  !stripe && "cursor-not-allowed"
+                } bg-[#FF4500] text-white transition-all ease-in-out duration-500 hover:text-[#FF4500] hover:bg-black md:px-14 md:text-xl px-10 font-semibold py-3 rounded-[50px] cursor-pointer`}
               />
             </form>
+            <button onClick={handleUnsubscribe}>Unsubscribe</button>
           </div>
         </div>
       </div>
       <div className="bg-[#F5F5F5] border-t border-gray-500 sticky top-[50px] z-10">
+        <div className="p-4 text-center">
+          {stripePromise && (
+            <Elements stripe={stripePromise}>
+              <CheckoutForm
+                amount={amount}
+                clientSecret={clientSecret}
+                isSubscription={isSubscription}
+              />
+            </Elements>
+          )}
+        </div>
         <div className="max-w-[600px] me-auto p-5 ">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nostrum
           dignissimos officia eos delectus? Sunt, ullam consequatur maiores

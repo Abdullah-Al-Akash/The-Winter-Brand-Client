@@ -3,7 +3,6 @@ import AdminContactModal from "../../../Component/Dashboard/AdminContactModal/Ad
 import { useEffect } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loading from "../../../Sheard/Loading/Loading";
-
 const AdminContact = () => {
   const [item, setItem] = useState({});
   const { axiosSecure } = useAxiosSecure();
@@ -40,6 +39,7 @@ const AdminContact = () => {
     axiosSecure
       .get("/get-all-contacts")
       .then((res) => {
+        console.log(res?.data?.data);
         setItems(res?.data?.data);
         setLoading(false);
       })
@@ -73,12 +73,15 @@ const AdminContact = () => {
           <tbody>
             {/* row 1 */}
             {items?.map((item, i) => {
+              const currentDate = new Date(item?.need);
+              const formattedDate = currentDate.toLocaleDateString();
+              console.log(formattedDate);
               return (
                 <tr className="text-center">
                   <th>{i + 1}</th>
                   <td>{item?.name}</td>
                   <td>{item?.email}</td>
-                  <td>{item?.need}</td>
+                  <td>{formattedDate}</td>
                   <td>
                     {" "}
                     <button

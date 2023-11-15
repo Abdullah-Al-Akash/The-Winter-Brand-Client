@@ -3,16 +3,13 @@ import React, { useEffect } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
 import Loading from "../../../Sheard/Loading/Loading";
+import EmailModal from "../../../Component/Dashboard/EmailModal/EmailModal";
 
 const EmailMarketing = () => {
   const { axiosSecure } = useAxiosSecure();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const items = [
-  //   { email: "abtahi@gmail.com", userId: "dx3f5v40s53f4gds34g" },
-  //   { email: "akash@gmail.com", userId: "as35c40sa3c40a35sc4" },
-  //   { email: "biplop@gmail.com", userId: "gh4jg420ghf0n4g534bv" },
-  // ];
+
   useEffect(() => {
     axiosSecure
       .get("/get-email-marketing-data")
@@ -30,6 +27,14 @@ const EmailMarketing = () => {
   return (
     <div className="max-w-[1200px] mx-auto">
       <h2 className="text-center my-10 md:text-5xl text-xl">Email Marketing</h2>
+      <div className="text-end mb-3">
+        <button
+          className="border-b"
+          onClick={() => document.getElementById("my_modal_4").showModal()}
+        >
+          All EMAIL
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="table border">
           {/* head */}
@@ -53,6 +58,7 @@ const EmailMarketing = () => {
           </tbody>
         </table>
       </div>
+      <EmailModal items={items} title="All Email"></EmailModal>
     </div>
   );
 };

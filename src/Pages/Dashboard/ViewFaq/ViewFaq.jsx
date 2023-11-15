@@ -3,11 +3,13 @@ import { Accordion, AccordionItem } from "@szhsin/react-accordion";
 import { BsTrash } from "react-icons/bs";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loading from "../../../Sheard/Loading/Loading";
+import Swal from "sweetalert2";
 
 const ViewFaq = () => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
   const { axiosSecure } = useAxiosSecure();
+  const [control, setControl] = useState(false);
   // const items = [
   //   {
   //     question: "What is Lorem Ipsum?",
@@ -44,13 +46,30 @@ const ViewFaq = () => {
     axiosSecure
       .get("/get-faqs")
       .then((res) => {
-        setItems(res?.data?.data || []);
+        setItems(res?.data?.data);
         setLoading(false);
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [control]);
+  const handleDeleteFAQ = (id) => {
+    axiosSecure
+      .delete(`delete-layout?type=FAQ&id=${id}`)
+      .then((res) => {
+        if (res?.data?.success) {
+          Swal.fire({
+            title: "Delete!",
+            text: "Delete FAQ Successfully.",
+            icon: "success",
+          });
+          setControl(!control);
+        }
+      })
+      .catch((err) => {
+        console.log(err?.message);
+      });
+  };
   if (loading) {
     return <Loading></Loading>;
   }
@@ -60,41 +79,44 @@ const ViewFaq = () => {
       <Accordion className="grid grid-cols-1 gap-5  my-[50px]">
         {items?.map((item, i) => {
           return (
-            <div key={i}
-              className={`${i + 1 == 1
-                ? " border-green-400 border-b"
-                : i + 1 == 2
+            <div
+              key={i}
+              className={`${
+                i + 1 == 1
+                  ? " border-green-400 border-b"
+                  : i + 1 == 2
                   ? " border-blue-400 border-b"
                   : i + 1 == 3
-                    ? " border-red-400 border-b"
-                    : i + 1 == 4
-                      ? " border-yellow-400 border-b"
-                      : (i + 1) % 4 === 1
-                        ? " border-amber-800 border-b"
-                        : (i + 1) % 4 === 2
-                          ? " border-blue-800 border-b"
-                          : (i + 1) % 4 === 3
-                            ? "border-green-400 border-b"
-                            : "border-red-400 border-b"
-                }  flex justify-between items-center`}
+                  ? " border-red-400 border-b"
+                  : i + 1 == 4
+                  ? " border-yellow-400 border-b"
+                  : (i + 1) % 4 === 1
+                  ? " border-amber-800 border-b"
+                  : (i + 1) % 4 === 2
+                  ? " border-blue-800 border-b"
+                  : (i + 1) % 4 === 3
+                  ? "border-green-400 border-b"
+                  : "border-red-400 border-b"
+              }  flex justify-between items-center`}
             >
               <AccordionItem
-                className={`${i + 1 == 1
-                  ? "border-l-[10px] px-2 border-green-400"
-                  : i + 1 == 2
+                className={`${
+                  i + 1 == 1
+                    ? "border-l-[10px] px-2 border-green-400"
+                    : i + 1 == 2
                     ? "border-l-[10px] px-2 border-blue-400"
                     : i + 1 == 3
-                      ? "border-l-[10px] px-2 border-red-400"
-                      : i + 1 == 4
-                        ? "border-l-[10px] px-2 border-yellow-400"
-                        : (i + 1) % 4 === 1
-                          ? "border-l-[10px] px-2 border-amber-800"
-                          : (i + 1) % 4 === 2
-                            ? "border-l-[10px] px-2 border-blue-800"
-                            : (i + 1) % 4 === 3
-                              ? "border-green-400"
-                              : "border-red-400"
-                  } md:text-2xl`}
+                    ? "border-l-[10px] px-2 border-red-400"
+                    : i + 1 == 4
+                    ? "border-l-[10px] px-2 border-yellow-400"
+                    : (i + 1) % 4 === 1
+                    ? "border-l-[10px] px-2 border-amber-800"
+                    : (i + 1) % 4 === 2
+                    ? "border-l-[10px] px-2 border-blue-800"
+                    : (i + 1) % 4 === 3
+                    ? "border-green-400"
+                    : "border-red-400"
+                } md:text-2xl`}
                 header={item?.question}
               >
                 <span className="md:text-[18px] text-[12px]">
@@ -102,7 +124,7 @@ const ViewFaq = () => {
                   {item?.body}
                 </span>
               </AccordionItem>
-              <button>
+              <button onClick={() => handleDeleteFAQ(item?.err_id)}>
                 <BsTrash></BsTrash>
               </button>
             </div>

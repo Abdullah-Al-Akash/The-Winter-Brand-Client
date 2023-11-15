@@ -154,11 +154,12 @@ const Register = () => {
                 </div>
               </div>
             </div>
-            <button
-              className="brand-btn text-white py-2 w-full my-3"
+            <input
+              className="brand-btn transition-all ease-in-out cursor-pointer w-full mx-auto my-5  py-2"
               type="submit"
+              value="Create account"
 
-            >Create account</button>
+            />
           </form>
           <p>
             Already have an Account?

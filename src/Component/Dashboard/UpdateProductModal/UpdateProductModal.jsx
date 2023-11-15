@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { AiOutlineClose } from "react-icons/ai";
@@ -6,6 +6,7 @@ import { AiOutlineClose } from "react-icons/ai";
 const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
   const { _id, product_image, product_name, quantity, price, discount } =
     updatedProduct || {};
+  const [error, setError] = useState("");
   const { axiosSecure } = useAxiosSecure();
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -16,7 +17,9 @@ const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
     const price = from?.price?.value;
     const discount = from?.discount?.value;
     const description = from?.description?.value;
-
+    if (!parseFloat(price)) {
+      return setError("Please provide valid number");
+    }
     // updated Product
     const obj = {
       product_name: name,
@@ -58,6 +61,7 @@ const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
               <label htmlFor="product_name">Name</label>
               <input
                 type="text"
+                autoComplete="off"
                 defaultValue={product_name}
                 name="product_name"
                 className="border-2 rounded-lg w-full p-2 outline-none text-[15px]"
@@ -67,18 +71,21 @@ const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
             <div className="flex flex-col justify-start items-start gap-1 my-2">
               <label htmlFor="quantity">Quantity</label>
               <input
-                type="text"
+                type="number"
                 defaultValue={quantity}
+                autoComplete="off"
                 name="quantity"
                 className="border-2 rounded-lg w-full p-2 outline-none text-[15px]"
                 placeholder="Update Product quantity"
               />
             </div>
+            <span className="text-red-500">{error}</span>
             <div className="flex flex-col justify-start items-start gap-1 my-2">
               <label htmlFor="price">price</label>
               <input
                 type="text"
                 defaultValue={price}
+                autoComplete="off"
                 name="price"
                 className="border-2 rounded-lg w-full p-2 outline-none text-[15px]"
                 placeholder="Update Product price"
@@ -87,7 +94,8 @@ const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
             <div className="flex flex-col justify-start items-start gap-1 my-2">
               <label htmlFor="discount">Discount</label>
               <input
-                type="text"
+                type="number"
+                autoComplete="off"
                 defaultValue={discount}
                 name="discount"
                 className="border-2 rounded-lg w-full p-2 outline-none text-[15px]"
@@ -98,6 +106,7 @@ const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
               <label htmlFor="description">Description</label>
 
               <textarea
+                autoComplete="off"
                 name="description"
                 id="description"
                 placeholder="Update description price"
@@ -107,7 +116,7 @@ const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
             <input
               type="submit"
               className="cursor-pointer brand-btn px-4 py-1"
-              value="value"
+              value="Update"
             />
           </form>
           <div className="modal-action justify-start ">

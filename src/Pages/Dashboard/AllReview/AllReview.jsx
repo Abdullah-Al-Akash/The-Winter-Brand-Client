@@ -22,7 +22,7 @@ const AllReview = () => {
   }, []);
   const handleViewModal = (id) => {
     const singleUserContact = items.find((item) => item?._id == id);
-    setItem(singleUserContact);
+    setItem(singleUserContact?.user_review);
   };
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -48,14 +48,14 @@ const AllReview = () => {
               return (
                 <tr key={i}>
                   <th>{i + 1}</th>
-                  <td>{item?.name}</td>
+                  <td>{item?.user_review?.name}</td>
                   <td>{item?.email}</td>
-                  <td>{item?.rating}</td>
+                  <td>{item?.user_review?.rating}</td>
                   <td>
                     <button
                       className="cursor-pointer"
                       onClick={() => {
-                        handleViewModal(item?._id),
+                        handleViewModal(item._id),
                           document.getElementById("my_modal_4").showModal();
                       }}
                     >

@@ -3,6 +3,7 @@ import { FaDownload, FaEye } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
 import ReactStars from "react-rating-star-with-type";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import { Link } from "react-router-dom";
 
 const MyOrder = () => {
   const { user } = useContext(AuthContext)
@@ -70,12 +71,14 @@ const MyOrder = () => {
                 </button>
               </td>
               <td className="">
-                <button className="rounded btn-sm bg-black text-white flex items-center mx-auto">
-                  See invoice{" "}
-                  <span className="ps-1">
-                    <FaEye />
-                  </span>{" "}
-                </button>
+                <Link to="/invoice-details">
+                  <button className="rounded btn-sm bg-black text-white flex items-center mx-auto">
+                    See invoice{" "}
+                    <span className="ps-1">
+                      <FaEye />
+                    </span>{" "}
+                  </button>
+                </Link>
               </td>
             </tr>
           </table>

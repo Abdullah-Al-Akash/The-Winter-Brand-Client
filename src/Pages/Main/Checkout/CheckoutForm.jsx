@@ -10,6 +10,7 @@ import { PiWarningCircle } from "react-icons/pi";
 
 import "./checkout.css";
 import { duration } from "moment/moment";
+import { useAuth } from "../../../AuthProvider/AuthProvider";
 
 const countries = {
   "United States": [
@@ -105,6 +106,7 @@ const CheckoutForm = ({
   const [emailMassage, setEmailMassage] = useState(false);
   const { axiosSecure } = useAxiosSecure();
   const { checkoutData } = useCheckoutData();
+  const { user } = useAuth()
 
   const stripe = useStripe();
   const elements = useElements();
@@ -180,6 +182,7 @@ const CheckoutForm = ({
             products_price: 50,
             products_quantity: 2,
             company: company,
+            email: user.email,
             contact_email: email,
             delivery_info: {
               country: selectedCountry,

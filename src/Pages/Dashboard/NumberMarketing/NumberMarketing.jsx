@@ -34,7 +34,7 @@ const NumberMarketing = () => {
           className="border-b"
           onClick={() => document.getElementById("my_modal_4").showModal()}
         >
-          All EMAIL
+          All Numbers
         </button>
       </div>
       <div className="overflow-x-auto">

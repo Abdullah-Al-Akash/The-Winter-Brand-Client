@@ -8,36 +8,7 @@ const AllReview = () => {
   const [item, setItem] = useState({});
   const { axiosSecure } = useAxiosSecure();
   const [items, setItems] = useState([]);
-  // const items = [
-  //   {
-  //     _id: 1,
-  //     rating: 5,
-  //     Name: "good review",
-  //     review: "this is a best product",
-  //     email: "test@gmail.com",
-  //   },
-  //   {
-  //     _id: 2,
-  //     rating: 5,
-  //     Name: "good review",
-  //     review: "this is a best product",
-  //     email: "test@gmail.com",
-  //   },
-  //   {
-  //     _id: 3,
-  //     rating: 5,
-  //     Name: "good review",
-  //     review: "this is a best product",
-  //     email: "test@gmail.com",
-  //   },
-  //   {
-  //     _id: 4,
-  //     rating: 5,
-  //     Name: "good review",
-  //     review: "this is a best product",
-  //     email: "test@gmail.com",
-  //   },
-  // ];
+
   useEffect(() => {
     axiosSecure
       .get("/get-all-reviews")
@@ -58,20 +29,7 @@ const AllReview = () => {
       <h1 className="text-center text-xl font-extrabold p-3">
         Your All Review
       </h1>
-      <div className="relative mx-auto w-[80%] flex justify-center my-8">
-        <input
-          type="text"
-          name="search_text"
-          placeholder="search here..."
-          className="bg-white py-3 w-full pl-14 border-2 rounded-full outline-none border-stone-300 text-black"
-        />
-        <button
-          type="submit"
-          className="absolute top-1/2 -translate-y-1/2 left-5 text-stone-300"
-        >
-          <FaSearch></FaSearch>
-        </button>
-      </div>
+
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}

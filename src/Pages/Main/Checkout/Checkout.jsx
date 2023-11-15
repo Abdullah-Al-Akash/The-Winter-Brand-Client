@@ -155,6 +155,14 @@ const Checkout = () => {
       numberMassage: numberMassage,
       emailMassage: emailMassage,
     };
+
+
+    axiosSecure.post("/create-order")
+      .then(res => {
+        if (res.data?.success) {
+
+        }
+      })
     console.log(obj);
   };
   const handleUnsubscribe = async () => {

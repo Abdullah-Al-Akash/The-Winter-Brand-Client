@@ -158,6 +158,7 @@ const Register = () => {
               className="brand-btn transition-all ease-in-out cursor-pointer w-full mx-auto my-5  py-2"
               type="submit"
               value="Create account"
+
             />
           </form>
           <p>

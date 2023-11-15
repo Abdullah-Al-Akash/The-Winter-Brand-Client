@@ -55,6 +55,7 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
   const logout = () => {
+
     return signOut(auth);
   };
   const handleTop = () => {

@@ -47,7 +47,7 @@ const AddProduct = () => {
             product_image: imgURL,
             quantity,
             discount,
-          };
+          }
           console.log(imgURL);
           axiosSecure
             .post("/create-product", updateImageFile)
@@ -61,7 +61,8 @@ const AddProduct = () => {
                   timer: 1500,
                 });
                 from.reset();
-                setLoadImage(false);navigate("/dashboard/all-products")
+                setLoadImage(false);
+                navigate("/dashboard/all-products")
                 setError("");
               } else {
                 Swal.fire({

@@ -25,17 +25,15 @@ const Checkout = () => {
   const [amount, setAmount] = useState(0);
   const { checkoutData } = useCheckoutData();
 
-
-
-  const [first_name, setFirst_name] = useState("")
-  const [last_name, setLast_name] = useState("")
-  const [company, setCompany] = useState("")
-  const [address, setAddress] = useState("")
-  const [apartment, setApartment] = useState("")
-  const [post_code, setPost_code] = useState("")
-  const [city, setCity] = useState("")
-  const [phone, setPhone] = useState("")
-  const [mobile_number, setMobile_number] = useState("")
+  const [first_name, setFirst_name] = useState("");
+  const [last_name, setLast_name] = useState("");
+  const [company, setCompany] = useState("");
+  const [address, setAddress] = useState("");
+  const [apartment, setApartment] = useState("");
+  const [post_code, setPost_code] = useState("");
+  const [city, setCity] = useState("");
+  const [phone, setPhone] = useState("");
+  const [mobile_number, setMobile_number] = useState("");
 
   // first_name, last_name, company, address, apartment, post_code, city, phone, mobile_number
 
@@ -57,7 +55,6 @@ const Checkout = () => {
         });
     }
   }, [amount, checkoutData]);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -89,13 +86,10 @@ const Checkout = () => {
       emailMassage: emailMassage,
     };
 
-
-    axiosSecure.post("/create-order")
-      .then(res => {
-        if (res.data?.success) {
-
-        }
-      })
+    axiosSecure.post("/create-order").then((res) => {
+      if (res.data?.success) {
+      }
+    });
     console.log(obj);
   };
   const handleUnsubscribe = async () => {
@@ -138,7 +132,6 @@ const Checkout = () => {
         </div>
       </div>
       <div className="bg-[#F5F5F5] border-t border-gray-500 sticky top-[50px] z-10">
-
         <div className="max-w-[600px] me-auto p-5 ">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nostrum
           dignissimos officia eos delectus? Sunt, ullam consequatur maiores

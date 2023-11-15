@@ -17,8 +17,8 @@ const ProductsCard = ({ product, handleAddToCard }) => {
   const { handleTop } = useAuth();
   const { role } = useUserRole();
   return (
-    <Link onClick={handleTop} to={`/product-details/${_id}`}>
-      <div className="flex justify-center xxl:w-96 w-full lg:mx-auto  border relative">
+    <div className="flex flex-col justify-center xxl:w-96 w-full lg:mx-auto  border relative">
+      <Link onClick={handleTop} to={`/product-details/${_id}`}>
         <span
           className={`absolute top-0 left-0 px-2  ${
             quantity <= 0 ? "bg-red-500 text-white" : "brand-bg"
@@ -50,22 +50,22 @@ const ProductsCard = ({ product, handleAddToCard }) => {
               )}
             </div>
           </div>
-          <button
-            onClick={() => handleAddToCard(product)}
-            className={`bg-black border ${
-              role == "admin" ? "cursor-not-allowed" : "cursor-pointer"
-            } text-white py-2 flex justify-center items-center gap-2`}
-            disabled={role == "admin"}
-            title={
-              role == "admin" &&
-              "You ar Login admin account. That's why yor are not add cart your cart"
-            }
-          >
-            <BsCartPlus></BsCartPlus> <span className="mt-1">Add to Cart</span>
-          </button>
         </div>
-      </div>
-    </Link>
+      </Link>
+      <button
+        onClick={() => handleAddToCard(product)}
+        className={`bg-black border ${
+          role == "admin" ? "cursor-not-allowed" : "cursor-pointer"
+        } text-white py-2 flex justify-center items-center gap-2`}
+        disabled={role == "admin"}
+        title={
+          role == "admin" &&
+          "You ar Login admin account. That's why yor are not add cart your cart"
+        }
+      >
+        <BsCartPlus></BsCartPlus> <span className="mt-1">Add to Cart</span>
+      </button>
+    </div>
   );
 };
 

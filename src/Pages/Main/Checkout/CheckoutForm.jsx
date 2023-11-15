@@ -9,6 +9,7 @@ import { FiSmartphone } from "react-icons/fi";
 import { PiWarningCircle } from "react-icons/pi";
 
 import "./checkout.css";
+import { duration } from "moment/moment";
 
 const countries = {
   "United States": [
@@ -95,37 +96,20 @@ const countries = {
 
 const CheckoutForm = ({
   amount,
-  clientSecret,
-  first_name,
-  last_name,
-  company,
-  address,
-  apartment,
-  post_code,
-  city,
-  phone,
-  mobile_number,
+  clientSecret
 }) => {
   const [selectedCountry, setSelectedCountry] = useState("United States");
-  const [selectedState, setSelectedState] = useState("");
+  const [selectedState, setSelectedState] = useState("Alabama");
   const [offer, setOffer] = useState(false);
   const [numberMassage, setNumberMassage] = useState(false);
   const [emailMassage, setEmailMassage] = useState(false);
   const { axiosSecure } = useAxiosSecure();
   const { checkoutData } = useCheckoutData();
+
   const stripe = useStripe();
   const elements = useElements();
   console.log(10, checkoutData?.duration);
-  const isDisabled =
-    !first_name ||
-    !last_name ||
-    !company ||
-    !address ||
-    !apartment ||
-    !post_code ||
-    !city ||
-    !phone ||
-    !mobile_number;
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const from = event.target;
@@ -139,35 +123,11 @@ const CheckoutForm = ({
     const city = from.city.value;
     const phone = from?.phone?.value || "";
     const mobile_number = from?.mobile_number?.value || "";
-    const obj = {
-      name: `${first_name + last_name}`,
-      product_id: "65517147483b0431d17045a0",
-      transaction_id: "af5855ads5f5f4d544e5d4de5",
-      products_price: 50,
-      products_quantity: 2,
-      company: company,
-      contact_email: email,
-      delivery_info: {
-        country: selectedCountry,
-        state: selectedState,
-        address: address,
-        postcode: post_code,
-        city: city,
-        phone: phone,
-        apartment: apartment,
-      },
-      promotions: {
-        phone_number: numberMassage ? mobile_number : null,
-        email: emailMassage ? email : null,
-      },
-    };
 
-    console.log(obj);
 
-    axiosSecure.post("/create-order").then((res) => {
-      if (res.data?.success) {
-      }
-    });
+
+
+
     if (!stripe || !elements) {
       return;
     }
@@ -208,6 +168,48 @@ const CheckoutForm = ({
               },
             },
           });
+
+        if (paymentIntent?.status === "succeeded") {
+
+
+          const order = {
+            order_type: checkoutData.duration,
+            name: `${first_name + " " + last_name}`,
+            product_id: "65534793386e8588da630524",
+            transaction_id: paymentIntent.id,
+            products_price: 50,
+            products_quantity: 2,
+            company: company,
+            contact_email: email,
+            delivery_info: {
+              country: selectedCountry,
+              state: selectedState,
+              address: address,
+              postcode: post_code,
+              city: city,
+              phone: phone,
+              apartment: apartment,
+            },
+            promotions: {
+              phone_number: numberMassage ? mobile_number : null,
+              email: emailMassage ? email : null,
+            }
+          }
+          axiosSecure.post("/create-order", order)
+            .then((res) => {
+              if (res?.data?.success) {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Order successfully",
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+              }
+            }).catch(err => console.log(err.message));
+        }
+
+        console.log(paymentIntent)
 
         if (confirmError) {
           console.error("Error confirming card payment:", confirmError);
@@ -266,7 +268,8 @@ const CheckoutForm = ({
               id="Country"
               className="w-full px-4 outline-none text-[14px]  focus:border-orange-600 relative bg-transparent"
             >
-              {Object.keys(countries).map((division, index) => {
+              <option value="" disabled>Select your country</option>
+              {Object?.keys(countries).map((division, index) => {
                 return (
                   <option key={index} value={division}>
                     {division}
@@ -284,8 +287,11 @@ const CheckoutForm = ({
             <select
               onChange={(e) => setSelectedState(e.target.value)}
               name=""
+              required
               className="w-full px-4 outline-none text-[14px]  focus:border-orange-600 relative bg-transparent"
+
             >
+              <option value="" disabled>Select your state</option>
               {countries[selectedCountry][0]?.map((state, index) => {
                 return (
                   <option key={index} value={state}>

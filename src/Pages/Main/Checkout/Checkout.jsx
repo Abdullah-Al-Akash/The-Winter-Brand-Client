@@ -38,7 +38,7 @@ const Checkout = () => {
   // first_name, last_name, company, address, apartment, post_code, city, phone, mobile_number
 
   useEffect(() => {
-    if (checkoutData) {
+    if (checkoutData?.price) {
       const amount = Math.round(checkoutData.price * 100);
       setAmount(amount);
     }
@@ -56,42 +56,7 @@ const Checkout = () => {
     }
   }, [amount, checkoutData]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const from = e.target;
-    const email = from.email.value;
-    const first_name = from.first_name.value;
-    const last_name = from.last_name.value;
-    const company = from.company.value || "";
-    const address = from.address.value;
-    const apartment = from?.apartment?.value || "";
-    const post_code = from.post_code.value;
-    const city = from.city.value;
-    const phone = from?.phone?.value || "";
-    const mobile_number = from?.mobile_number?.value || "";
-    const obj = {
-      email: email,
-      country: selectedCountry,
-      state: selectedState,
-      first_name: first_name,
-      last_name: last_name,
-      company: company,
-      address: address,
-      apartment: apartment,
-      post_code: post_code,
-      city: city,
-      phone: phone,
-      mobile_number: mobile_number,
-      numberMassage: numberMassage,
-      emailMassage: emailMassage,
-    };
 
-    axiosSecure.post("/create-order").then((res) => {
-      if (res.data?.success) {
-      }
-    });
-    console.log(obj);
-  };
   const handleUnsubscribe = async () => {
     const response = await axiosSecure.post("/unsubscribe", {
       subscriptionId: "sub_1OCdv0Iq0mLIaueHQJBG2bjn",

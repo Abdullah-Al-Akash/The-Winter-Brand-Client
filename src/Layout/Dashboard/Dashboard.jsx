@@ -116,9 +116,9 @@ const Dashboard = () => {
       link: "/dashboard/manage-order",
     },
     {
-      title: "Payments",
+      title: "Manage Subscriptions",
       src: <MdOutlinePayment className="text-base" />,
-      link: "/dashboard/payment",
+      link: "/dashboard/subscription",
     },
     {
       title: "Contacts",

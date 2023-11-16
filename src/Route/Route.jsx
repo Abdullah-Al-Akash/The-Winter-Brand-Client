@@ -32,6 +32,7 @@ import MyOrder from "../Pages/Main/MyOrder/MyOrder";
 import ProductDetails from "../Pages/Main/ProductDetails/ProductDetails";
 import InvoicePDF from "../Pages/Main/invoicePDF/invoicePDF";
 import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails";
+import Subscription from "../Pages/Dashboard/Subscription/Subscription";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -157,8 +158,8 @@ export const router = createBrowserRouter([
         element: <OrderDetails></OrderDetails>,
       },
       {
-        path: "/dashboard/payment",
-        element: <Payment></Payment>,
+        path: "/dashboard/subscription",
+        element: <Subscription></Subscription>,
       },
       {
         path: "/dashboard/contact",

@@ -39,9 +39,6 @@ const MyOrder = () => {
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
-    console.log(name, email, star, review);
-
-
 
     setOpen(false)
   }

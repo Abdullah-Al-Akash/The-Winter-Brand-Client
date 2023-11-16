@@ -39,7 +39,6 @@ const MyOrder = () => {
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
-
     setOpen(false)
   }
   return (

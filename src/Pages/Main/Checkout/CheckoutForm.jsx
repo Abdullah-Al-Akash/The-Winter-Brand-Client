@@ -213,47 +213,103 @@ const CheckoutForm = ({
           });
 
         if (paymentIntent?.status === "succeeded") {
-          const order = checkoutData.duration === "payment" ? {
-            order_type: checkoutData.duration,
-            name: `${first_name + " " + last_name}`,
-            transaction_id: paymentIntent.id,
-            products_price: checkoutData.price,
-            company: company,
-            email: user.email,
-            packages: {
-              type: checkoutData.type,
-              gender: checkoutData.gender,
-              size: checkoutData.size,
-              selected: checkoutData.selected,
-              package: checkoutData.quantity,
-            },
-            contact_email: email,
-            delivery_info: {
-              country: selectedCountry,
-              state: selectedState,
-              address: address,
-              postcode: post_code,
-              city: city,
-              phone: phone,
-              apartment: apartment,
-            },
-            promotions: {
-              phone_number: numberMassage ? mobile_number : null,
-              email: emailMassage ? email : null,
-            }
-          } : {}
-          axiosSecure.post("/create-order", order)
-            .then((res) => {
-              if (res?.data?.success) {
-                Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Order successfully",
-                  showConfirmButton: false,
-                  timer: 1500
-                });
+
+          if (checkoutData.duration === "payment") {
+            const order = {
+              order_type: checkoutData.duration,
+              name: `${first_name + " " + last_name}`,
+              transaction_id: paymentIntent.id,
+              products_price: checkoutData.price,
+              company: company,
+              email: user.email,
+              packages: {
+                type: checkoutData.type,
+                gender: checkoutData.gender,
+                size: checkoutData.size,
+                selected: checkoutData.selected,
+                package: checkoutData.quantity,
+              },
+              contact_email: email,
+              delivery_info: {
+                country: selectedCountry,
+                state: selectedState,
+                address: address,
+                postcode: post_code,
+                city: city,
+                phone: phone,
+                apartment: apartment,
+              },
+              promotions: {
+                phone_number: numberMassage ? mobile_number : null,
+                email: emailMassage ? email : null,
               }
-            }).catch(err => console.log(err.message));
+            }
+            axiosSecure.post("/create-order", order)
+              .then((res) => {
+                if (res?.data?.success) {
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Order successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                }
+              }).catch(err => console.log(err.message));
+
+          }
+
+
+          if (checkoutData.duration === "cart") {
+            axiosSecure.get(`/get-cart/${user.email}`)
+              .then(res => {
+                const order = {
+                  order_type: checkoutData.duration,
+                  name: `${first_name + " " + last_name}`,
+                  transaction_id: paymentIntent.id,
+                  cart_ids: res?.data?.data && res?.data?.data.map(item => item._id),
+                  products: res?.data?.data && res?.data?.data.map(item => {
+                    return {
+                      id: item.product_id,
+                      product_name: item.product_name,
+                      quantity: item.quantity,
+                      price: item.price,
+                    }
+                  }),
+                  company: company,
+                  email: user.email,
+                  contact_email: email,
+                  delivery_info: {
+                    country: selectedCountry,
+                    state: selectedState,
+                    address: address,
+                    postcode: post_code,
+                    city: city,
+                    phone: phone,
+                    apartment: apartment,
+                  },
+                  promotions: {
+                    phone_number: numberMassage ? mobile_number : null,
+                    email: emailMassage ? email : null,
+                  }
+                }
+                axiosSecure.post("/create-order", order)
+                  .then((res) => {
+                    if (res?.data?.success) {
+                      Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Order successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
+                    }
+                  }).catch(err => console.log(err.message));
+              })
+
+          }
+
+
         }
 
         console.log(paymentIntent)

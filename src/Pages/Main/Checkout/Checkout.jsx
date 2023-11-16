@@ -9,34 +9,16 @@ import { useCheckoutData } from "../../../context/CheckoutProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
+import { useAuth } from "../../../AuthProvider/AuthProvider";
 
 const stripePromise = loadStripe(import.meta.env.VITE_Publishable_key);
 
 const Checkout = () => {
   const { axiosSecure } = useAxiosSecure();
-
-  // const [selectedCountry, setSelectedCountry] = useState("United States");
-  // const [selectedState, setSelectedState] = useState("");
-  // const [offer, setOffer] = useState(false);
-  // const [numberMassage, setNumberMassage] = useState(false);
-  // const [emailMassage, setEmailMassage] = useState(false);
-  // const [stripePromise, setStripePromise] = useState(null)
+  const { user } = useAuth()
   const [clientSecret, setClientSecret] = useState(null);
   const [amount, setAmount] = useState(0);
   const { checkoutData } = useCheckoutData();
-
-  const [first_name, setFirst_name] = useState("");
-  const [last_name, setLast_name] = useState("");
-  const [company, setCompany] = useState("");
-  const [address, setAddress] = useState("");
-  const [apartment, setApartment] = useState("");
-  const [post_code, setPost_code] = useState("");
-  const [city, setCity] = useState("");
-  const [phone, setPhone] = useState("");
-  const [mobile_number, setMobile_number] = useState("");
-
-  // first_name, last_name, company, address, apartment, post_code, city, phone, mobile_number
-
   useEffect(() => {
     if (checkoutData?.price) {
       const amount = Math.round(checkoutData.price * 100);
@@ -45,7 +27,7 @@ const Checkout = () => {
   }, [checkoutData]);
 
   useEffect(() => {
-    if (checkoutData?.duration !== "subscription") {
+    if (checkoutData?.duration !== "subscription" && checkoutData?.duration !== "cart") {
       axiosSecure
         .post("/payment", {
           amount,
@@ -53,6 +35,30 @@ const Checkout = () => {
         .then((res) => {
           setClientSecret(res?.data?.data?.client_secret);
         });
+    }
+
+    if (checkoutData?.duration === "cart") {
+      axiosSecure.get(`/get-cart/${user?.email}`)
+        .then(res => {
+          if (res?.data?.success) {
+            const totalPrice = res?.data?.data?.reduce(
+              (acc, item) => acc + item.price * item.quantity,
+              0
+            );
+            setAmount(Math.round(totalPrice * 100))
+            if (amount) {
+              axiosSecure
+                .post("/payment", {
+                  amount,
+                })
+                .then((res) => {
+                  setClientSecret(res?.data?.data?.client_secret);
+                });
+            }
+
+          }
+        })
+
     }
   }, [amount, checkoutData]);
 

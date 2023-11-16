@@ -5,15 +5,18 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import UseGetCart from "../../../hooks/UseGetCart";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCheckoutData } from "../../../context/CheckoutProvider";
 
 const Cart = () => {
   const { user } = useAuth();
   const { axiosSecure } = useAxiosSecure();
-
+  const navigate = useNavigate()
   const { cartProduct } = UseGetCart();
   const { controlCart, setControlCart, handleTop } = useAuth();
   const [availableQuantity, setAvailableQuantity] = useState({});
+  const { checkoutData, setCheckoutData, control,
+    setControl } = useCheckoutData()
   const totalPrice = cartProduct?.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -47,6 +50,21 @@ const Cart = () => {
       }
     });
   };
+
+
+  const handleCheckout = () => {
+    try {
+      const data = {
+        duration: "cart"
+      }
+      localStorage.setItem("checkout", JSON.stringify(data))
+      setControl(!control)
+
+      navigate("/checkout")
+    } catch (error) {
+
+    }
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -137,10 +155,9 @@ const Cart = () => {
               <p>Order Total</p>
               <p>${totalPrice}</p>
             </div>
-            <button
-              className={`${
-                totalPrice === 0 ? "cursor-not-allowed" : ""
-              } brand-btn mt-5 w-full py-1`}
+            <button onClick={handleCheckout}
+              className={`${totalPrice === 0 ? "cursor-not-allowed" : ""
+                } brand-btn mt-5 w-full py-1`}
               disabled={totalPrice === 0}
             >
               Checkout

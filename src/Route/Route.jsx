@@ -100,7 +100,7 @@ export const router = createBrowserRouter([
         element: <ProductDetails></ProductDetails>,
       },
       {
-        path: "/invoice-details",
+        path: "/invoice-details/:id",
         element: <InvoicePDF></InvoicePDF>,
       },
     ],

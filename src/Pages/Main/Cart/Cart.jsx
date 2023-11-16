@@ -98,10 +98,7 @@ const Cart = () => {
                       <button
                         onClick={() => handleQuantity(item._id, "inc")}
                         className="btn hover:bg-black btn-sm text-xl bg-black text-white"
-                        disabled={
-                          item?.quantity === 1 ||
-                          item?.quantity > availableQuantity?.quantity
-                        }
+                        disabled={item?.quantity >= item?.product_quantity}
                       >
                         +
                       </button>

@@ -53,9 +53,11 @@ const ProductsCard = ({ product, handleAddToCard }) => {
       </Link>
       <button
         onClick={() => handleAddToCard(product)}
-        className={`bg-black border ${role == "admin" ? "cursor-not-allowed" : "cursor-pointer"
+        className={`bg-black border ${role == "admin" || quantity <= 0
+            ? "cursor-not-allowed"
+            : "cursor-pointer"
           } text-white py-2 flex justify-center items-center gap-2`}
-        disabled={role == "admin"}
+        disabled={role == "admin" || quantity <= 0}
         title={
           role == "admin" &&
           "You ar Login admin account. That's why yor are not add cart your cart"

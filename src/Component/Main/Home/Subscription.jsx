@@ -51,7 +51,7 @@ const Subscription = () => {
       duration: plan === "plan1" ? "payment" : "subscription",
       quantity: quantity === "1" ? "bundle_one" : "bundle_two",
       price: quantity === "1" ? 49 : 90,
-      selected: selected === "S1" ? ["Neutral Color"] : ["Neutral Color", "Wild and Colorful"]
+      selected: quantity === "1" ? selected === "S1" ? ["Neutral Color"] : ["Wild and Colorful"] : ["Neutral Color", "Wild and Colorful"]
     } : {
       type: "gift",
       gender: gender,
@@ -63,7 +63,7 @@ const Subscription = () => {
       duration: plan === "plan1" ? "payment" : "subscription",
       quantity: quantity === "1" ? "bundle_one" : "bundle_two",
       price: quantity === "1" ? 49 : 90,
-      selected: selected === "S1" ? ["Neutral Color"] : ["Neutral Color", "Wild and Colorful"]
+      selected: quantity === "1" ? selected === "S1" ? ["Neutral Color"] : ["Wild and Colorful"] : ["Neutral Color", "Wild and Colorful"]
     }
 
 

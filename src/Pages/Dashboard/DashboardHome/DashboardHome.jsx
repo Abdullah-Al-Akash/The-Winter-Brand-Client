@@ -54,7 +54,7 @@ const DashboardHome = () => {
           <h3 className="text-xl font-bold">Recent Orders</h3>
           <div className="border rounded-md mt-3">
             <div className="overflow-x-auto">
-              <table className="table w-[778px] table-md">
+              <table className="table w-[950px] table-md">
                 <thead>
                   <tr>
                     <th></th>
@@ -88,16 +88,6 @@ const DashboardHome = () => {
                     );
                   })}
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Order Status</th>
-                    <th>Transaction Id</th>
-                    <th>Price</th>
-                    <th>Email</th>
-                  </tr>
-                </tfoot>
               </table>
             </div>
           </div>
@@ -106,7 +96,7 @@ const DashboardHome = () => {
           <h3 className="text-xl font-bold">Recent Reviews</h3>
           <div className="border rounded-md mt-3">
             <div className="overflow-x-auto">
-              <table className="table table-md w-[778px]">
+              <table className="table table-md w-[950px]">
                 <thead>
                   <tr>
                     <th></th>

@@ -5,6 +5,8 @@ import ReactStars from "react-rating-star-with-type";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { IoClose } from "react-icons/io5";
+import Swal from "sweetalert2";
 
 const MyOrder = () => {
   const { user } = useContext(AuthContext)
@@ -21,24 +23,53 @@ const MyOrder = () => {
       })
   }, [])
 
-  // Todo When My Order Zero Handle You have no order yet!
-  const handleReviewModal = orderId => {
-    document.getElementById('my_modal_4').showModal();
-    console.log(orderId);
-  }
-
+  const [userName, setUserName] = useState("");
   const [star, setStar] = useState(null);
   const [review, setReview] = useState("");
-
+  const [orderID, setOrderID] = useState("");
   const onRatingChange = (nextValue) => {
     setStar(nextValue);
   };
 
-  const handleReview = (e) => {
+  const handleModal = (id, name) => {
+    setOrderID(id);
+    setUserName(name);
+    setOpen(true);
+  }
+  const handleReview = (e, id) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
+
+    const newReview = {
+      order_id: orderID,
+      rating: star,
+      name: name,
+      review: review
+    }
+    axiosSecure.post('/create-review', newReview)
+      .then(res => {
+        if (res?.data?.success) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Review Added Successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          })
+
+        }
+        else {
+          Swal.fire({
+            icon: "error",
+            title: "Warning",
+            text: "Something went wrong!",
+          });
+        }
+        from.reset();
+      })
+
     setOpen(false)
   }
   return (
@@ -64,7 +95,8 @@ const MyOrder = () => {
 
             {
               myOrder?.map(order => {
-                const { _id, name, email, order_status, delivery_info: { address }, } = order || {};
+                console.log(order);
+                const { createdAt, _id, name, email, order_status, delivery_info: { address }, } = order || {};
                 return (
 
                   <tr key={order?._id} className="text-center">
@@ -72,11 +104,12 @@ const MyOrder = () => {
                     <td>{name}</td>
                     <td>{email}</td>
                     <td>{address}</td>
-                    <td>{order_status} </td>
-                    <td>Transaction Id</td>
+                    <td>{createdAt} </td>
+                    <td>{order_status}</td>
                     <td>
                       {" "}
-                      <button onClick={() => setOpen(true)} className="rounded btn-sm bg-black text-white flex items-center mx-auto">
+                      <button onClick={() => handleModal(_id, name)} className="rounded btn-sm bg-black text-white flex items-center mx-auto" disabled={order?.user_review
+                        ? true : false}>
                         Add Review
                         <span className="ps-1">
                           <IoIosStar></IoIosStar>
@@ -102,9 +135,10 @@ const MyOrder = () => {
         </div>
       </div>
 
-      <div className={`${open ? '' : 'hidden'} fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999]`}>
-        <form onSubmit={handleReview}>
+      <div className={`${open ? '' : 'hidden'} fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}>
+        <form className="relative" onSubmit={handleReview}>
           <h1 className="text-center my-2">Please Leave a Review!</h1>
+          <span onClick={() => setOpen(false)} className="cursor-pointer bg-gray-200 rounded-full p-2 absolute -top-11 -right-10  text-xl"><IoClose /></span>
           <div>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -116,6 +150,7 @@ const MyOrder = () => {
                 placeholder="Your Name"
                 name="name"
                 required
+                defaultValue={userName}
               />
             </div>
           </div>

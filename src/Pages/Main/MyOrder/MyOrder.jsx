@@ -158,9 +158,8 @@ const MyOrder = () => {
 
       {/* review modal */}
       <div
-        className={`${
-          open ? "" : "hidden"
-        } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
+        className={`${open ? "" : "hidden"
+          } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
       >
         <form className="relative" onSubmit={handleReview}>
           <h1 className="text-center my-2">Please Leave a Review!</h1>

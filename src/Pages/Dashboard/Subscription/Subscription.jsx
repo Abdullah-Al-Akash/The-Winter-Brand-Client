@@ -5,20 +5,17 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-
-const ManageOrder = () => {
+const Subscription = () => {
     const [control, setControl] = useState(false);
     const [selectValue, setSelectValue] = useState("Pending");
     const [tap, setTap] = useState('all-order')
     const [orders, setOrders] = useState([]);
-    const [subscription, setSubscription] = useState("");
-    console.log(subscription);
     const { axiosSecure } = useAxiosSecure();
     useEffect(() => {
         axiosSecure.get('/get-orders')
             .then(res => {
-                const responseOrder = res?.data?.data;
-                const allOrders = responseOrder?.filter(order => order?.order_type === 'cart' || order?.order_type === 'payment');
+                const orderResponse = res?.data?.data;
+                const allOrders = orderResponse?.filter(order => order?.order_type === 'subscription');
                 if (tap === 'all-order') {
                     setOrders(allOrders);
                 }
@@ -39,7 +36,7 @@ const ManageOrder = () => {
                     setOrders(canceledOrders);
                 }
             })
-    }, [control, tap, subscription]);
+    }, [control, tap]);
 
     const options = [
         { value: "pending", label: "Pending" },
@@ -47,6 +44,7 @@ const ManageOrder = () => {
         { value: "returned", label: "Returned" },
         { value: "canceled", label: "Canceled" },
     ];
+
     const updateOrderStatus = (order_status, id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -72,12 +70,11 @@ const ManageOrder = () => {
         });
         //// console.log(order_status, id);
     };
-
     return (
         <div className="p-3">
             <div className="my-8 bg-slate-50 shadow rounded p-5">
                 <div className="flex gap-3 justify-between items-center mb-3">
-                    <h2 className="my-subtitle text-slate-600">All Orders</h2>
+                    <h2 className="my-subtitle text-slate-600">All Subscribers</h2>
                 </div>
                 <div className="relative">
                     <ul className="flex gap-5 items-stretch my-5 py-2">
@@ -108,8 +105,6 @@ const ManageOrder = () => {
                         <FaSearch></FaSearch>
                     </span>{" "}
                 </div>
-
-
 
                 {/* Table */}
                 <div className="overflow-x-auto mt-10">
@@ -216,4 +211,4 @@ const ManageOrder = () => {
     );
 };
 
-export default ManageOrder;
+export default Subscription;

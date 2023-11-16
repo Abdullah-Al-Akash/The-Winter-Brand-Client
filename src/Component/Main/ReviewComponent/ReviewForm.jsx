@@ -7,12 +7,7 @@ const ReviewForm = () => {
   const { axiosSecure } = useAxiosSecure();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [star, setStar] = useState(null);
-  const [review, setReview] = useState("");
-
-  const onRatingChange = (nextValue) => {
-    setStar(nextValue);
-  };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();

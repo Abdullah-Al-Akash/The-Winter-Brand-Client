@@ -109,6 +109,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
   const elements = useElements();
   console.log(10, checkoutData?.duration);
 
+  console.log("from 115", checkoutData)
   const handleSubmit = async (event) => {
     event.preventDefault();
     const from = event.target;
@@ -178,10 +179,18 @@ const CheckoutForm = ({ amount, clientSecret }) => {
           promotions: {
             phone_number: numberMassage ? mobile_number : null,
             email: emailMassage ? email : null,
-          },
-        };
-        axiosSecure
-          .post("/create-order", order)
+          }
+        }
+
+        if (checkoutData?.type === "gift") {
+          order.gift = {
+            gift_message: checkoutData.gift_message,
+            gift_recipient_email: checkoutData.gift_recipient_email,
+            gift_message_date: checkoutData.gift_message_date,
+            shipping_date: checkoutData.shipping_date
+          }
+        }
+        axiosSecure.post("/create-order", order)
           .then((res) => {
             if (res?.data?.success) {
               Swal.fire({
@@ -222,6 +231,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
                 size: checkoutData.size,
                 selected: checkoutData.selected,
                 package: checkoutData.quantity,
+
               },
               contact_email: email,
               delivery_info: {
@@ -236,10 +246,19 @@ const CheckoutForm = ({ amount, clientSecret }) => {
               promotions: {
                 phone_number: numberMassage ? mobile_number : null,
                 email: emailMassage ? email : null,
-              },
-            };
-            axiosSecure
-              .post("/create-order", order)
+              }
+            }
+
+            if (checkoutData?.type === "gift") {
+              order.gift = {
+                gift_message: checkoutData.gift_message,
+                gift_recipient_email: checkoutData.gift_recipient_email,
+                gift_message_date: checkoutData.gift_message_date,
+                shipping_date: checkoutData.shipping_date
+              }
+            }
+
+            axiosSecure.post("/create-order", order)
               .then((res) => {
                 if (res?.data?.success) {
                   Swal.fire({

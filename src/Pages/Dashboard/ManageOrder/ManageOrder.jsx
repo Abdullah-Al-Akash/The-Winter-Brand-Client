@@ -109,7 +109,7 @@ const ManageOrder = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map((order, ind) => {
+                            {orders && orders.map((order, ind) => {
                                 const currentDate = new Date(order?.createdAt);
                                 const formattedDate = currentDate.toLocaleDateString();
                                 const orderTypeCheck = order?.order_type

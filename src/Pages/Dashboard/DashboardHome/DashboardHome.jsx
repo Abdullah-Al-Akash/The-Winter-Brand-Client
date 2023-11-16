@@ -60,9 +60,9 @@ const DashboardHome = () => {
                     <th></th>
                     <th>Name</th>
                     <th>Order Status</th>
-                    <th>Transaction Id</th>
-                    <th>Price</th>
+                    <th>Transaction / subscription Id</th>
                     <th>Email</th>
+                    <th>Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -70,7 +70,7 @@ const DashboardHome = () => {
                     const {
                       name,
                       transaction_id,
-                      products_price,
+                      subscription_id,
                       contact_email,
                       order_status,
                       createdAt,
@@ -80,8 +80,8 @@ const DashboardHome = () => {
                         <th>{i + 1}</th>
                         <td>{name}</td>
                         <td>{order_status}</td>
-                        <td>{transaction_id}</td>
-                        <td>{products_price}</td>
+                        <td>{transaction_id || subscription_id}</td>
+
                         <td>{contact_email}</td>
                         <td>{moment(createdAt).fromNow()}</td>
                       </tr>
@@ -109,15 +109,15 @@ const DashboardHome = () => {
                 </thead>
                 <tbody>
                   {orderAndReviews?.reviews?.map((singleReview, i) => {
-                    const { rating, name, review, email, createdAt } =
-                      singleReview;
+                    const { rating, name, review, createdAt } =
+                      singleReview.user_review;
                     return (
                       <tr key={i}>
                         <th>{i + 1}</th>
                         <td>{name}</td>
                         <td>{rating}</td>
                         <td>{review}</td>
-                        <td>{email}</td>
+                        <td>{singleReview.email}</td>
                         <td>{moment(createdAt).fromNow()}</td>
                       </tr>
                     );

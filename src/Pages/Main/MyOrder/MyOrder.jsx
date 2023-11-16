@@ -1,13 +1,25 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaDownload, FaEye } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
 import ReactStars from "react-rating-star-with-type";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyOrder = () => {
   const { user } = useContext(AuthContext)
   const [open, setOpen] = useState(false);
+  const { axiosSecure } = useAxiosSecure();
+
+  // Load Order By Email:
+  const [myOrder, setMyOrder] = useState([]);
+  useEffect(() => {
+    axiosSecure.get(`/get-orders-by-email?email=${user?.email}`)
+      .then(res => {
+        console.log(res?.data?.data);
+        setMyOrder(res?.data?.data);
+      })
+  }, [])
 
   // Todo When My Order Zero Handle You have no order yet!
   const handleReviewModal = orderId => {
@@ -54,33 +66,42 @@ const MyOrder = () => {
               </tr>
             </thead>
 
-            <tr className="text-center">
-              <td>Order Id</td>
-              <td>User Name</td>
-              <td>email</td>
-              <td>Mymensingh</td>
-              <td>Order Status </td>
-              <td>Transaction Id</td>
-              <td>
-                {" "}
-                <button onClick={() => setOpen(true)} className="rounded btn-sm bg-black text-white flex items-center mx-auto">
-                  Add Review
-                  <span className="ps-1">
-                    <IoIosStar></IoIosStar>
-                  </span>{" "}
-                </button>
-              </td>
-              <td className="">
-                <Link to="/invoice-details">
-                  <button className="rounded btn-sm bg-black text-white flex items-center mx-auto">
-                    See invoice{" "}
-                    <span className="ps-1">
-                      <FaEye />
-                    </span>{" "}
-                  </button>
-                </Link>
-              </td>
-            </tr>
+            {
+              myOrder?.map(order => {
+                const { _id, name, email, order_status, delivery_info: { address }, } = order || {};
+                return (
+
+                  <tr key={order?._id} className="text-center">
+                    <td>{_id}</td>
+                    <td>{name}</td>
+                    <td>{email}</td>
+                    <td>{address}</td>
+                    <td>{order_status} </td>
+                    <td>Transaction Id</td>
+                    <td>
+                      {" "}
+                      <button onClick={() => setOpen(true)} className="rounded btn-sm bg-black text-white flex items-center mx-auto">
+                        Add Review
+                        <span className="ps-1">
+                          <IoIosStar></IoIosStar>
+                        </span>{" "}
+                      </button>
+                    </td>
+                    <td className="">
+                      <Link to="/invoice-details">
+                        <button className="rounded btn-sm bg-black text-white flex items-center mx-auto">
+                          See invoice{" "}
+                          <span className="ps-1">
+                            <FaEye />
+                          </span>{" "}
+                        </button>
+                      </Link>
+                    </td>
+                  </tr>)
+              }
+              )
+
+            }
           </table>
         </div>
       </div>

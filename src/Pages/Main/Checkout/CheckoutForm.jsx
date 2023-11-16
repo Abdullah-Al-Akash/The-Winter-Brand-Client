@@ -177,7 +177,7 @@ const CheckoutForm = ({
           const order = {
             order_type: checkoutData.duration,
             name: `${first_name + " " + last_name}`,
-            product_id: "65534793386e8588da630524",
+            product_id: "65533ca26b5adbb77f0b1185",
             transaction_id: paymentIntent.id,
             products_price: 50,
             products_quantity: 2,

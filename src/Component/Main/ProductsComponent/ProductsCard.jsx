@@ -20,8 +20,9 @@ const ProductsCard = ({ product, handleAddToCard }) => {
     <div className="flex flex-col justify-center xxl:w-96 w-full lg:mx-auto  border relative">
       <Link onClick={handleTop} to={`/product-details/${_id}`}>
         <span
-          className={`absolute top-0 left-0 px-2  ${quantity <= 0 ? "bg-red-500 text-white" : "brand-bg"
-            }`}
+          className={`absolute top-0 left-0 px-2  ${
+            quantity <= 0 ? "bg-red-500 text-white" : "brand-bg"
+          }`}
         >
           {quantity <= 0 ? "Out of Stock" : "In stock"}
         </span>
@@ -35,8 +36,12 @@ const ProductsCard = ({ product, handleAddToCard }) => {
             />
           </div>
           <div className="card-body">
-            <h2 className="text-[16px] font-semibold">{product_name?.length > 30 ? `${product_name?.slice(0, 30)}...` : product_name}</h2>
-            <div className="flex justify-end my-2">
+            <h2 className="text-[16px] font-semibold">
+              {product_name?.length > 30
+                ? `${product_name?.slice(0, 30)}...`
+                : product_name}
+            </h2>
+            <div className="flex justify-end my-2 h-[25px]">
               <p>
                 Regular Price:
                 <span className={discount && "line-through"}>
@@ -53,10 +58,11 @@ const ProductsCard = ({ product, handleAddToCard }) => {
       </Link>
       <button
         onClick={() => handleAddToCard(product)}
-        className={`bg-black border ${role == "admin" || quantity <= 0
+        className={`bg-black border ${
+          role == "admin" || quantity <= 0
             ? "cursor-not-allowed"
             : "cursor-pointer"
-          } text-white py-2 flex justify-center items-center gap-2`}
+        } text-white py-2 flex justify-center items-center gap-2`}
         disabled={role == "admin" || quantity <= 0}
         title={
           role == "admin" &&

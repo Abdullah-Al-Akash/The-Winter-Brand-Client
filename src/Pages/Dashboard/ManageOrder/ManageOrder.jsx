@@ -1,75 +1,35 @@
-import { FaSearch } from "react-icons/fa";
+import { FaEye, FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 
 const ManageOrder = () => {
+    const [control, setControl] = useState(false);
     const [selectValue, setSelectValue] = useState("Pending");
     const [tap, setTap] = useState('pending')
-    const orders = [
-        {
-            invoiceNo: "INV001",
-            _id: 1,
-            customerName: "John Doe",
-            itemsName: "t-shart",
-            orderDate: "2023-07-01",
-            status: "completed",
-            price: 100.0,
-            payment_via: "Credit Card",
-        },
-        {
-            invoiceNo: "INV002",
-            _id: 2,
-            customerName: "Jane Smith",
-            itemsName: "t-shart",
-            orderDate: "2023-07-02",
-            status: "pending",
-            price: 75.5,
-            payment_via: "Credit Card",
-        },
-        {
-            invoiceNo: "INV003",
-            _id: 3,
-            customerName: "Mike Johnson",
-            itemsName: "t-shart",
-            orderDate: "2023-07-03",
-            status: "retured",
-            price: 50.0,
-            payment_via: "Credit Card",
-        },
-        {
-            invoiceNo: "INV004",
-            _id: 4,
-            customerName: "Sarah Williams",
-            itemsName: "t-shart",
-            orderDate: "2023-07-04",
-            status: "canceled",
-            price: 120.75,
-            payment_via: "Credit Card",
-        },
-        {
-            invoiceNo: "INV005",
-            _id: 5,
-            customerName: "David Brown",
-            itemsName: "t-shart",
-            orderDate: "2023-07-05",
-            status: "canceled",
-            price: 90.5,
-            payment_via: "Credit Card",
-        },
-    ];
+    const [orders, setOrders] = useState([]);
+    const { axiosSecure } = useAxiosSecure();
+    useEffect(() => {
+        axiosSecure.get('/get-orders')
+            .then(res => {
+                setOrders(res?.data?.data);
+            })
+    }, [control])
 
     const options = [
         { value: "pending", label: "Pending" },
         { value: "completed", label: "Completed" },
-        { value: "retured", label: "Retured" },
+        { value: "returned", label: "Returned" },
         { value: "canceled", label: "Canceled" },
     ];
 
-    const updateOrderStatus = (status, id) => {
+    const updateOrderStatus = (order_status, id) => {
         Swal.fire({
             title: "Are you sure?",
-            text: "You are changed Delivery Status",
+            text: "You are changed Delivery order_status",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -77,11 +37,25 @@ const ManageOrder = () => {
             confirmButtonText: "Yes, update it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire("Updated!", "Delivery Status has Changed", "success");
+                const updateStatus = {
+                    order_id: id,
+                    order_status: order_status
+                }
+                axiosSecure.put(`/update-order-status`, updateStatus)
+                    .then(res => {
+                        console.log(res);
+                    })
+                Swal.fire("Updated!", "Delivery order_status has Changed", "success");
+                setControl(!control)
             }
         });
-        //// console.log(status, id);
+        //// console.log(order_status, id);
     };
+
+    // Handle Order Details:
+    const handleOrderDetails = id => {
+
+    }
     return (
         <div className="p-3">
             <div className="my-8 bg-slate-50 shadow rounded p-5">
@@ -98,10 +72,10 @@ const ManageOrder = () => {
                         <TapLink href="/seller-dashboard/order-management/retured">Retured</TapLink>
                         <TapLink href="/seller-dashboard/order-management/canceled">Canceled</TapLink> */}
 
-                        <li onClick={() => setTap("pending")} className={tap === "pending" ? "border-b-2 border-[#0621bb] text-[#0621bb] py-2 uppercase cursor-pointer" : "py-2 uppercase cursor-pointer"}>Pending</li>
+                        <li onClick={() => setTap("pending")} className={tap === "pending" ? "border-b-2 border-[#0621bb] text-[#0621bb] py-2 uppercase cursor-pointer" : "py-2 uppercase cursor-pointer"}>All Order</li>
                         <li onClick={() => setTap("complete")} className={tap === "complete" ? "border-b-2 border-[#0621bb] text-[#0621bb] py-2 uppercase cursor-pointer" : "py-2 uppercase cursor-pointer"}>Completed</li>
                         <li onClick={() => setTap("return")} className={tap === "return" ? "border-b-2 border-[#0621bb] text-[#0621bb] py-2 uppercase cursor-pointer" : "py-2 uppercase cursor-pointer"}>Pending</li>
-                        <li onClick={() => setTap("canceled")} className={tap === "canceled" ? "border-b-2 border-[#0621bb] text-[#0621bb] py-2 uppercase cursor-pointer" : "py-2 uppercase cursor-pointer"}>Pending</li>
+                        <li onClick={() => setTap("canceled")} className={tap === "canceled" ? "border-b-2 border-[#0621bb] text-[#0621bb] py-2 uppercase cursor-pointer" : "py-2 uppercase cursor-pointer"}>Return</li>
                     </ul>
                     <hr className="-mt-[29px]" />
                 </div>
@@ -126,53 +100,72 @@ const ManageOrder = () => {
                                 <th>No</th>
                                 <th>Order Id</th>
                                 <th>Customer</th>
-                                <th>Order</th>
-                                <th>Delivery Date</th>
+                                <th>Order Type</th>
+                                <th>Order Date</th>
                                 <th>Price</th>
-                                <th>Delivery Status</th>
-                                <th>Payment</th>
+                                <th>Delivery order_status</th>
+                                <th>order Details</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map((invoice, ind) => {
+                            {orders && orders.map((order, ind) => {
+                                const currentDate = new Date(order?.createdAt);
+                                const formattedDate = currentDate.toLocaleDateString();
+                                const orderTypeCheck = order?.order_type
+
+                                let orderType = '';
+                                let price = null;
+                                if (orderTypeCheck == 'cart') {
+                                    orderType = 'Purchase Product';
+                                    const totalPrice = order?.products?.reduce((accumulator, product) => accumulator + (product.quantity * product.price), 0);
+                                    price = totalPrice;
+                                }
+                                else if (orderTypeCheck == 'subscription') {
+                                    orderType = 'Yearly Payment';
+                                    price = order?.packages?.price;
+                                }
+                                else {
+                                    orderType = 'One Time Bundle';
+                                    price = order?.packages?.price;
+                                }
+
                                 const {
-                                    invoiceNo,
                                     _id,
-                                    payment_via,
-                                    customerName,
-                                    itemsName,
-                                    orderDate,
-                                    status,
-                                    price,
-                                } = invoice || {};
+                                    name,
+                                    order_status,
+                                } = order || {};
                                 const itemsNameColor = ["#FF0000", "#990099", "#003366"];
                                 return (
                                     <tr key={ind}>
-                                        <th>{_id}</th>
-                                        <td>{invoiceNo}</td>
-                                        <td>{customerName}</td>
-                                        <td>{itemsName}</td>
-                                        <td>{orderDate}</td>
-                                        <td>${price}</td>
+                                        <th>{ind + 1}</th>
+                                        <td>{_id}</td>
+                                        <td>{name}</td>
+                                        <td>{orderType}</td>
+                                        <td>{formattedDate}</td>
+                                        <td>$ {price}</td>
                                         <td>
                                             <span
-                                                className={`${status === "pending"
+                                                className={`${order_status === "pending"
                                                     ? "bg-[#fcefcc] text-[#f0ad00]"
-                                                    : status === "completed"
+                                                    : order_status === "completed"
                                                         ? "bg-[#daebdb] text-[#0a7815]"
-                                                        : status === "retured"
+                                                        : order_status === "returned"
                                                             ? "bg-[#fce6e8] text-[#e02627]"
                                                             : "text-[#597eaa] bg-[#a7c3e6]"
                                                     } px-3 py-1 rounded`}
                                             >
-                                                {status}
+                                                {order_status}
                                             </span>
                                         </td>
-                                        <td>{payment_via}</td>
+                                        <td className="text-center">
+                                            <Link to={`/dashboard/order-details/${_id}`}>
+                                                <button className="rounded-full text-xl"><FaEye /></button>
+                                            </Link>
+                                        </td>
                                         <td>
                                             <select
-                                                defaultValue={status}
+                                                defaultValue={order_status}
                                                 onChange={(e) => updateOrderStatus(e.target.value, _id)}
                                                 className="px-4 py-2 border bg-none"
                                                 name=""

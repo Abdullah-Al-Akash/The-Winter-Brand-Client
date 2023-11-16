@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import { useAuth } from "../../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import OrderDetails from "../../Pages/Dashboard/OrderDetails/OrderDetails";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);

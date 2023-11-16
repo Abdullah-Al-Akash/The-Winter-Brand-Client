@@ -5,50 +5,92 @@ import ReactStars from "react-rating-star-with-type";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { IoClose } from "react-icons/io5";
+import Swal from "sweetalert2";
+import Loading from "../../../Sheard/Loading/Loading";
 
 const MyOrder = () => {
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const { axiosSecure } = useAxiosSecure();
-
+  const [loading, setLoading] = useState(true);
   // Load Order By Email:
   const [myOrder, setMyOrder] = useState([]);
   useEffect(() => {
-    axiosSecure.get(`/get-orders-by-email?email=${user?.email}`)
-      .then(res => {
-        console.log(res?.data?.data);
+    axiosSecure
+      .get(`/get-orders-by-email?email=${user?.email}`)
+      .then((res) => {
+        // console.log(res?.data?.data);
         setMyOrder(res?.data?.data);
+        setLoading(false);
       })
-  }, [])
+      .catch((err) => {
+        console.log(err?.message);
+      });
+  }, []);
 
-  // Todo When My Order Zero Handle You have no order yet!
-  const handleReviewModal = orderId => {
-    document.getElementById('my_modal_4').showModal();
-    console.log(orderId);
-  }
-
+  const [userName, setUserName] = useState("");
   const [star, setStar] = useState(null);
   const [review, setReview] = useState("");
+  const [orderID, setOrderID] = useState("");
+  const [handleTab, setHandleTab] = useState("product order");
 
   const onRatingChange = (nextValue) => {
     setStar(nextValue);
   };
 
-  const handleReview = (e) => {
+  const handleModal = (id, name) => {
+    setOrderID(id);
+    setUserName(name);
+    setOpen(true);
+  };
+  const handleReview = (e, id) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
 
-    setOpen(false)
+    const newReview = {
+      order_id: orderID,
+      rating: star,
+      name: name,
+      review: review,
+    };
+    axiosSecure.post("/create-review", newReview).then((res) => {
+      if (res?.data?.success) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Review Added Successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Warning",
+          text: "Something went wrong!",
+        });
+      }
+      from.reset();
+    });
+
+    setOpen(false);
+  };
+  if (loading) {
+    return <Loading></Loading>;
   }
   return (
-    <div>
+    <div className="max-w-[1200px] mx-auto">
       <div className="">
-        <h1 className="text-center text-xl font-extrabold p-3 my-4">My Order</h1>
+        <h1 className="text-center text-xl font-extrabold p-3 my-4">
+          My Order
+        </h1>
+
+        {/* product order in cart page */}
 
         <div className="overflow-x-auto">
-          <table className="table w-[1280px] mx-auto">
+          <table className="table w-[1200px] mx-auto">
             {/* head */}
             <thead className="">
               <tr className="">
@@ -63,49 +105,71 @@ const MyOrder = () => {
               </tr>
             </thead>
 
-            {
-              myOrder?.map(order => {
-                const { _id, name, email, order_status, delivery_info: { address }, } = order || {};
-                return (
-
-                  <tr key={order?._id} className="text-center">
-                    <td>{_id}</td>
-                    <td>{name}</td>
-                    <td>{email}</td>
-                    <td>{address}</td>
-                    <td>{order_status} </td>
-                    <td>Transaction Id</td>
-                    <td>
-                      {" "}
-                      <button onClick={() => setOpen(true)} className="rounded btn-sm bg-black text-white flex items-center mx-auto">
-                        Add Review
+            {myOrder?.map((order) => {
+              console.log(order);
+              const currentDate = new Date(order?.createdAt);
+              const formattedDate = currentDate.toLocaleDateString();
+              const {
+                createdAt,
+                _id,
+                name,
+                email,
+                transaction_id,
+                order_status,
+                delivery_info: { address },
+              } = order || {};
+              return (
+                <tr key={order?._id} className="text-center">
+                  <td>{_id}</td>
+                  <td>{name.slice(0, 6)}...</td>
+                  <td>{email}</td>
+                  <td>{address.slice(0, 10)}...</td>
+                  <td>{formattedDate} </td>
+                  <td>{order_status}</td>
+                  <td>
+                    {" "}
+                    <button
+                      onClick={() => handleModal(_id, name)}
+                      className="rounded btn-sm bg-black text-white flex items-center mx-auto"
+                      disabled={order?.user_review ? true : false}
+                    >
+                      Add Review
+                      <span className="ps-1">
+                        <IoIosStar></IoIosStar>
+                      </span>{" "}
+                    </button>
+                  </td>
+                  <td className="">
+                    <Link to={`/invoice-details/${order?._id}`}>
+                      <button className="rounded btn-sm bg-black text-white flex items-center mx-auto">
+                        See invoice{" "}
                         <span className="ps-1">
-                          <IoIosStar></IoIosStar>
+                          <FaEye />
                         </span>{" "}
                       </button>
-                    </td>
-                    <td className="">
-                      <Link to="/invoice-details">
-                        <button className="rounded btn-sm bg-black text-white flex items-center mx-auto">
-                          See invoice{" "}
-                          <span className="ps-1">
-                            <FaEye />
-                          </span>{" "}
-                        </button>
-                      </Link>
-                    </td>
-                  </tr>)
-              }
-              )
-
-            }
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
           </table>
         </div>
       </div>
 
-      <div className={`${open ? '' : 'hidden'} fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999]`}>
-        <form onSubmit={handleReview}>
+      {/* review modal */}
+      <div
+        className={`${
+          open ? "" : "hidden"
+        } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
+      >
+        <form className="relative" onSubmit={handleReview}>
           <h1 className="text-center my-2">Please Leave a Review!</h1>
+          <span
+            onClick={() => setOpen(false)}
+            className="cursor-pointer bg-gray-200 rounded-full p-2 absolute -top-11 -right-10  text-xl"
+          >
+            <IoClose />
+          </span>
           <div>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -117,6 +181,7 @@ const MyOrder = () => {
                 placeholder="Your Name"
                 name="name"
                 required
+                defaultValue={userName}
               />
             </div>
           </div>
@@ -160,7 +225,12 @@ const MyOrder = () => {
               required
             />
           </div>
-          <button type="submit" className="btn w-full bg-black text-white hover:text-black">Submit Review</button>
+          <button
+            type="submit"
+            className="btn w-full bg-black text-white hover:text-black"
+          >
+            Submit Review
+          </button>
         </form>
       </div>
     </div>

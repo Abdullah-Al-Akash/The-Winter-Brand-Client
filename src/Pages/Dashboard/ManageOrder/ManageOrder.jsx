@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 
 const ManageOrder = () => {
+    const [control, setControl] = useState(false);
     const [selectValue, setSelectValue] = useState("Pending");
     const [tap, setTap] = useState('pending')
     const [orders, setOrders] = useState([]);
@@ -16,7 +17,7 @@ const ManageOrder = () => {
             .then(res => {
                 setOrders(res?.data?.data);
             })
-    }, [])
+    }, [control])
 
     const options = [
         { value: "pending", label: "Pending" },
@@ -45,6 +46,7 @@ const ManageOrder = () => {
                         console.log(res);
                     })
                 Swal.fire("Updated!", "Delivery order_status has Changed", "success");
+                setControl(!control)
             }
         });
         //// console.log(order_status, id);
@@ -148,7 +150,7 @@ const ManageOrder = () => {
                                                     ? "bg-[#fcefcc] text-[#f0ad00]"
                                                     : order_status === "completed"
                                                         ? "bg-[#daebdb] text-[#0a7815]"
-                                                        : order_status === "retured"
+                                                        : order_status === "returned"
                                                             ? "bg-[#fce6e8] text-[#e02627]"
                                                             : "text-[#597eaa] bg-[#a7c3e6]"
                                                     } px-3 py-1 rounded`}
@@ -157,7 +159,7 @@ const ManageOrder = () => {
                                             </span>
                                         </td>
                                         <td className="text-center">
-                                            <Link to="/order-details">
+                                            <Link to={`/dashboard/order-details/${_id}`}>
                                                 <button className="rounded-full text-xl"><FaEye /></button>
                                             </Link>
                                         </td>

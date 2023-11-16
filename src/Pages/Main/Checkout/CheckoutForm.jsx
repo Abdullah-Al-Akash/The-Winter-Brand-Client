@@ -95,10 +95,7 @@ const countries = {
   ],
 };
 
-const CheckoutForm = ({
-  amount,
-  clientSecret
-}) => {
+const CheckoutForm = ({ amount, clientSecret }) => {
   const [selectedCountry, setSelectedCountry] = useState("United States");
   const [selectedState, setSelectedState] = useState("Alabama");
   const [offer, setOffer] = useState(false);
@@ -106,7 +103,7 @@ const CheckoutForm = ({
   const [emailMassage, setEmailMassage] = useState(false);
   const { axiosSecure } = useAxiosSecure();
   const { checkoutData } = useCheckoutData();
-  const { user } = useAuth()
+  const { user, setControlCart, controlCart } = useAuth();
 
   const stripe = useStripe();
   const elements = useElements();
@@ -125,10 +122,6 @@ const CheckoutForm = ({
     const city = from.city.value;
     const phone = from?.phone?.value || "";
     const mobile_number = from?.mobile_number?.value || "";
-
-
-
-
 
     if (!stripe || !elements) {
       return;
@@ -153,7 +146,7 @@ const CheckoutForm = ({
 
         const response = await axiosSecure.post("/subscribe", {
           name: `${first_name + " " + last_name}`,
-          email: user?.email || 'anonymous',
+          email: user?.email || "anonymous",
           paymentMethod: paymentMethod.id,
           amount,
         });
@@ -185,9 +178,10 @@ const CheckoutForm = ({
           promotions: {
             phone_number: numberMassage ? mobile_number : null,
             email: emailMassage ? email : null,
-          }
-        }
-        axiosSecure.post("/create-order", order)
+          },
+        };
+        axiosSecure
+          .post("/create-order", order)
           .then((res) => {
             if (res?.data?.success) {
               Swal.fire({
@@ -195,10 +189,11 @@ const CheckoutForm = ({
                 icon: "success",
                 title: "Order successfully",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1500,
               });
             }
-          }).catch(err => console.log(err.message));
+          })
+          .catch((err) => console.log(err.message));
         console.log(response);
       } else {
         const { paymentIntent, error: confirmError } =
@@ -207,13 +202,12 @@ const CheckoutForm = ({
               card: cardElement,
               billing_details: {
                 name: `${first_name + " " + last_name}`,
-                email: user?.email || 'anonymous',
+                email: user?.email || "anonymous",
               },
             },
           });
 
         if (paymentIntent?.status === "succeeded") {
-
           if (checkoutData.duration === "payment") {
             const order = {
               order_type: checkoutData.duration,
@@ -242,9 +236,10 @@ const CheckoutForm = ({
               promotions: {
                 phone_number: numberMassage ? mobile_number : null,
                 email: emailMassage ? email : null,
-              }
-            }
-            axiosSecure.post("/create-order", order)
+              },
+            };
+            axiosSecure
+              .post("/create-order", order)
               .then((res) => {
                 if (res?.data?.success) {
                   Swal.fire({
@@ -252,67 +247,68 @@ const CheckoutForm = ({
                     icon: "success",
                     title: "Order successfully",
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1500,
                   });
                 }
-              }).catch(err => console.log(err.message));
-
+              })
+              .catch((err) => console.log(err.message));
           }
 
-
           if (checkoutData.duration === "cart") {
-            axiosSecure.get(`/get-cart/${user.email}`)
-              .then(res => {
-                const order = {
-                  order_type: checkoutData.duration,
-                  name: `${first_name + " " + last_name}`,
-                  transaction_id: paymentIntent.id,
-                  cart_ids: res?.data?.data && res?.data?.data.map(item => item._id),
-                  products: res?.data?.data && res?.data?.data.map(item => {
+            axiosSecure.get(`/get-cart/${user.email}`).then((res) => {
+              const order = {
+                order_type: checkoutData.duration,
+                name: `${first_name + " " + last_name}`,
+                transaction_id: paymentIntent.id,
+                cart_ids:
+                  res?.data?.data && res?.data?.data.map((item) => item._id),
+                products:
+                  res?.data?.data &&
+                  res?.data?.data.map((item) => {
                     return {
                       id: item.product_id,
                       product_name: item.product_name,
                       quantity: item.quantity,
                       price: item.price,
-                    }
+                    };
                   }),
-                  company: company,
-                  email: user.email,
-                  contact_email: email,
-                  delivery_info: {
-                    country: selectedCountry,
-                    state: selectedState,
-                    address: address,
-                    postcode: post_code,
-                    city: city,
-                    phone: phone,
-                    apartment: apartment,
-                  },
-                  promotions: {
-                    phone_number: numberMassage ? mobile_number : null,
-                    email: emailMassage ? email : null,
+                company: company,
+                email: user.email,
+                contact_email: email,
+                delivery_info: {
+                  country: selectedCountry,
+                  state: selectedState,
+                  address: address,
+                  postcode: post_code,
+                  city: city,
+                  phone: phone,
+                  apartment: apartment,
+                },
+                promotions: {
+                  phone_number: numberMassage ? mobile_number : null,
+                  email: emailMassage ? email : null,
+                },
+              };
+              axiosSecure
+                .post("/create-order", order)
+                .then((res) => {
+                  if (res?.data?.success) {
+                    Swal.fire({
+                      position: "center",
+                      icon: "success",
+                      title: "Order successfully",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                    setControlCart(!controlCart);
                   }
-                }
-                axiosSecure.post("/create-order", order)
-                  .then((res) => {
-                    if (res?.data?.success) {
-                      Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Order successfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                      });
-                    }
-                  }).catch(err => console.log(err.message));
-              })
-
+                })
+                .catch((err) => console.log(err.message));
+            });
           }
-
-
         }
 
-        console.log(paymentIntent)
+        console.log(paymentIntent);
 
         if (confirmError) {
           console.error("Error confirming card payment:", confirmError);
@@ -371,7 +367,9 @@ const CheckoutForm = ({
               id="Country"
               className="w-full px-4 outline-none text-[14px]  focus:border-orange-600 relative bg-transparent"
             >
-              <option value="" disabled>Select your country</option>
+              <option value="" disabled>
+                Select your country
+              </option>
               {Object?.keys(countries).map((division, index) => {
                 return (
                   <option key={index} value={division}>
@@ -392,9 +390,10 @@ const CheckoutForm = ({
               name=""
               required
               className="w-full px-4 outline-none text-[14px]  focus:border-orange-600 relative bg-transparent"
-
             >
-              <option value="" disabled>Select your state</option>
+              <option value="" disabled>
+                Select your state
+              </option>
               {countries[selectedCountry][0]?.map((state, index) => {
                 return (
                   <option key={index} value={state}>

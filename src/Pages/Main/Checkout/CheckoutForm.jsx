@@ -152,12 +152,53 @@ const CheckoutForm = ({
         }
 
         const response = await axiosSecure.post("/subscribe", {
-          name: "babu",
-          email: "babubhaiya@gmail.com",
+          name: `${first_name + " " + last_name}`,
+          email: user?.email || 'anonymous',
           paymentMethod: paymentMethod.id,
           amount,
         });
 
+        const order = {
+          order_type: checkoutData.duration,
+          name: `${first_name + " " + last_name}`,
+          subscription_id: response.data.subscriptionId,
+          products_price: checkoutData.price,
+          company: company,
+          email: user.email,
+          packages: {
+            type: checkoutData.type,
+            gender: checkoutData.gender,
+            size: checkoutData.size,
+            selected: checkoutData.selected,
+            package: checkoutData.quantity,
+          },
+          contact_email: email,
+          delivery_info: {
+            country: selectedCountry,
+            state: selectedState,
+            address: address,
+            postcode: post_code,
+            city: city,
+            phone: phone,
+            apartment: apartment,
+          },
+          promotions: {
+            phone_number: numberMassage ? mobile_number : null,
+            email: emailMassage ? email : null,
+          }
+        }
+        axiosSecure.post("/create-order", order)
+          .then((res) => {
+            if (res?.data?.success) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Order successfully",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
+          }).catch(err => console.log(err.message));
         console.log(response);
       } else {
         const { paymentIntent, error: confirmError } =
@@ -165,24 +206,27 @@ const CheckoutForm = ({
             payment_method: {
               card: cardElement,
               billing_details: {
-                name: "babu",
-                email: "babubhaiya@gmail.com",
+                name: `${first_name + " " + last_name}`,
+                email: user?.email || 'anonymous',
               },
             },
           });
 
         if (paymentIntent?.status === "succeeded") {
-
-
-          const order = {
+          const order = checkoutData.duration === "payment" ? {
             order_type: checkoutData.duration,
             name: `${first_name + " " + last_name}`,
-            product_id: "65534793386e8588da630524",
             transaction_id: paymentIntent.id,
-            products_price: 50,
-            products_quantity: 2,
+            products_price: checkoutData.price,
             company: company,
             email: user.email,
+            packages: {
+              type: checkoutData.type,
+              gender: checkoutData.gender,
+              size: checkoutData.size,
+              selected: checkoutData.selected,
+              package: checkoutData.quantity,
+            },
             contact_email: email,
             delivery_info: {
               country: selectedCountry,
@@ -197,7 +241,7 @@ const CheckoutForm = ({
               phone_number: numberMassage ? mobile_number : null,
               email: emailMassage ? email : null,
             }
-          }
+          } : {}
           axiosSecure.post("/create-order", order)
             .then((res) => {
               if (res?.data?.success) {

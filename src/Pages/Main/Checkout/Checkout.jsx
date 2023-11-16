@@ -83,15 +83,6 @@ const Checkout = () => {
                     <CheckoutForm
                       amount={amount}
                       clientSecret={clientSecret}
-                      first_name={first_name}
-                      last_name={last_name}
-                      company={company}
-                      address={address}
-                      apartment={apartment}
-                      post_code={post_code}
-                      city={city}
-                      phone={phone}
-                      mobile_number={mobile_number}
                     />
                   </Elements>
                 )}

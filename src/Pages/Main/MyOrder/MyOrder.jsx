@@ -96,7 +96,9 @@ const MyOrder = () => {
             {
               myOrder?.map(order => {
                 console.log(order);
-                const { createdAt, _id, name, email, order_status, delivery_info: { address }, } = order || {};
+                const currentDate = new Date(order?.createdAt);
+                const formattedDate = currentDate.toLocaleDateString();
+                const { createdAt, _id, name, email, transaction_id, order_status, delivery_info: { address }, } = order || {};
                 return (
 
                   <tr key={order?._id} className="text-center">
@@ -104,7 +106,7 @@ const MyOrder = () => {
                     <td>{name}</td>
                     <td>{email}</td>
                     <td>{address}</td>
-                    <td>{createdAt} </td>
+                    <td>{formattedDate} </td>
                     <td>{order_status}</td>
                     <td>
                       {" "}

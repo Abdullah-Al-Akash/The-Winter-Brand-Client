@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
+import { cookies } from "../AuthProvider/AuthProvider";
 export const CheckoutContext = createContext(null);
 
 
@@ -8,8 +9,8 @@ const CheckoutProvider = ({ children }) => {
     const [control, setControl] = useState(true)
 
     useEffect(() => {
-        const checkoutInformation = localStorage.getItem("checkout")
-        setCheckoutData(JSON.parse(checkoutInformation))
+        const checkoutData = cookies.get("data")
+        setCheckoutData(checkoutData)
     }, [control])
 
     const checkoutInfo = {

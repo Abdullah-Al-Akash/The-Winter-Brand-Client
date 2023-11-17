@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from "../../../AuthProvider/AuthProvider";
+import { cookies, cookiesOptions, useAuth } from "../../../AuthProvider/AuthProvider";
 import { useEffect } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
@@ -7,6 +7,7 @@ import { IoMdClose } from "react-icons/io";
 import UseGetCart from "../../../hooks/UseGetCart";
 import { Link, useNavigate } from "react-router-dom";
 import { useCheckoutData } from "../../../context/CheckoutProvider";
+
 
 const Cart = () => {
   const { user } = useAuth();
@@ -56,11 +57,12 @@ const Cart = () => {
       const data = {
         duration: "cart",
       };
-      localStorage.setItem("checkout", JSON.stringify(data));
+
+      cookies.set("data", data, cookiesOptions)
       setControl(!control);
 
       navigate("/checkout");
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -154,9 +156,8 @@ const Cart = () => {
             </div>
             <button
               onClick={handleCheckout}
-              className={`${
-                totalPrice === 0 ? "cursor-not-allowed" : ""
-              } brand-btn mt-5 w-full py-1`}
+              className={`${totalPrice === 0 ? "cursor-not-allowed" : ""
+                } brand-btn mt-5 w-full py-1`}
               disabled={totalPrice === 0}
             >
               Checkout

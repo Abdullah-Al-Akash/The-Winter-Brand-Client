@@ -8,10 +8,11 @@ import size4 from "./../../../assets/size4.png";
 import size5 from "./../../../assets/size5.png";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import { AuthContext, cookies, cookiesOptions } from "../../../AuthProvider/AuthProvider";
 import { useCheckoutData } from "../../../context/CheckoutProvider";
 import { Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
+
 
 const sizes = [
   {
@@ -67,7 +68,7 @@ const Subscription = () => {
     }
 
 
-    localStorage.setItem("checkout", JSON.stringify(data))
+    cookies.set("data", data, cookiesOptions)
 
     setControl(!control)
 

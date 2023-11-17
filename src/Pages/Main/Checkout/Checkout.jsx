@@ -19,6 +19,7 @@ const Checkout = () => {
   const [clientSecret, setClientSecret] = useState(null);
   const [amount, setAmount] = useState(0);
   const { checkoutData } = useCheckoutData();
+  console.log("22 checkout data", checkoutData)
   useEffect(() => {
     if (checkoutData?.price) {
       const amount = Math.round(checkoutData.price * 100);

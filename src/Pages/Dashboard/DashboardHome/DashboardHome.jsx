@@ -109,7 +109,7 @@ const DashboardHome = () => {
                 </thead>
                 <tbody>
                   {orderAndReviews?.reviews?.map((singleReview, i) => {
-                    const { rating, name, review, createdAt } =
+                    const { rating, name, review } =
                       singleReview.user_review;
                     return (
                       <tr key={i}>
@@ -118,7 +118,7 @@ const DashboardHome = () => {
                         <td>{rating}</td>
                         <td>{review}</td>
                         <td>{singleReview.email}</td>
-                        <td>{moment(createdAt).fromNow()}</td>
+                        <td>{moment(singleReview.createdAt).fromNow()}</td>
                       </tr>
                     );
                   })}

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loading from "../../../Sheard/Loading/Loading";
 import { IoArrowBackOutline } from "react-icons/io5";
+import BackButton from "../../../Sheard/BackButton/BackButton";
 const InvoicePDF = () => {
   const [loading, setLoading] = useState(false);
   const [invoiceLoading, setInvoiceLoading] = useState(true);
@@ -15,7 +16,7 @@ const InvoicePDF = () => {
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
   const { axiosSecure } = useAxiosSecure();
-  const navigate = useNavigate();
+
   useEffect(() => {
     axiosSecure
       .get(`/get-invoice/${id}`)
@@ -63,15 +64,7 @@ const InvoicePDF = () => {
   return (
     <div className="max-w-[1000px] mx-auto mt-5">
       <div className="flex justify-between">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 px-4 py-2"
-        >
-          <span>
-            <IoArrowBackOutline></IoArrowBackOutline>
-          </span>{" "}
-          Back
-        </button>
+        <BackButton></BackButton>
         <button
           onClick={downloadPDF}
           disabled={!(loading === false)}
@@ -118,11 +111,12 @@ const InvoicePDF = () => {
             <>
               <div className="customer-info flex justify-between items-start">
                 <div
-                  className={`flex flex-col gap-2 md:w-[50%] ${invoice?.order_type === "payment" ||
-                      invoice?.order_type == "subscription"
+                  className={`flex flex-col gap-2 md:w-[50%] ${
+                    invoice?.order_type === "payment" ||
+                    invoice?.order_type == "subscription"
                       ? "ms-auto"
                       : "me-auto"
-                    }`}
+                  }`}
                 >
                   <h1 className="font-bold">Bill to:</h1>
                   <p>{invoice?.name}</p>
@@ -132,34 +126,34 @@ const InvoicePDF = () => {
                 </div>
                 {(invoice?.order_type === "payment" ||
                   invoice?.order_type == "subscription") && (
-                    <div className="flex flex-col gap-2 md:w-[50%] me-auto">
+                  <div className="flex flex-col gap-2 md:w-[50%] me-auto">
+                    {" "}
+                    <h1 className="font-bold">
+                      Type: {invoice?.packages?.type}
+                    </h1>
+                    <p>
                       {" "}
-                      <h1 className="font-bold">
-                        Type: {invoice?.packages?.type}
-                      </h1>
-                      <p>
-                        {" "}
-                        Gender:{" "}
-                        {invoice?.packages?.gender == "male" ? "Male" : "Female"}
-                      </p>
-                      <p>
-                        {" "}
-                        package:{" "}
-                        {invoice?.packages?.package == "bundle_one"
-                          ? "Bundle One"
-                          : "Bundle Two"}
-                      </p>
-                      <div className="flex items-center gap-1">
-                        <span>selected: </span>
-                        {invoice?.packages?.selected?.map((select) => {
-                          return (
-                            <p className="badge badge-accent mx-1">{select}</p>
-                          );
-                        })}
-                      </div>
-                      <p> Size: {invoice?.packages?.size}</p>
+                      Gender:{" "}
+                      {invoice?.packages?.gender == "male" ? "Male" : "Female"}
+                    </p>
+                    <p>
+                      {" "}
+                      package:{" "}
+                      {invoice?.packages?.package == "bundle_one"
+                        ? "Bundle One"
+                        : "Bundle Two"}
+                    </p>
+                    <div className="flex items-center gap-1">
+                      <span>selected: </span>
+                      {invoice?.packages?.selected?.map((select) => {
+                        return (
+                          <p className="badge badge-accent mx-1">{select}</p>
+                        );
+                      })}
                     </div>
-                  )}
+                    <p> Size: {invoice?.packages?.size}</p>
+                  </div>
+                )}
               </div>
               <div className="customer-items-table">
                 <div className="overflow-x-auto">

@@ -72,31 +72,36 @@ const AdminContact = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {items?.map((item, i) => {
-              const currentDate = new Date(item?.need);
-              const formattedDate = currentDate.toLocaleDateString();
-              console.log(formattedDate);
-              return (
-                <tr className="text-center">
-                  <th>{i + 1}</th>
-                  <td>{item?.name}</td>
-                  <td>{item?.email}</td>
-                  <td>{formattedDate}</td>
-                  <td>
-                    {" "}
-                    <button
-                      className="cursor-pointer"
-                      onClick={() => {
-                        handleViewModal(item?._id),
-                          document.getElementById("my_modal_2").showModal();
-                      }}
-                    >
-                      view
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {
+              items?.length === 0 ?
+                <h5 className="text-lg">No one want to contact yet!</h5>
+                :
+                items?.map((item, i) => {
+                  const currentDate = new Date(item?.need);
+                  const formattedDate = currentDate.toLocaleDateString();
+                  console.log(formattedDate);
+                  return (
+                    <tr className="text-center">
+                      <th>{i + 1}</th>
+                      <td>{item?.name}</td>
+                      <td>{item?.email}</td>
+                      <td>{formattedDate}</td>
+                      <td>
+                        {" "}
+                        <button
+                          className="cursor-pointer"
+                          onClick={() => {
+                            handleViewModal(item?._id),
+                              document.getElementById("my_modal_2").showModal();
+                          }}
+                        >
+                          view
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+            }
           </tbody>
         </table>
       </div>

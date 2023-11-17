@@ -118,12 +118,11 @@ const InvoicePDF = () => {
             <>
               <div className="customer-info flex justify-between items-start">
                 <div
-                  className={`flex flex-col gap-2 md:w-[50%] ${
-                    invoice?.order_type === "payment" ||
-                    invoice?.order_type == "subscription"
+                  className={`flex flex-col gap-2 md:w-[50%] ${invoice?.order_type === "payment" ||
+                      invoice?.order_type == "subscription"
                       ? "ms-auto"
                       : "me-auto"
-                  }`}
+                    }`}
                 >
                   <h1 className="font-bold">Bill to:</h1>
                   <p>{invoice?.name}</p>
@@ -133,34 +132,34 @@ const InvoicePDF = () => {
                 </div>
                 {(invoice?.order_type === "payment" ||
                   invoice?.order_type == "subscription") && (
-                  <div className="flex flex-col gap-2 md:w-[50%] me-auto">
-                    {" "}
-                    <h1 className="font-bold">
-                      Type: {invoice?.packages?.type}
-                    </h1>
-                    <p>
+                    <div className="flex flex-col gap-2 md:w-[50%] me-auto">
                       {" "}
-                      Gender:{" "}
-                      {invoice?.packages?.gender == "male" ? "Male" : "Female"}
-                    </p>
-                    <p>
-                      {" "}
-                      package:{" "}
-                      {invoice?.packages?.package == "bundle_one"
-                        ? "Bundle One"
-                        : "Bundle Two"}
-                    </p>
-                    <div className="flex items-center gap-1">
-                      <span>selected: </span>
-                      {invoice?.packages?.selected?.map((select) => {
-                        return (
-                          <p className="badge badge-accent mx-1">{select}</p>
-                        );
-                      })}
+                      <h1 className="font-bold">
+                        Type: {invoice?.packages?.type}
+                      </h1>
+                      <p>
+                        {" "}
+                        Gender:{" "}
+                        {invoice?.packages?.gender == "male" ? "Male" : "Female"}
+                      </p>
+                      <p>
+                        {" "}
+                        package:{" "}
+                        {invoice?.packages?.package == "bundle_one"
+                          ? "Bundle One"
+                          : "Bundle Two"}
+                      </p>
+                      <div className="flex items-center gap-1">
+                        <span>selected: </span>
+                        {invoice?.packages?.selected?.map((select) => {
+                          return (
+                            <p className="badge badge-accent mx-1">{select}</p>
+                          );
+                        })}
+                      </div>
+                      <p> Size: {invoice?.packages?.size}</p>
                     </div>
-                    <p> Size: {invoice?.packages?.size}</p>
-                  </div>
-                )}
+                  )}
               </div>
               <div className="customer-items-table">
                 <div className="overflow-x-auto">

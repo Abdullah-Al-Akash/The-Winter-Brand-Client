@@ -46,15 +46,19 @@ const EmailMarketing = () => {
             </tr>
           </thead>
           <tbody>
-            {items?.map((item, i) => {
-              return (
-                <tr key={i} className="text-center">
-                  <th>{i + 1}</th>
-                  <td>{item?.name}</td>
-                  <td>{item?.promotions?.email}</td>
-                </tr>
-              );
-            })}
+            {
+              items?.length === 0 ?
+                <h5 className="text-lg">There is no Email yet!</h5>
+                :
+                items?.map((item, i) => {
+                  return (
+                    <tr key={i} className="text-center">
+                      <th>{i + 1}</th>
+                      <td>{item?.name}</td>
+                      <td>{item?.promotions?.email}</td>
+                    </tr>
+                  );
+                })}
           </tbody>
         </table>
       </div>

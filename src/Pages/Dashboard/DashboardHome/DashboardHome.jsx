@@ -29,23 +29,23 @@ const DashboardHome = () => {
     <main>
       <section className="relative md:grid md:grid-cols-4 gap-5 w-full">
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
-          <FaUsers className="text-5xl" />
+          <FaUsers className="text-5xl text-green-500" />
           <h4 className="text-lg">Total Customers</h4>
           <p className="text-3xl  font-bold">{totalCount.users || 0}</p>
         </div>
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
-          <MdProductionQuantityLimits className="text-5xl" />
+          <MdProductionQuantityLimits className="text-5xl text-yellow-500" />
           <h4 className="text-lg">Total Orders</h4>
           <p className="text-3xl  font-bold">{totalCount.orders || 0}</p>
         </div>
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
-          <AiFillStar className="text-5xl" />
+          <AiFillStar className="text-5xl text-orange-500" />
           <h4 className="text-lg">Total Reviews</h4>
           <p className="text-3xl  font-bold">{totalCount.reviews || 0}</p>
         </div>
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
 
-          <MdPermContactCalendar className="text-5xl" /><h4 className="text-lg">Total Contacts</h4>
+          <MdPermContactCalendar className="text-5xl text-cyan-500" /><h4 className="text-lg">Total Contacts</h4>
           <p className="text-3xl  font-bold">{totalCount.contacts || 0}</p>
         </div>
       </section>

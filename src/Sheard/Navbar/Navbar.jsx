@@ -12,6 +12,8 @@ import defaultProfile from "../../assets/profile.png";
 import { FaRegUserCircle, FaSignOutAlt } from "react-icons/fa";
 import useUserRole from "../../hooks/useUserRole";
 import UseGetCart from "../../hooks/UseGetCart";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const {
@@ -44,6 +46,15 @@ const Navbar = () => {
         console.log(err);
       });
   };
+
+  const [userImage, setUserImage] = useState('');
+  useEffect(() => {
+    // Load User Image:
+    axiosSecure.get(`/get-user-profile/${user?.email}`)
+      .then(res => {
+        setUserImage(res?.data?.data?.avatar);
+      })
+  }, [])
   return (
     <div className="border-b md:py-1 max-h-16 md:max-h-20">
       <div className="max-w-[1200px] mx-auto">
@@ -85,10 +96,9 @@ const Navbar = () => {
                       className="w-full h-full rounded-full cursor-pointer"
                     >
                       <img
-                        className="h-[42px] w-[42px]"
-                        src={`${
-                          user?.photoURL ? user?.photoURL : defaultProfile
-                        }`}
+                        className="h-[42px] w-[42px] rounded-full border border-black border-2"
+                        src={`${userImage ? userImage : defaultProfile
+                          }`}
                         alt=""
                       />
                     </label>
@@ -163,10 +173,9 @@ const Navbar = () => {
                       className="w-full h-full rounded-full cursor-pointer"
                     >
                       <img
-                        className="h-[42px] w-[42px]"
-                        src={`${
-                          user?.photoURL ? user?.photoURL : defaultProfile
-                        }`}
+                        className="h-[42px] w-[42px] rounded-full border border-black border-2"
+                        src={`${userImage ? userImage : defaultProfile
+                          }`}
                         alt=""
                       />
                     </label>

@@ -20,7 +20,7 @@ const AdminOnly = ({ children }) => {
   }
 
   // if (role === "admin") {
-  console.log("asdfalsdjfdfasdjldjfsajsdjfaksdj");
+
   return children;
   // }
   // return children;

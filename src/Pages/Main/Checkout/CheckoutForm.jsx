@@ -2,7 +2,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useCheckoutData } from "../../../context/CheckoutProvider";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiSmartphone } from "react-icons/fi";
@@ -10,7 +10,7 @@ import { PiWarningCircle } from "react-icons/pi";
 
 import "./checkout.css";
 import { duration } from "moment/moment";
-import { useAuth } from "../../../AuthProvider/AuthProvider";
+import { cookies, useAuth } from "../../../AuthProvider/AuthProvider";
 
 const countries = {
   "United States": [
@@ -104,6 +104,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
   const { axiosSecure } = useAxiosSecure();
   const { checkoutData } = useCheckoutData();
   const { user, setControlCart, controlCart } = useAuth();
+  const navigate = useNavigate()
 
   const stripe = useStripe();
   const elements = useElements();
@@ -193,6 +194,9 @@ const CheckoutForm = ({ amount, clientSecret }) => {
         axiosSecure.post("/create-order", order)
           .then((res) => {
             if (res?.data?.success) {
+              cookies.remove("data")
+              from.reset()
+              navigate("/my-order")
               Swal.fire({
                 position: "center",
                 icon: "success",
@@ -261,6 +265,9 @@ const CheckoutForm = ({ amount, clientSecret }) => {
             axiosSecure.post("/create-order", order)
               .then((res) => {
                 if (res?.data?.success) {
+                  cookies.remove("data")
+                  from.reset()
+                  navigate("/my-order")
                   Swal.fire({
                     position: "center",
                     icon: "success",
@@ -312,6 +319,8 @@ const CheckoutForm = ({ amount, clientSecret }) => {
                 .post("/create-order", order)
                 .then((res) => {
                   if (res?.data?.success) {
+                    cookies.remove("data")
+                    navigate("/my-order")
                     Swal.fire({
                       position: "center",
                       icon: "success",

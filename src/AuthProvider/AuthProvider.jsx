@@ -16,7 +16,7 @@ import { app } from "../firebase/firebase.config";
 import { baseURL } from "../hooks/useAxiosSecure";
 export const cookies = new Cookies();
 export const cookiesOptions = {
-  secure: false,
+  secure: true,
 };
 // TODO make it true
 

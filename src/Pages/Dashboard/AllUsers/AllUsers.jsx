@@ -112,7 +112,16 @@ const AllUsers = () => {
             return (
               <TabPanel key={ind}>
                 {/* search inp */}
-
+                <div className="relative mx-auto w-[80%] flex justify-center my-8">
+                  <input
+                    placeholder="search here..."
+                    type="text"
+                    className="bg-white py-3 w-full pl-14 border-2 rounded-full outline-none border-stone-300 text-black"
+                  />{" "}
+                  <span className="absolute top-1/2 -translate-y-1/2 left-5 text-stone-300">
+                    <FaSearch></FaSearch>
+                  </span>{" "}
+                </div>
                 {/* Table */}
                 <div className="overflow-x-auto mt-10">
                   <table className="table">

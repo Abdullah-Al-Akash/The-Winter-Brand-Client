@@ -37,7 +37,7 @@ const ReviewComponent = () => {
         </h4>
         <div className="px-2">
           <div className="grid grid-cols-1 md:grid-cols-3 mx-auto gap-5">
-            {reviews.map((r, id) => {
+            {reviews?.map((r, id) => {
               const { name, rating, review } = r?.user_review;
               console.log(rating);
               return (

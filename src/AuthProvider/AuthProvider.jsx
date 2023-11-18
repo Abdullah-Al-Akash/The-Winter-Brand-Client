@@ -10,6 +10,7 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  sendEmailVerification
 } from "firebase/auth";
 import axios from "axios";
 import { app } from "../firebase/firebase.config";
@@ -21,11 +22,12 @@ export const cookiesOptions = {
 // TODO make it true
 
 const githubProvider = new GithubAuthProvider();
+export const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [nevActive, setNevActive] = useState("home");
   const [controlCart, setControlCart] = useState(false);
-
+  const [updateProfileControl, setUpdateProfileControl] = useState(true);
   const [NavIsOpen, setNavIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -33,7 +35,6 @@ const AuthProvider = ({ children }) => {
   const NavToggleDrawer = () => {
     setNavIsOpen((prevState) => !prevState);
   };
-  const auth = getAuth(app);
   const [Favorite, setFavorite] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,7 +56,6 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
   const logout = () => {
-
     return signOut(auth);
   };
   const handleTop = () => {
@@ -115,6 +115,8 @@ const AuthProvider = ({ children }) => {
     handleTop,
     controlCart,
     setControlCart,
+    updateProfileControl,
+    setUpdateProfileControl,
   };
 
   return (

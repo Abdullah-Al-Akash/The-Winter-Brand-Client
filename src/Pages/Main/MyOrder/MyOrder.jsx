@@ -14,6 +14,7 @@ const MyOrder = () => {
   const [open, setOpen] = useState(false);
   const { axiosSecure } = useAxiosSecure();
   const [loading, setLoading] = useState(true);
+  const [control, setControl] = useState(true);
   // Load Order By Email:
   const [myOrder, setMyOrder] = useState([]);
   useEffect(() => {
@@ -77,11 +78,46 @@ const MyOrder = () => {
 
     setOpen(false);
   };
+  const handleUnsubscribe = (subscription_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You are changed User Role",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .post("/unsubscribe", {
+            subscriptionId: subscription_id,
+          })
+          .then((res) => {
+            Swal.fire({
+              title: "success!",
+              text: res?.data?.message,
+              icon: "success",
+              confirmButtonText: "Cool",
+            });
+            setControl(!control);
+          })
+          .catch((err) => {
+            Swal.fire({
+              title: "Error!",
+              text: "Do you want to continue",
+              icon: "error",
+              confirmButtonText: "Cool",
+            });
+          });
+      }
+    });
+  };
   if (loading) {
     return <Loading></Loading>;
   }
   return (
-    <div className="max-w-[1200px] mx-auto">
+    <div className="max-w-[1280px] mx-auto">
       <div className="">
         <h1 className="text-center text-xl font-extrabold p-3 my-4">
           My Order
@@ -90,7 +126,7 @@ const MyOrder = () => {
         {/* product order in cart page */}
 
         <div className="overflow-x-auto">
-          <table className="table w-[1200px] mx-auto">
+          <table className="table w-[1280px] mx-auto">
             {/* head */}
             <thead className="">
               <tr className="">
@@ -100,13 +136,13 @@ const MyOrder = () => {
                 <th className="text-center">Address</th>
                 <th className="text-center">Order Date</th>
                 <th className="text-center ">Order Status</th>
+                <th className="text-center">Subscription</th>
                 <th className="text-center ">Review</th>
                 <th className="text-center ">Invoice</th>
               </tr>
             </thead>
 
             {myOrder?.map((order) => {
-              console.log(order);
               const currentDate = new Date(order?.createdAt);
               const formattedDate = currentDate.toLocaleDateString();
               const {
@@ -116,8 +152,10 @@ const MyOrder = () => {
                 email,
                 transaction_id,
                 order_status,
+                subscription_id,
                 delivery_info: { address },
               } = order || {};
+              console.log(transaction_id);
               return (
                 <tr key={order?._id} className="text-center">
                   <td>{_id}</td>
@@ -126,6 +164,18 @@ const MyOrder = () => {
                   <td>{address.slice(0, 10)}...</td>
                   <td>{formattedDate} </td>
                   <td>{order_status}</td>
+                  {subscription_id ? (
+                    <td>
+                      <button
+                        className="rounded btn-sm bg-black text-white flex items-center mx-auto"
+                        onClick={() => handleUnsubscribe(subscription_id)}
+                      >
+                        Unsubscribe
+                      </button>
+                    </td>
+                  ) : (
+                    <td></td>
+                  )}
                   <td>
                     {" "}
                     <button
@@ -158,8 +208,9 @@ const MyOrder = () => {
 
       {/* review modal */}
       <div
-        className={`${open ? "" : "hidden"
-          } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
+        className={`${
+          open ? "" : "hidden"
+        } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
       >
         <form className="relative" onSubmit={handleReview}>
           <h1 className="text-center my-2">Please Leave a Review!</h1>

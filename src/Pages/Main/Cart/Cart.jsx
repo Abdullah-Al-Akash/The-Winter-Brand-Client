@@ -1,5 +1,9 @@
 import React from "react";
-import { cookies, cookiesOptions, useAuth } from "../../../AuthProvider/AuthProvider";
+import {
+  cookies,
+  cookiesOptions,
+  useAuth,
+} from "../../../AuthProvider/AuthProvider";
 import { useEffect } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
@@ -7,7 +11,6 @@ import { IoMdClose } from "react-icons/io";
 import UseGetCart from "../../../hooks/UseGetCart";
 import { Link, useNavigate } from "react-router-dom";
 import { useCheckoutData } from "../../../context/CheckoutProvider";
-
 
 const Cart = () => {
   const { user } = useAuth();
@@ -58,7 +61,7 @@ const Cart = () => {
         duration: "cart",
       };
 
-      cookies.set("data", data, cookiesOptions)
+      cookies.set("data", data, cookiesOptions);
       setControl(!control);
 
       navigate("/checkout");
@@ -72,7 +75,9 @@ const Cart = () => {
         <div className="md:col-span-8 col-span-12 p-10">
           <div className="flex justify-between items-center">
             <span className="font-bold">{cartProduct?.length} item Added</span>
-            <span className="font-bold">Total: ${totalPrice}</span>
+            <span className="font-bold">
+              Total: ${Math.round(totalPrice).toFixed(2)}
+            </span>
           </div>
           {cartProduct?.map((item, i) => {
             console.log(item);

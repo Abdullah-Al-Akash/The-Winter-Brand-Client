@@ -17,6 +17,7 @@ const useAxiosSecure = () => {
       const token = cookies.get("accessToken");
       if (token) {
         config.headers.authorization = token;
+        config.withCredentials = true;
       }
       return config;
     });

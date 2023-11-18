@@ -22,7 +22,7 @@ const AllReview = () => {
   }, []);
   const handleViewModal = (id) => {
     const singleUserContact = items.find((item) => item?._id == id);
-    setItem(singleUserContact?.user_review);
+    setItem(singleUserContact?.user_review || []);
   };
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -44,7 +44,7 @@ const AllReview = () => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item, i) => {
+            {items?.map((item, i) => {
               return (
                 <tr key={i}>
                   <th>{i + 1}</th>

@@ -256,7 +256,7 @@ const Subscription = () => {
           Select Size
         </h3>
         <div>
-          {sizes.map((size, i) => {
+          {sizes?.map((size, i) => {
             return (
               <button
                 onClick={() => setSizeName(size.name)}

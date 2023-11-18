@@ -63,7 +63,7 @@ const PendingReview = () => {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item, i) => {
+                {items?.map((item, i) => {
                   return (
                     <tr key={i}>
                       <th>{i + 1}</th>

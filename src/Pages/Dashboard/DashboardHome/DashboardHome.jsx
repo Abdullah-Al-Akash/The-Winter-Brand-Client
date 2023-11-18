@@ -11,23 +11,30 @@ import moment from "moment/moment";
 import { FaUsers } from "react-icons/fa";
 import { MdProductionQuantityLimits, MdPermContactCalendar } from "react-icons/md";
 import { AiFillStar } from "react-icons/ai";
+import { FaHandHoldingDollar } from "react-icons/fa6";
 
 const DashboardHome = () => {
   const { axiosSecure } = useAxiosSecure();
   const [totalCount, setTotalCount] = useState({});
-  const [orderAndReviews, setOrderAndReviews] = useState({});
+  const [orderAndReviews, setOrderAndReviews] = useState({ orders: [] });
 
   useEffect(() => {
     axiosSecure
       .get("/get-total-data-count")
-      .then((res) => setTotalCount(res?.data?.data || {}));
+      .then((res) => setTotalCount(res?.data?.data || { orders: [] }));
     axiosSecure
       .get("/get-recent-orders-reviews")
-      .then((res) => setOrderAndReviews(res?.data?.data || {}));
+      .then((res) => setOrderAndReviews(res?.data?.data || { orders: [] }));
   }, []);
   return (
     <main>
       <section className="relative md:grid md:grid-cols-4 gap-5 w-full">
+
+        <div className="bg-card col-span-2 row-span-2 w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
+
+          <FaHandHoldingDollar className="text-5xl text-cyan-500" /><h4 className="text-lg">Total Earnings</h4>
+          <p className="text-3xl  font-bold">{totalCount.earnings || 0}</p>
+        </div>
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
           <FaUsers className="text-5xl text-green-500" />
           <h4 className="text-lg">Total Customers</h4>
@@ -48,6 +55,7 @@ const DashboardHome = () => {
           <MdPermContactCalendar className="text-5xl text-cyan-500" /><h4 className="text-lg">Total Contacts</h4>
           <p className="text-3xl  font-bold">{totalCount.contacts || 0}</p>
         </div>
+
       </section>
       <section className="md:grid md:grid-cols-2 mt-5 gap-5">
         <div>
@@ -66,7 +74,7 @@ const DashboardHome = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orderAndReviews?.orders?.map((order, i) => {
+                  {orderAndReviews?.orders?.length <= 0 ? <p className="py-5 ps-2 text-[#cccccc]">No data available</p> : orderAndReviews && orderAndReviews?.orders?.map((order, i) => {
                     const {
                       name,
                       transaction_id,
@@ -87,6 +95,7 @@ const DashboardHome = () => {
                       </tr>
                     );
                   })}
+
                 </tbody>
               </table>
             </div>
@@ -108,7 +117,7 @@ const DashboardHome = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orderAndReviews?.reviews?.map((singleReview, i) => {
+                  {orderAndReviews?.orders?.length <= 0 ? <p className="py-5 ps-2 text-[#cccccc]">No data available</p> : orderAndReviews?.reviews?.map((singleReview, i) => {
                     const { rating, name, review } =
                       singleReview.user_review;
                     return (

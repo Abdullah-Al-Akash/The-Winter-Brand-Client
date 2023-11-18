@@ -289,10 +289,10 @@ const CheckoutForm = ({ amount, clientSecret }) => {
                 name: `${first_name + " " + last_name}`,
                 transaction_id: paymentIntent.id,
                 cart_ids:
-                  res?.data?.data && res?.data?.data.map((item) => item._id),
+                  res?.data?.data && res?.data?.data?.map((item) => item._id),
                 products:
                   res?.data?.data &&
-                  res?.data?.data.map((item) => {
+                  res?.data?.data?.map((item) => {
                     return {
                       id: item.product_id,
                       product_name: item.product_name,
@@ -401,7 +401,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
               <option value="" disabled>
                 Select your country
               </option>
-              {Object?.keys(countries).map((division, index) => {
+              {Object?.keys(countries)?.map((division, index) => {
                 return (
                   <option key={index} value={division}>
                     {division}

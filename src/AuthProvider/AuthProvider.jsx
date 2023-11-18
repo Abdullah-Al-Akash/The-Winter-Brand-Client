@@ -10,6 +10,7 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  sendEmailVerification
 } from "firebase/auth";
 import axios from "axios";
 import { app } from "../firebase/firebase.config";
@@ -21,6 +22,7 @@ export const cookiesOptions = {
 // TODO make it true
 
 const githubProvider = new GithubAuthProvider();
+export const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [nevActive, setNevActive] = useState("home");
@@ -33,7 +35,6 @@ const AuthProvider = ({ children }) => {
   const NavToggleDrawer = () => {
     setNavIsOpen((prevState) => !prevState);
   };
-  const auth = getAuth(app);
   const [Favorite, setFavorite] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

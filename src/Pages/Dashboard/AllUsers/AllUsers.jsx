@@ -92,7 +92,7 @@ const AllUsers = () => {
               "flex gap-5 items-stretch my-5 border-b border-[#0621bb6b]"
             }
           >
-            {["All Users", "user", "admin"].map((elem, ind) => {
+            {["All Users", "user", "admin"]?.map((elem, ind) => {
               return (
                 <Tab
                   key={ind}
@@ -108,7 +108,7 @@ const AllUsers = () => {
             })}
           </TabList>
 
-          {["All Users", "user", "admin"].map((elem, ind) => {
+          {["All Users", "user", "admin"]?.map((elem, ind) => {
             return (
               <TabPanel key={ind}>
                 {/* search inp */}
@@ -173,7 +173,7 @@ const AllUsers = () => {
                                     name=""
                                     id=""
                                   >
-                                    {options.map((option, i) => (
+                                    {options?.map((option, i) => (
                                       <option key={i} value={option.value}>
                                         {option.label}
                                       </option>

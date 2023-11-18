@@ -11,7 +11,8 @@ const img_hosting_Token = import.meta.env.VITE_IMAGE_UPLOAD;
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const UserProfile = () => {
-  const { user } = useContext(AuthContext);
+  const { user, updateProfileControl, setUpdateProfileControl } =
+    useContext(AuthContext);
   const imgHostingUrl = `https://api.imgbb.com/1/upload?key=${img_hosting_Token}`;
   const [loadImage, setLoadImage] = useState(false);
   const { axiosSecure } = useAxiosSecure();
@@ -86,6 +87,7 @@ const UserProfile = () => {
                 toast("Update-successfully");
                 setLoadImage(false);
                 setControl(!control);
+                setUpdateProfileControl(!updateProfileControl);
               }
             })
             .catch((err) => {

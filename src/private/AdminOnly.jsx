@@ -19,11 +19,10 @@ const AdminOnly = ({ children }) => {
     return <Loading></Loading>;
   }
 
-  // if (role === "admin") {
+  if (role === "admin") {
+    return children;
+  }
 
-  return children;
-  // }
-  // return children;
   return <Navigate state={{ from: location }} to="/" replace />;
 };
 

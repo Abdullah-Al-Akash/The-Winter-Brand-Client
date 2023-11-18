@@ -25,6 +25,7 @@ const Navbar = () => {
     handleTop,
     user,
     logout,
+    updateProfileControl,
   } = useContext(AuthContext);
   const { axiosSecure } = useAxiosSecure();
   const { role } = useUserRole();
@@ -53,7 +54,7 @@ const Navbar = () => {
     axiosSecure.get(`/get-user-profile/${user?.email}`).then((res) => {
       setUserImage(res?.data?.data?.avatar);
     });
-  }, []);
+  }, [updateProfileControl]);
   return (
     <div className="border-b md:py-1 max-h-16 md:max-h-20">
       <div className="max-w-[1200px] mx-auto">

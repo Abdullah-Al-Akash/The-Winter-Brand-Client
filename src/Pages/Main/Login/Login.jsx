@@ -8,7 +8,7 @@ import axios from "axios";
 import { baseURL } from "../../../hooks/useAxiosSecure";
 const Login = () => {
   const [toggleIcon, setToggleIcon] = useState(true);
-  const { login } = useContext(AuthContext);
+  const { login, controlCart, setControlCart } = useContext(AuthContext);
   const [errorMassage, setErrorMassage] = useState("");
   const [successMassage, setSuccessMassage] = useState("");
   const location = useLocation();
@@ -23,13 +23,15 @@ const Login = () => {
     const passwordField = form.password.value;
     login(emailField, passwordField)
       .then((result) => {
-
         const loggedUser = result.user;
-        axios.post(baseURL + "/login-user", {
-          email: loggedUser.email
-        }).then(res => "")
+        axios
+          .post(baseURL + "/login-user", {
+            email: loggedUser.email,
+          })
+          .then((res) => "");
         setSuccessMassage("login successful");
         setErrorMassage("");
+        setControlCart(!controlCart);
         navigate(from, { replace: true });
       })
       .catch((err) => {

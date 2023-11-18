@@ -14,7 +14,7 @@ const Register = () => {
   const [toggleIcon, setToggleIcon] = useState(true);
   const [errorMassage, setErrorMassage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const { signUp } = useContext(AuthContext);
+  const { signUp, controlCart, setControlCart } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { axiosSecure } = useAxiosSecure();
@@ -48,6 +48,7 @@ const Register = () => {
               if (data?.data?.success) {
                 toast("Register successful!");
                 form.reset();
+                setControlCart(!controlCart)
                 navigate(from, { replace: true });
                 setErrorMassage("");
                 setSuccessMessage("");
@@ -158,7 +159,6 @@ const Register = () => {
               className="brand-btn transition-all ease-in-out cursor-pointer w-full mx-auto my-5  py-2"
               type="submit"
               value="Create account"
-
             />
           </form>
           <p>

@@ -8,11 +8,14 @@ import size4 from "./../../../assets/size4.png";
 import size5 from "./../../../assets/size5.png";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext, cookies, cookiesOptions } from "../../../AuthProvider/AuthProvider";
+import {
+  AuthContext,
+  cookies,
+  cookiesOptions,
+} from "../../../AuthProvider/AuthProvider";
 import { useCheckoutData } from "../../../context/CheckoutProvider";
 import { Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
 
 const sizes = [
   {
@@ -30,53 +33,70 @@ const sizes = [
 const Subscription = () => {
   const navigate = useNavigate();
   const { toggleDrawer } = useContext(AuthContext);
-  const { setControl, control } = useCheckoutData()
+  const { setControl, control } = useCheckoutData();
   const [sub, setSub] = useState("me");
   const [gender, setGender] = useState("male");
   const [plan, setPlan] = useState("plan1");
   const [sizeName, setSizeName] = useState("Adult");
   const [quantity, setQuantity] = useState("1");
   const [selected, setSelected] = useState("S1");
-  const [giftRecipientEmail, setGiftRecipientEmail] = useState(null)
-  const [giftMessageDate, setGiftMessageDate] = useState(null)
-  const [giftMessage, setGiftMessage] = useState(null)
-  const [shippingDate, setShippingDate] = useState(null)
-
-
+  const [giftRecipientEmail, setGiftRecipientEmail] = useState(null);
+  const [giftMessageDate, setGiftMessageDate] = useState(null);
+  const [giftMessage, setGiftMessage] = useState(null);
+  const [shippingDate, setShippingDate] = useState(null);
+  const [errorMassage, setErrorMassage] = useState("");
   const handleSubmit = () => {
+    const data =
+      sub === "me"
+        ? {
+            type: sub === "me" && "personal",
+            gender: gender,
+            size: sizeName,
+            duration: plan === "plan1" ? "payment" : "subscription",
+            quantity: quantity === "1" ? "bundle_one" : "bundle_two",
+            price: quantity === "1" ? 49 : 90,
+            selected:
+              quantity === "1"
+                ? selected === "S1"
+                  ? ["Neutral Color"]
+                  : ["Wild and Colorful"]
+                : ["Neutral Color", "Wild and Colorful"],
+          }
+        : {
+            type: "gift",
+            gender: gender,
+            size: sizeName,
+            gift_recipient_email: giftRecipientEmail,
+            gift_message_date: giftMessageDate,
+            gift_message: giftMessage,
+            shipping_date: shippingDate,
+            duration: plan === "plan1" ? "payment" : "subscription",
+            quantity: quantity === "1" ? "bundle_one" : "bundle_two",
+            price: quantity === "1" ? 49 : 90,
+            selected:
+              quantity === "1"
+                ? selected === "S1"
+                  ? ["Neutral Color"]
+                  : ["Wild and Colorful"]
+                : ["Neutral Color", "Wild and Colorful"],
+          };
 
-    const data = sub === "me" ? {
-      type: sub === "me" && "personal",
-      gender: gender,
-      size: sizeName,
-      duration: plan === "plan1" ? "payment" : "subscription",
-      quantity: quantity === "1" ? "bundle_one" : "bundle_two",
-      price: quantity === "1" ? 49 : 90,
-      selected: quantity === "1" ? selected === "S1" ? ["Neutral Color"] : ["Wild and Colorful"] : ["Neutral Color", "Wild and Colorful"]
-    } : {
-      type: "gift",
-      gender: gender,
-      size: sizeName,
-      gift_recipient_email: giftRecipientEmail,
-      gift_message_date: giftMessageDate,
-      gift_message: giftMessage,
-      shipping_date: shippingDate,
-      duration: plan === "plan1" ? "payment" : "subscription",
-      quantity: quantity === "1" ? "bundle_one" : "bundle_two",
-      price: quantity === "1" ? 49 : 90,
-      selected: quantity === "1" ? selected === "S1" ? ["Neutral Color"] : ["Wild and Colorful"] : ["Neutral Color", "Wild and Colorful"]
+    cookies.set("data", data, cookiesOptions);
+
+    setControl(!control);
+
+    toggleDrawer();
+    return navigate("/checkout");
+  };
+  const handleEmailValidation = (value) => {
+    const emailHandle = value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailHandle)) {
+      setErrorMassage("Email are not valid");
+      return;
+    } else {
+      setErrorMassage("");
     }
-
-
-    cookies.set("data", data, cookiesOptions)
-
-    setControl(!control)
-
-    toggleDrawer()
-    return navigate("/checkout")
-
-
-  }
+  };
 
   return (
     <>
@@ -89,8 +109,9 @@ const Subscription = () => {
           {/* bg-black */}
           <button
             onClick={() => setSub("me")}
-            className={`${sub === "me" ? "bg-black text-white" : ""
-              } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-black  font-bold border`}
+            className={`${
+              sub === "me" ? "bg-black text-white" : ""
+            } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-black  font-bold border`}
           >
             <img
               className="h-[24px] w-[24px] md:w-[34px] md:h-[34px]"
@@ -101,8 +122,9 @@ const Subscription = () => {
           </button>
           <button
             onClick={() => setSub("gift")}
-            className={`${sub === "gift" ? "bg-black text-white" : ""
-              } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-black  font-bold border`}
+            className={`${
+              sub === "gift" ? "bg-black text-white" : ""
+            } duration-200 flex items-center gap-2 p-[16px] w-full rounded-lg hover:border-black  font-bold border`}
           >
             <img
               className="h-[24px] w-[24px] md:w-[34px] md:h-[34px]"
@@ -114,28 +136,36 @@ const Subscription = () => {
         </div>
         {sub === "gift" && (
           <form>
-            <h2 className="text-sm md:text-[24px] font-bold my-4">Gift Option</h2>
+            <h2 className="text-sm md:text-[24px] font-bold my-4">
+              Gift Option
+            </h2>
             <p>
               Don't worry, we won't send them any emails until the date you tell
               us to. We wouldn't want to spoil the surprise!
             </p>
             <div className="my-3">
               <label className="block text-[14px] font-bold my-2" htmlFor="">
-                Gift Recipient Email Address <span className="text-red-600">*</span>
+                Gift Recipient Email Address{" "}
+                <span className="text-red-600">*</span>
               </label>
               <input
                 className="px-4 py-2 rounded-lg outline-none border w-full"
-                type="text"
+                type="email"
                 name=""
                 value={giftRecipientEmail}
-                onChange={(e) => setGiftRecipientEmail(e.target.value)}
+                onChange={(e) => {
+                  setGiftRecipientEmail(e.target.value),
+                    handleEmailValidation(e.target.value);
+                }}
                 placeholder="Gift Recipient Email Address"
                 required
               />
+              <p className="text-red-500 mt-1">{errorMassage}</p>
             </div>
             <div className="my-3">
               <label className="block text-[14px] font-bold my-2" htmlFor="">
-                Date to Email Gift Message <span className="text-red-600">*</span>
+                Date to Email Gift Message{" "}
+                <span className="text-red-600">*</span>
               </label>
               <input
                 className="px-4 py-2 rounded-lg outline-none border w-full"
@@ -188,8 +218,9 @@ const Subscription = () => {
         <div className="w-full">
           <button
             onClick={() => setGender("male")}
-            className={`${gender === "male" ? "bg-black text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex  items-center justify-between gap-3`}
+            className={`${
+              gender === "male" ? "bg-black text-white" : ""
+            } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex  items-center justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji1} alt="" />
@@ -199,14 +230,13 @@ const Subscription = () => {
                 </span>
               </span>
             </p>
-            <p className="flex flex-col items-start -mb-3">
-
-            </p>
+            <p className="flex flex-col items-start -mb-3"></p>
           </button>
           <button
             onClick={() => setGender("female")}
-            className={`${gender === "female" ? "bg-black text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-center justify-between gap-3`}
+            className={`${
+              gender === "female" ? "bg-black text-white" : ""
+            } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-center justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji2} alt="" />
@@ -216,12 +246,10 @@ const Subscription = () => {
                 </span>
               </span>
             </p>
-            <p className="flex flex-col items-start -mb-3">
-            </p>
+            <p className="flex flex-col items-start -mb-3"></p>
           </button>
         </div>
         {/* select duration  */}
-
 
         {/* sizes  */}
         <h3 className="text-[16px] font-bold md:text-[24px] mt-10 mb-4">
@@ -232,8 +260,9 @@ const Subscription = () => {
             return (
               <button
                 onClick={() => setSizeName(size.name)}
-                className={`${sizeName === size.name ? "bg-black text-white" : ""
-                  } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-end  gap-3`}
+                className={`${
+                  sizeName === size.name ? "bg-black text-white" : ""
+                } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-end  gap-3`}
                 key={i}
               >
                 <img src={size.image} alt="" />
@@ -253,8 +282,9 @@ const Subscription = () => {
         <div className="w-full">
           <button
             onClick={() => setPlan("plan1")}
-            className={`${plan === "plan1" ? "bg-black text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex  items-center justify-between gap-3`}
+            className={`${
+              plan === "plan1" ? "bg-black text-white" : ""
+            } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex  items-center justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji1} alt="" />
@@ -264,14 +294,13 @@ const Subscription = () => {
                 </span>
               </span>
             </p>
-            <p className="flex flex-col items-start -mb-3">
-
-            </p>
+            <p className="flex flex-col items-start -mb-3"></p>
           </button>
           <button
             onClick={() => setPlan("plan2")}
-            className={`${plan === "plan2" ? "bg-black text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-center justify-between gap-3`}
+            className={`${
+              plan === "plan2" ? "bg-black text-white" : ""
+            } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-center justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji2} alt="" />
@@ -281,8 +310,7 @@ const Subscription = () => {
                 </span>
               </span>
             </p>
-            <p className="flex flex-col items-start -mb-3">
-            </p>
+            <p className="flex flex-col items-start -mb-3"></p>
           </button>
         </div>
         {/* Select Quantity */}
@@ -292,8 +320,9 @@ const Subscription = () => {
         <div className="w-full">
           <button
             onClick={() => setQuantity("1")}
-            className={`${quantity === "1" ? "bg-black text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-end justify-between gap-3`}
+            className={`${
+              quantity === "1" ? "bg-black text-white" : ""
+            } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-end justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji1} alt="" />
@@ -301,9 +330,7 @@ const Subscription = () => {
                 <span className="my-1 text-[14px] font-bold md:text-[18px]">
                   1 Bundle
                 </span>
-                <span className="my-1 text-[14px]">
-                  Upto save 30%
-                </span>
+                <span className="my-1 text-[14px]">Upto save 30%</span>
               </span>
             </p>
             <p className="flex flex-col items-start -mb-3">
@@ -317,8 +344,9 @@ const Subscription = () => {
           </button>
           <button
             onClick={() => setQuantity("2")}
-            className={`${quantity === "2" ? "bg-black text-white" : ""
-              } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-end justify-between gap-3`}
+            className={`${
+              quantity === "2" ? "bg-black text-white" : ""
+            } duration-200 my-2 border p-5 rounded-lg hover:border-black w-full flex items-end justify-between gap-3`}
           >
             <p className="flex gap-3 items-center">
               <img className="w-[35px] h-[35px]" src={emoji2} alt="" />
@@ -326,9 +354,7 @@ const Subscription = () => {
                 <span className="my-1 text-[14px] font-bold md:text-[18px]">
                   2 Bundle
                 </span>
-                <span className="my-1 text-[14px]">
-                  Upto save 70%
-                </span>
+                <span className="my-1 text-[14px]">Upto save 70%</span>
               </span>
             </p>
             <p className="flex items-center pb-4">
@@ -345,10 +371,11 @@ const Subscription = () => {
         <div className="w-full flex gap-3">
           <div
             onClick={() => (quantity === "1" ? setSelected("S1") : "")}
-            className={`${selected === "S1"
-              ? "bg-black text-white"
-              : quantity === "2" && "bg-black text-white"
-              } duration-200 my-2 border  rounded-lg hover:border-black w-full flex flex-col gap-3`}
+            className={`${
+              selected === "S1"
+                ? "bg-black text-white"
+                : quantity === "2" && "bg-black text-white"
+            } duration-200 my-2 border  rounded-lg hover:border-black w-full flex flex-col gap-3`}
           >
             <img
               className="w-full rounded-t-lg bg-white"
@@ -362,10 +389,11 @@ const Subscription = () => {
           </div>
           <div
             onClick={() => (quantity === "1" ? setSelected("S2") : "")}
-            className={`${selected === "S2"
-              ? "bg-black text-white"
-              : quantity === "2" && "bg-black text-white"
-              } duration-200 my-2 border rounded-lg hover:border-black w-full flex flex-col gap-3`}
+            className={`${
+              selected === "S2"
+                ? "bg-black text-white"
+                : quantity === "2" && "bg-black text-white"
+            } duration-200 my-2 border rounded-lg hover:border-black w-full flex flex-col gap-3`}
           >
             <img
               className="w-full rounded-t-lg"
@@ -384,9 +412,40 @@ const Subscription = () => {
           to="/"
         > */}
 
-        {sub === "gift" && <p className="text-red-700"><span className="font-bold">Note:</span> Gift Option is required</p>}
-        {sub === "me" && <button className={`w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center`} onClick={handleSubmit}>Continue to checkout</button>}
-        {sub === "gift" && <button disabled={sub === "gift" && giftRecipientEmail === null || giftMessageDate === null || giftMessage === null || shippingDate === null} className={`${sub === "gift" && giftRecipientEmail === null || giftMessageDate === null || giftMessage === null || shippingDate === null ? "cursor-not-allowed bg-opacity-50" : "cursor-pointer"} w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center`} onClick={handleSubmit}>Continue to checkout</button>}
+        {sub === "gift" && (
+          <p className="text-red-700">
+            <span className="font-bold">Note:</span> Gift Option is required
+          </p>
+        )}
+        {sub === "me" && (
+          <button
+            className={`w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center`}
+            onClick={handleSubmit}
+          >
+            Continue to checkout
+          </button>
+        )}
+        {sub === "gift" && (
+          <button
+            disabled={
+              (sub === "gift" && giftRecipientEmail === null) ||
+              giftMessageDate === null ||
+              giftMessage === null ||
+              shippingDate === null
+            }
+            className={`${
+              (sub === "gift" && giftRecipientEmail === null) ||
+              giftMessageDate === null ||
+              giftMessage === null ||
+              shippingDate === null
+                ? "cursor-not-allowed bg-opacity-50"
+                : "cursor-pointer"
+            } w-full my-4 py-3 block brand-bg rounded-full font-bold text-white text-[18px] text-center`}
+            onClick={handleSubmit}
+          >
+            Continue to checkout
+          </button>
+        )}
         {/* </Link> */}
       </div>
     </>

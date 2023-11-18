@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [nevActive, setNevActive] = useState("home");
   const [controlCart, setControlCart] = useState(false);
-
+  const [updateProfileControl, setUpdateProfileControl] = useState(true);
   const [NavIsOpen, setNavIsOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -55,7 +55,6 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
   const logout = () => {
-
     return signOut(auth);
   };
   const handleTop = () => {
@@ -115,6 +114,8 @@ const AuthProvider = ({ children }) => {
     handleTop,
     controlCart,
     setControlCart,
+    updateProfileControl,
+    setUpdateProfileControl,
   };
 
   return (

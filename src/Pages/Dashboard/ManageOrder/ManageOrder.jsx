@@ -5,8 +5,12 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../../Sheard/Loading/Loading";
+import ResponsivePagination from 'react-responsive-pagination';
+import 'react-responsive-pagination/themes/classic.css';
 
 const ManageOrder = () => {
+  const [currentPage, setCurrentPage] = useState(1); // Start from the first page
+  const [totalPages, setTotalPages] = useState(1);
   const [control, setControl] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectValue, setSelectValue] = useState("Pending");
@@ -15,9 +19,12 @@ const ManageOrder = () => {
   const [subscription, setSubscription] = useState("");
   console.log(subscription);
   const { axiosSecure } = useAxiosSecure();
+
   useEffect(() => {
     axiosSecure.get("/get-orders").then((res) => {
       const responseOrder = res?.data?.data;
+      const pageNumber = Math.ceil(responseOrder?.length / 10);
+      setTotalPages(pageNumber);
       const allOrders = responseOrder?.filter(
         (order) =>
           order?.order_type === "cart" || order?.order_type === "payment"
@@ -51,7 +58,7 @@ const ManageOrder = () => {
         setOrders(canceledOrders);
       }
     });
-  }, [control, tap, subscription]);
+  }, [control, tap, subscription, currentPage]);
 
   const options = [
     { value: "pending", label: "Pending" },
@@ -86,6 +93,7 @@ const ManageOrder = () => {
   if (loading) {
     return <Loading></Loading>;
   }
+
   return (
     <div className="p-3">
       <div className="my-8 bg-slate-50 shadow rounded p-5">
@@ -225,15 +233,14 @@ const ManageOrder = () => {
                       <td>$ {Math.round(price).toFixed(2)}</td>
                       <td>
                         <span
-                          className={`${
-                            order_status === "pending"
-                              ? "bg-[#fcefcc] text-[#f0ad00]"
-                              : order_status === "completed"
+                          className={`${order_status === "pending"
+                            ? "bg-[#fcefcc] text-[#f0ad00]"
+                            : order_status === "completed"
                               ? "bg-[#daebdb] text-[#0a7815]"
                               : order_status === "returned"
-                              ? "bg-[#fce6e8] text-[#e02627]"
-                              : "text-[#597eaa] bg-[#a7c3e6]"
-                          } px-3 py-1 rounded`}
+                                ? "bg-[#fce6e8] text-[#e02627]"
+                                : "text-[#597eaa] bg-[#a7c3e6]"
+                            } px-3 py-1 rounded`}
                         >
                           {order_status}
                         </span>
@@ -269,6 +276,13 @@ const ManageOrder = () => {
             )}
           </table>
         </div>
+
+        {/* Pagination */}
+        <ResponsivePagination
+          current={currentPage}
+          total={totalPages}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </div>
   );

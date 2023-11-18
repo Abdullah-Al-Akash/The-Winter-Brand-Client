@@ -59,7 +59,7 @@ const Checkout = () => {
 
   useEffect(() => {
     if (checkoutData?.price) {
-      const amount = Math.round(checkoutData.price * 100);
+      const amount = (checkoutData.price * 100).toFixed(2);
       setAmount(amount);
     }
   }, [checkoutData]);
@@ -85,7 +85,7 @@ const Checkout = () => {
             (acc, item) => acc + item.price * item.quantity,
             0
           );
-          setAmount(Math.round(totalPrice * 100));
+          setAmount(totalPrice * 100);
           if (amount) {
             axiosSecure
               .post("/payment", {
@@ -181,7 +181,7 @@ const Checkout = () => {
                             <td>{cart?.product_name}</td>
                             <td>{cart?.quantity}</td>
                             <td>
-                              {Math.round(cart?.quantity * cart?.price).toFixed(
+                              {(cart?.quantity * cart?.price).toFixed(
                                 2
                               )}
                             </td>
@@ -194,7 +194,7 @@ const Checkout = () => {
 
                         <td className="bg-black text-white">Total Price: </td>
                         <td className="bg-black text-white">
-                          {Math.round(cartPrice).toFixed(2)}
+                          {cartPrice.toFixed(2)}
                         </td>
                       </tr>
                     </tbody>
@@ -206,39 +206,39 @@ const Checkout = () => {
           <div>
             {(checkoutData?.duration === "payment" ||
               checkoutData?.duration == "subscription") && (
-              <div className="flex flex-col gap-2 me-auto">
-                {" "}
-                <h1 className="font-bold capitalize">
-                  For {checkoutData?.type}
-                </h1>
-                <p>
+                <div className="flex flex-col gap-2 me-auto">
                   {" "}
-                  Gender: {checkoutData?.gender == "male" ? "Male" : "Female"}
-                </p>
-                <p> Price: {checkoutData?.price}</p>
-                <p>
-                  {" "}
-                  package:{" "}
-                  {checkoutData?.package == "bundle_one"
-                    ? "Bundle One"
-                    : "Bundle Two"}
-                </p>
-                <div className="flex items-center gap-1">
-                  <span>selected: </span>
-                  {checkoutData?.selected?.map((select, i) => {
-                    return (
-                      <p
-                        key={i}
-                        className="badge badge-secondary badge-outline mx-1"
-                      >
-                        {select}
-                      </p>
-                    );
-                  })}
+                  <h1 className="font-bold capitalize">
+                    For {checkoutData?.type}
+                  </h1>
+                  <p>
+                    {" "}
+                    Gender: {checkoutData?.gender == "male" ? "Male" : "Female"}
+                  </p>
+                  <p> Price: {checkoutData?.price}</p>
+                  <p>
+                    {" "}
+                    package:{" "}
+                    {checkoutData?.package == "bundle_one"
+                      ? "Bundle One"
+                      : "Bundle Two"}
+                  </p>
+                  <div className="flex items-center gap-1">
+                    <span>selected: </span>
+                    {checkoutData?.selected?.map((select, i) => {
+                      return (
+                        <p
+                          key={i}
+                          className="badge badge-secondary badge-outline mx-1"
+                        >
+                          {select}
+                        </p>
+                      );
+                    })}
+                  </div>
+                  <p> Size: {checkoutData?.size}</p>
                 </div>
-                <p> Size: {checkoutData?.size}</p>
-              </div>
-            )}
+              )}
             {checkoutData?.type === "gift" && (
               <>
                 <hr className="my-5" />

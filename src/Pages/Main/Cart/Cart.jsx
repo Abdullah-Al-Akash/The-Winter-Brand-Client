@@ -65,7 +65,7 @@ const Cart = () => {
       setControl(!control);
 
       navigate("/checkout");
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -76,7 +76,7 @@ const Cart = () => {
           <div className="flex justify-between items-center">
             <span className="font-bold">{cartProduct?.length} item Added</span>
             <span className="font-bold">
-              Total: ${Math.round(totalPrice).toFixed(2)}
+              Total: ${totalPrice.toFixed(2)}
             </span>
           </div>
           {cartProduct?.map((item, i) => {
@@ -144,7 +144,7 @@ const Cart = () => {
           <div>
             <div className="flex justify-between items-start">
               <p>Total Price</p>
-              <p>{totalPrice <= 0 ? "0" : Math.round(totalPrice).toFixed(2)}</p>
+              <p>{totalPrice <= 0 ? "0" : totalPrice.toFixed(2)}</p>
             </div>
             <div className="flex justify-between items-start">
               <p>Discount</p>
@@ -157,13 +157,12 @@ const Cart = () => {
             <hr />
             <div className="flex justify-between items-start mt-5">
               <p>Order Total</p>
-              <p>${Math.round(totalPrice).toFixed(2)}</p>
+              <p>${totalPrice.toFixed(2)}</p>
             </div>
             <button
               onClick={handleCheckout}
-              className={`${
-                totalPrice === 0 ? "cursor-not-allowed" : ""
-              } brand-btn mt-5 w-full py-1`}
+              className={`${totalPrice === 0 ? "cursor-not-allowed" : ""
+                } brand-btn mt-5 w-full py-1`}
               disabled={totalPrice === 0}
             >
               Checkout

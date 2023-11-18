@@ -29,9 +29,9 @@ const OrderDetails = () => {
       );
       const subtotalTex = (productSubtotal / 100) * 5;
       const fullAmount = productSubtotal + subtotalTex;
-      setTotal(Math.round(fullAmount).toFixed(2));
-      setTax(Math.round(subtotalTex).toFixed(2));
-      setSubtotal(Math.round(productSubtotal).toFixed(2));
+      setTotal(fullAmount.toFixed(2));
+      setTax(subtotalTex.toFixed(2));
+      setSubtotal(productSubtotal.toFixed(2));
       setLoading(false);
     });
   }, [id]);
@@ -63,15 +63,14 @@ const OrderDetails = () => {
                 <p className="flex justify-between items-center my-2">
                   <span>Status</span>
                   <span
-                    className={`${
-                      order?.order_status === "pending"
-                        ? "bg-[#fcefcc] text-[#f0ad00]"
-                        : order?.order_status === "completed"
+                    className={`${order?.order_status === "pending"
+                      ? "bg-[#fcefcc] text-[#f0ad00]"
+                      : order?.order_status === "completed"
                         ? "bg-[#daebdb] text-[#0a7815]"
                         : order?.order_status === "returned"
-                        ? "bg-[#fce6e8] text-[#e02627]"
-                        : "text-[#597eaa] bg-[#a7c3e6]"
-                    }
+                          ? "bg-[#fce6e8] text-[#e02627]"
+                          : "text-[#597eaa] bg-[#a7c3e6]"
+                      }
                                            px-3 rounded `}
                   >
                     {order?.order_status}
@@ -141,7 +140,7 @@ const OrderDetails = () => {
                         <th>{product_name}</th>
                         <td>{quantity}</td>
                         <td>${price}</td>
-                        <td>${Math.round(price * quantity).toFixed(2)}</td>
+                        <td>${(price * quantity).toFixed(2)}</td>
                       </tr>
                     );
                   })}
@@ -180,33 +179,33 @@ const OrderDetails = () => {
 
           {(order?.order_type === "payment" ||
             order?.order_type == "subscription") && (
-            <div className="flex flex-col gap-2 md:w-[50%] me-auto">
-              {" "}
-              <h1 className="font-bold">Type: {order?.packages?.type}</h1>
-              <p>
+              <div className="flex flex-col gap-2 md:w-[50%] me-auto">
                 {" "}
-                Gender: {order?.packages?.gender == "male" ? "Male" : "Female"}
-              </p>
-              <p>
-                {" "}
-                package:{" "}
-                {order?.packages?.package == "bundle_one"
-                  ? "Bundle One"
-                  : "Bundle Two"}
-              </p>
-              <div className="flex items-center gap-1">
-                <span>selected: </span>
-                {order?.packages?.selected?.map((select, i) => {
-                  return (
-                    <p key={i} className="badge badge-accent mx-1">
-                      {select}
-                    </p>
-                  );
-                })}
+                <h1 className="font-bold">Type: {order?.packages?.type}</h1>
+                <p>
+                  {" "}
+                  Gender: {order?.packages?.gender == "male" ? "Male" : "Female"}
+                </p>
+                <p>
+                  {" "}
+                  package:{" "}
+                  {order?.packages?.package == "bundle_one"
+                    ? "Bundle One"
+                    : "Bundle Two"}
+                </p>
+                <div className="flex items-center gap-1">
+                  <span>selected: </span>
+                  {order?.packages?.selected?.map((select, i) => {
+                    return (
+                      <p key={i} className="badge badge-accent mx-1">
+                        {select}
+                      </p>
+                    );
+                  })}
+                </div>
+                <p> Size: {order?.packages?.size}</p>
               </div>
-              <p> Size: {order?.packages?.size}</p>
-            </div>
-          )}
+            )}
 
           {order?.packages?.type === "gift" && (
             <>

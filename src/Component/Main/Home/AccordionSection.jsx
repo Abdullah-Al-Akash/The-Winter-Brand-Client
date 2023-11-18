@@ -55,7 +55,7 @@ const AccordionSection = () => {
       </div>
       <div>
         <Accordion allowZeroExpanded className="border-0">
-          {items.map((item) => (
+          {items?.map((item) => (
             <AccordionItem className="mt-3 bg-orange-50" key={item.id}>
               <AccordionItemHeading className="">
                 <AccordionItemButton>

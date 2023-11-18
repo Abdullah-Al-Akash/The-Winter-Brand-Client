@@ -161,7 +161,7 @@ const Dashboard = () => {
           </div>
           <div className="overflow-y-auto -translate-y-[80px] ">
             <ul className={` pt-6 px-4 h-[75vh] !text-base`}>
-              {Menus.map((Menu, index) => (
+              {Menus?.map((Menu, index) => (
                 <NavLink
                   to={Menu.link}
                   key={index}

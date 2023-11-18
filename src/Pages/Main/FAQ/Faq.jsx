@@ -56,26 +56,25 @@ const Faq = () => {
         <p className="mt-4 text-[#FF4500]">Clear Confusion</p>
       </div>
       <Accordion className="grid grid-cols-1 gap-5  my-[50px]">
-        {items.map((item, i) => {
+        {items?.map((item, i) => {
           return (
             <AccordionItem
-              className={`${
-                i + 1 == 1
+              className={`${i + 1 == 1
                   ? "border-l-[10px] px-2 border-green-400"
                   : i + 1 == 2
-                  ? "border-l-[10px] px-2 border-blue-400"
-                  : i + 1 == 3
-                  ? "border-l-[10px] px-2 border-red-400"
-                  : i + 1 == 4
-                  ? "border-l-[10px] px-2 border-yellow-400"
-                  : (i + 1) % 4 === 1
-                  ? "border-l-[10px] px-2 border-amber-800"
-                  : (i + 1) % 4 === 2
-                  ? "border-l-[10px] px-2 border-blue-800"
-                  : (i + 1) % 4 === 3
-                  ? "border-green-400"
-                  : "border-red-400"
-              } md:text-2xl`}
+                    ? "border-l-[10px] px-2 border-blue-400"
+                    : i + 1 == 3
+                      ? "border-l-[10px] px-2 border-red-400"
+                      : i + 1 == 4
+                        ? "border-l-[10px] px-2 border-yellow-400"
+                        : (i + 1) % 4 === 1
+                          ? "border-l-[10px] px-2 border-amber-800"
+                          : (i + 1) % 4 === 2
+                            ? "border-l-[10px] px-2 border-blue-800"
+                            : (i + 1) % 4 === 3
+                              ? "border-green-400"
+                              : "border-red-400"
+                } md:text-2xl`}
               header={item?.question}
             >
               <span className="md:text-[18px] text-[12px]"> {item?.body}</span>

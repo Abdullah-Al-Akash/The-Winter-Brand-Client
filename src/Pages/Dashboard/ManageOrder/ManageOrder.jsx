@@ -190,7 +190,7 @@ const ManageOrder = () => {
               </div>
             ) : (
               <tbody>
-                {orders.map((order, ind) => {
+                {orders?.map((order, ind) => {
                   const currentDate = new Date(order?.createdAt);
                   const formattedDate = currentDate.toLocaleDateString();
                   const orderTypeCheck = order?.order_type;
@@ -225,15 +225,14 @@ const ManageOrder = () => {
                       <td>$ {Math.round(price).toFixed(2)}</td>
                       <td>
                         <span
-                          className={`${
-                            order_status === "pending"
-                              ? "bg-[#fcefcc] text-[#f0ad00]"
-                              : order_status === "completed"
+                          className={`${order_status === "pending"
+                            ? "bg-[#fcefcc] text-[#f0ad00]"
+                            : order_status === "completed"
                               ? "bg-[#daebdb] text-[#0a7815]"
                               : order_status === "returned"
-                              ? "bg-[#fce6e8] text-[#e02627]"
-                              : "text-[#597eaa] bg-[#a7c3e6]"
-                          } px-3 py-1 rounded`}
+                                ? "bg-[#fce6e8] text-[#e02627]"
+                                : "text-[#597eaa] bg-[#a7c3e6]"
+                            } px-3 py-1 rounded`}
                         >
                           {order_status}
                         </span>
@@ -255,7 +254,7 @@ const ManageOrder = () => {
                           name=""
                           id=""
                         >
-                          {options.map((option, i) => (
+                          {options?.map((option, i) => (
                             <option key={i} value={option.value}>
                               {option.label}
                             </option>

@@ -20,7 +20,7 @@ const AllFeature = () => {
         const checkedImages = res?.data?.data.filter(
           (data) => data?.isChecked === true
         );
-        const images_id = checkedImages.map((checked) => checked?._id);
+        const images_id = checkedImages?.map((checked) => checked?._id);
         setDeletedObj(images_id);
         setSelectedImage(checkedImages || []);
         setImages(res?.data?.data);
@@ -111,18 +111,16 @@ const AllFeature = () => {
                   key={image._id}
                   className={` itemsCustomStyle border w-full relative rounded-[20px] overflow-hidden 
                   flex justify-center items-center group cursor-grab
-                  ${
-                    images[0]?._id === image?._id &&
+                  ${images[0]?._id === image?._id &&
                     "md:col-span-2 md:row-span-2"
-                  }
+                    }
                   
                 `}
                 >
                   <img
                     style={{
-                      height: `${
-                        images[0]?._id == image?._id ? "100%" : "200px"
-                      }`,
+                      height: `${images[0]?._id == image?._id ? "100%" : "200px"
+                        }`,
                       objectFit: "contain",
                       width: "auto",
                       borderRadius: "20px",
@@ -132,11 +130,10 @@ const AllFeature = () => {
                     alt=""
                   />
                   <div
-                    className={`${
-                      image?.isChecked == true
+                    className={`${image?.isChecked == true
                         ? "bg-opacity-20 transition-all duration-500"
                         : "hidden bg-opacity-40"
-                    } group-hover:block items-center justify-center absolute inset-0 bg-black  transition-all  ease-out p-5`}
+                      } group-hover:block items-center justify-center absolute inset-0 bg-black  transition-all  ease-out p-5`}
                   >
                     <input
                       onChange={(e) => handleSelectedImage(e, image?._id)}

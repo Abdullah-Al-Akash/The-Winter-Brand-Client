@@ -133,7 +133,7 @@ const AllProducts = () => {
           </thead>
 
           {products &&
-            products.map((product, i) => {
+            products?.map((product, i) => {
               const {
                 _id,
                 product_image,

@@ -222,7 +222,7 @@ const ManageOrder = () => {
                       <td>{name}</td>
                       <td>{orderType}</td>
                       <td>{formattedDate}</td>
-                      <td>$ {Math.round(price).toFixed(2)}</td>
+                      <td>$ {price.toFixed(2)}</td>
                       <td>
                         <span
                           className={`${order_status === "pending"

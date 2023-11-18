@@ -33,7 +33,7 @@ const DashboardHome = () => {
         <div className="bg-card col-span-2 row-span-2 w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
 
           <FaHandHoldingDollar className="text-5xl text-cyan-500" /><h4 className="text-lg">Total Earnings</h4>
-          <p className="text-3xl  font-bold">{totalCount.earnings || 0}</p>
+          <p className="text-3xl  font-bold">$ {Number.isInteger(totalCount.earnings) ? totalCount?.earnings : totalCount?.earnings?.toFixed(2) || 0}</p>
         </div>
         <div className="bg-card w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">
           <FaUsers className="text-5xl text-green-500" />

@@ -71,6 +71,8 @@ const AuthProvider = ({ children }) => {
           })
           .then((res) => {
             if (res?.data?.accessToken) {
+              setLoading(false);
+              setReload(false);
               cookies.set("accessToken", res.data.accessToken, cookiesOptions);
             }
           });

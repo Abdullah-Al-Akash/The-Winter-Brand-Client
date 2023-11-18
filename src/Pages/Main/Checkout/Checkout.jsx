@@ -2,24 +2,58 @@ import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiSmartphone } from "react-icons/fi";
 import { PiWarningCircle } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
 import { useCheckoutData } from "../../../context/CheckoutProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
-import { useAuth } from "../../../AuthProvider/AuthProvider";
+import { cookies, useAuth } from "../../../AuthProvider/AuthProvider";
+import Swal from "sweetalert2";
 
 const stripePromise = loadStripe(import.meta.env.VITE_Publishable_key);
 
 const Checkout = () => {
   const { axiosSecure } = useAxiosSecure();
-  const { user } = useAuth()
+  const { user, toggleDrawer, handleTop } = useAuth()
   const [clientSecret, setClientSecret] = useState(null);
   const [amount, setAmount] = useState(0);
   const { checkoutData } = useCheckoutData();
-  console.log("22 checkout data", checkoutData)
+  const navigate = useNavigate("")
+
+  if (!cookies.get("data")) {
+    navigate("/")
+    handleTop()
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: "First select your packages or add to cart",
+      text: "please select any one",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Select packages",
+      cancelButtonText: "go to add to cart",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/")
+        toggleDrawer()
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        navigate("/all-product")
+        handleTop()
+      }
+    });
+
+  }
+
   useEffect(() => {
     if (checkoutData?.price) {
       const amount = Math.round(checkoutData.price * 100);

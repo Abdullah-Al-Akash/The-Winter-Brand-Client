@@ -103,7 +103,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
   const [emailMassage, setEmailMassage] = useState(false);
   const { axiosSecure } = useAxiosSecure();
   const { checkoutData } = useCheckoutData();
-  const { user, setControlCart, controlCart } = useAuth();
+  const { user, setControlCart, controlCart, handleTop } = useAuth();
   const navigate = useNavigate()
 
   const stripe = useStripe();
@@ -197,6 +197,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
               cookies.remove("data")
               from.reset()
               navigate("/my-order")
+              handleTop()
               Swal.fire({
                 position: "center",
                 icon: "success",
@@ -268,6 +269,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
                   cookies.remove("data")
                   from.reset()
                   navigate("/my-order")
+                  handleTop()
                   Swal.fire({
                     position: "center",
                     icon: "success",
@@ -321,6 +323,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
                   if (res?.data?.success) {
                     cookies.remove("data")
                     navigate("/my-order")
+                    handleTop()
                     Swal.fire({
                       position: "center",
                       icon: "success",

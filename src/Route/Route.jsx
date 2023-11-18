@@ -33,6 +33,10 @@ import ProductDetails from "../Pages/Main/ProductDetails/ProductDetails";
 import InvoicePDF from "../Pages/Main/invoicePDF/invoicePDF";
 import OrderDetails from "../Pages/Dashboard/OrderDetails/OrderDetails";
 import Subscription from "../Pages/Dashboard/Subscription/Subscription";
+import CustomerOnly from "../private/CustomerOnly";
+import AdminOnly from "../private/AdminOnly";
+import LoginRequired from "../private/LoginRequired";
+import LogoutOnly from "../private/LogoutOnly";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -55,7 +59,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <UserProfile></UserProfile>,
+        element: <LoginRequired><UserProfile></UserProfile></LoginRequired>,
       },
       {
         path: "/about",
@@ -75,7 +79,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/cart",
-        element: <Cart></Cart>,
+        element: <CustomerOnly><Cart></Cart></CustomerOnly>,
       },
       {
         path: "/all-product",
@@ -83,19 +87,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login></Login>,
+        element: <LogoutOnly><Login></Login></LogoutOnly>,
       },
       {
         path: "/register",
-        element: <Register></Register>,
+        element: <LogoutOnly><Register></Register></LogoutOnly>,
       },
       {
         path: "/checkout",
-        element: <Checkout></Checkout>,
+        element: <CustomerOnly><Checkout></Checkout></CustomerOnly>,
       },
       {
         path: "/my-order",
-        element: <MyOrder></MyOrder>,
+        element: <CustomerOnly><MyOrder></MyOrder></CustomerOnly>,
       },
       {
         path: "/product-details/:id",
@@ -103,14 +107,14 @@ export const router = createBrowserRouter([
       },
       {
         path: "/invoice-details/:id",
-        element: <InvoicePDF></InvoicePDF>,
+        element: <CustomerOnly><InvoicePDF></InvoicePDF></CustomerOnly>,
       },
     ],
   },
 
   {
     path: "/dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <AdminOnly><Dashboard></Dashboard></AdminOnly>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {

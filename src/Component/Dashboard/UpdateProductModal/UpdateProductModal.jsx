@@ -4,8 +4,15 @@ import Swal from "sweetalert2";
 import { AiOutlineClose } from "react-icons/ai";
 
 const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
-  const { _id, product_image, product_name, quantity, price, discount } =
-    updatedProduct || {};
+  const {
+    _id,
+    product_image,
+    product_name,
+    quantity,
+    price,
+    discount,
+    product_description,
+  } = updatedProduct || {};
   const [error, setError] = useState("");
   const { axiosSecure } = useAxiosSecure();
   const handleUpdate = (e) => {
@@ -26,7 +33,7 @@ const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
       quantity,
       price,
       discount,
-      description,
+      product_description: description,
     };
     axiosSecure
       .put(`/update-product/${_id}`, obj)
@@ -107,11 +114,12 @@ const UpdateProductModal = ({ updatedProduct, setControl, control }) => {
 
               <textarea
                 autoComplete="off"
+                defaultValue={product_description}
                 name="description"
                 id="description"
                 placeholder="Update description price"
                 className="border-2 rounded-lg w-full p-2 outline-none text-[15px]"
-              ></textarea>
+              />
             </div>
             <input
               type="submit"

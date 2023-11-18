@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getAuth, sendEmailVerification } from "firebase/auth";
 
 import { AuthContext, useAuth } from "../../../AuthProvider/AuthProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -37,6 +38,7 @@ const Register = () => {
       signUp(email, password)
         .then((result) => {
           const saveUser = result.user;
+          sendEmailVerification(getAuth)
           console.log(saveUser);
           axiosSecure
             .post("/user-registration", {

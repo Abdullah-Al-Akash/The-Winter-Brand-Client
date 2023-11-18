@@ -9,24 +9,24 @@ const AdminOnly = ({ children }) => {
 
   const location = useLocation();
 
-  // if (loading) {
-  //   return <Loading></Loading>;
-  // }
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
-  // if (!user?.email) {
-  //   return <Loading></Loading>;
-  // }
-
-
-  // if (isLoading) {
-  //   return <Loading></Loading>;
-  // }
+  if (!user?.email) {
+    return <Loading></Loading>;
+  }
 
 
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
-  // if (role === "admin") {
-  return children;
-  // }
+
+
+  if (role === "admin") {
+    return children;
+  }
 
   return <Navigate state={{ from: location }} to="/" replace />;
 };

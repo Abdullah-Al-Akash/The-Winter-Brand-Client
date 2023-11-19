@@ -60,6 +60,18 @@ const OrderDetails = () => {
                   <span>ID</span>
                   <span>{order?._id}</span>
                 </p>
+                {order?.transaction_id && <p className="flex justify-between items-center my-2">
+                  <span>Transaction Id</span>
+                  <span>{order?.transaction_id}</span>
+                </p>}
+                {order?.subscription_id && <p className="flex justify-between items-center my-2">
+                  <span>subscription_id</span>
+                  <span>{order?.subscription_id}</span>
+                </p>}
+                {order?.subscription_id && <p className="flex justify-between items-center my-2">
+                  <span>Subscription Status</span>
+                  <span className={`${order?.subscription_status === "active" ? "badge badge-accent badge-outline" : "badge badge-secondary badge-outline"}`}>{order?.subscription_status}</span>
+                </p>}
                 <p className="flex justify-between items-center my-2">
                   <span>Date & Time</span>
                   <span>

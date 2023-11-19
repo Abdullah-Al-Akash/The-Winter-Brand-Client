@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const Subscription = () => {
   const [control, setControl] = useState(false);
@@ -76,6 +77,11 @@ const Subscription = () => {
   };
   return (
     <div className="p-3">
+      <HelmetSeo
+        title="subscriptions"
+        canonical={"dashboard/subscription"}
+        description=""
+      />
       <div className="my-8 bg-slate-50 shadow rounded p-5">
         <div className="flex gap-3 justify-between items-center mb-3">
           <h2 className="my-subtitle text-slate-600">All Subscribers</h2>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect } from "react";
 import EmailModal from "../../../Component/Dashboard/EmailModal/EmailModal";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const NumberMarketing = () => {
   const { axiosSecure } = useAxiosSecure();
@@ -26,6 +27,11 @@ const NumberMarketing = () => {
   }
   return (
     <div className="max-w-[1200px] mx-auto">
+      <HelmetSeo
+        title="Numbers"
+        canonical={"dashboard/number-marketing"}
+        description=""
+      />
       <h2 className="text-center my-10 md:text-5xl text-xl">
         Number Marketing
       </h2>

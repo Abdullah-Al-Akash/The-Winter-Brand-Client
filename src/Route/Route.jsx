@@ -36,7 +36,6 @@ import Subscription from "../Pages/Dashboard/Subscription/Subscription";
 import CustomerOnly from "../private/CustomerOnly";
 import AdminOnly from "../private/AdminOnly";
 import LoginRequired from "../private/LoginRequired";
-import LogoutOnly from "../private/LogoutOnly";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -87,11 +86,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <LogoutOnly><Login></Login></LogoutOnly>,
+        element: <Login></Login>,
       },
       {
         path: "/register",
-        element: <LogoutOnly><Register></Register></LogoutOnly>,
+        element: <Register></Register>,
       },
       {
         path: "/checkout",

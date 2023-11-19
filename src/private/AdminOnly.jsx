@@ -9,22 +9,11 @@ const AdminOnly = ({ children }) => {
 
   const location = useLocation();
 
-  if (loading) {
+  if (loading || isLoading) {
     return <Loading></Loading>;
   }
 
-  if (!user?.email) {
-    return <Loading></Loading>;
-  }
-
-
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
-
-
-
-  if (role === "admin") {
+  if (user?.email && role === "admin") {
     return children;
   }
 

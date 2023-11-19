@@ -84,7 +84,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       unSubscribe();
     };
-  }, [reload]);
+  }, []);
   const ProfileUpdate = (name, PhotoUrl) => {
     setLoading(true);
     return updateProfile(auth.currentUser, {
@@ -92,6 +92,7 @@ const AuthProvider = ({ children }) => {
       photoURL: PhotoUrl,
     });
   };
+
 
   const authInfo = {
     user,

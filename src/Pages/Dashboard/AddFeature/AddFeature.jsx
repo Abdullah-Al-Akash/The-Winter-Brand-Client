@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { BsFillImageFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import HelmetSeo from "../../../Component/shared/Helmet"
 
 const img_hosting_Token = import.meta.env.VITE_IMAGE_UPLOAD;
 
@@ -67,6 +68,11 @@ const AddFeature = () => {
   };
   return (
     <div>
+      <HelmetSeo
+        title="Add feature"
+        canonical={"dashboard/add-feature"}
+        description=""
+      />
       <h1 className="text-center my-5 md:text-5xl text-xl">
         Add Featured Image
       </h1>

@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
 import Loading from "../../../Sheard/Loading/Loading";
 import EmailModal from "../../../Component/Dashboard/EmailModal/EmailModal";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const EmailMarketing = () => {
   const { axiosSecure } = useAxiosSecure();
@@ -26,6 +27,11 @@ const EmailMarketing = () => {
   }
   return (
     <div className="max-w-[1200px] mx-auto">
+      <HelmetSeo
+        title="Emails"
+        canonical={"dashboard/email-marketing"}
+        description=""
+      />
       <h2 className="text-center my-10 md:text-5xl text-xl">Email Marketing</h2>
       <div className="text-end mb-3">
         <button

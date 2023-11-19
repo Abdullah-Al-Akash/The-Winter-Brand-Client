@@ -5,6 +5,7 @@ import { useState } from "react";
 import moment from "moment/moment";
 import BackButton from "../../../Sheard/BackButton/BackButton";
 import Loading from "../../../Sheard/Loading/Loading";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -40,6 +41,11 @@ const OrderDetails = () => {
   }
   return (
     <div>
+      <HelmetSeo
+        title="Order details"
+        canonical={"dashboard/order-details/" + id}
+        description=""
+      />
       <h3 className="text-2xl font-bold flex items-center">
         <BackButton></BackButton> <span> Order Details</span>
       </h3>

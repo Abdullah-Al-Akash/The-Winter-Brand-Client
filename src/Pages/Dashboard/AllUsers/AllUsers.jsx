@@ -7,6 +7,7 @@ import "react-tabs/style/react-tabs.css";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loading from "../../../Sheard/Loading/Loading";
 import userImage from '../../../assets/male.png';
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 
 const AllUsers = () => {
@@ -80,6 +81,11 @@ const AllUsers = () => {
   }
   return (
     <div className="p-3">
+      <HelmetSeo
+        title="All users"
+        canonical={"dashboard/all-users"}
+        description=""
+      />
       <div className="my-8 bg-slate-50 shadow rounded p-5">
         <div className="flex gap-3 justify-between items-center mb-3">
           <h2 className="my-subtitle text-slate-600">All Users</h2>

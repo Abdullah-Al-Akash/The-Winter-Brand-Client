@@ -286,7 +286,7 @@ const Subscription = () => {
             )
           }
           {
-            pageNumbers?.map((page, i) => <Link className="bg-black px-2 py-1 rounded text-white mx-2" key={i} to={`/dashboard/manage-order?page=${page}`}>{page}</Link>)
+            pageNumbers?.map((page, i) => <Link className={page === currentPage ? "bg-black px-2 py-1 rounded text-white mx-2" : "border-2 px-2 py-1 rounded text-white mx-2"} key={i} to={`/dashboard/manage-order?page=${page}`}>{page}</Link>)
           }
           {
             currentPage + 1 <= totalPages && (

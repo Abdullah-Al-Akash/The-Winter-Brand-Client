@@ -28,7 +28,7 @@ const AllUsers = () => {
   const dataPerPage = 20
   let pageNumbers = []
   const totalPages = Math.ceil(totalData / dataPerPage)
-  let skip = (currentPage - 1) * dataPerPage
+
   const pageNumber = Number(queryParams.get('page'))
   if (Number(pageNumber >= 1)) {
     currentPage = pageNumber
@@ -42,6 +42,7 @@ const AllUsers = () => {
 
 
   useEffect(() => {
+    let skip = (currentPage - 1) * dataPerPage
     axiosSecure.get(`/get-all-users?skip=${skip}&limit=${dataPerPage}&role=${tap}`).then((res) => {
       setUsers(res?.data?.data);
       setTotalData(res?.data?.meta?.total || 20)
@@ -247,7 +248,7 @@ const AllUsers = () => {
             )
           }
           {
-            pageNumbers?.map((page, i) => <Link className={page === currentPage ? "bg-black px-2 py-1 rounded text-white mx-2" : "border-2 px-2 py-1 rounded text-white mx-2"} key={i} to={`/dashboard/all-users?page=${page}`}>{page}</Link>)
+            pageNumbers?.map((page, i) => <Link className={page === currentPage ? "bg-black px-2 py-1 rounded text-white mx-2" : "border-2 px-2 py-1 rounded  mx-2"} key={i} to={`/dashboard/all-users?page=${page}`}>{page}</Link>)
           }
           {
             currentPage + 1 <= totalPages && (

@@ -27,7 +27,8 @@ const ManageOrder = () => {
   const dataPerPage = 20
   let pageNumbers = []
   const totalPages = Math.ceil(totalData / dataPerPage)
-  let skip = (currentPage - 1) * dataPerPage
+
+
   const pageNumber = Number(queryParams.get('page'))
   if (Number(pageNumber >= 1)) {
     currentPage = pageNumber
@@ -43,7 +44,7 @@ const ManageOrder = () => {
   const { axiosSecure } = useAxiosSecure();
 
   useEffect(() => {
-
+    let skip = (currentPage - 1) * dataPerPage
     axiosSecure.get(`/get-orders?skip=${skip}&limit=${dataPerPage}&tap=${tap}`).then((res) => {
       setOrders(res?.data?.data || [])
       setTotalData(res?.data?.meta?.payment || 20)
@@ -296,7 +297,7 @@ const ManageOrder = () => {
             )
           }
           {
-            pageNumbers?.map((page, i) => <Link key={i} className={page === currentPage ? "bg-black px-2 py-1 rounded text-white mx-2" : "border-2 px-2 py-1 rounded text-white mx-2"} to={`/dashboard/manage-order?page=${page}`}>{page}</Link>)
+            pageNumbers?.map((page, i) => <Link key={i} className={page === currentPage ? "bg-black px-2 py-1 rounded text-white mx-2" : "border-2 px-2 py-1 rounded mx-2"} to={`/dashboard/manage-order?page=${page}`}>{page}</Link>)
           }
           {
             currentPage + 1 <= totalPages && (

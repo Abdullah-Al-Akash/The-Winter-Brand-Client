@@ -3,6 +3,7 @@ import AdminContactModal from "../../../Component/Dashboard/AdminContactModal/Ad
 import { useEffect } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loading from "../../../Sheard/Loading/Loading";
+import HelmetSeo from "../../../Component/shared/Helmet";
 const AdminContact = () => {
   const [item, setItem] = useState({});
   const { axiosSecure } = useAxiosSecure();
@@ -57,6 +58,11 @@ const AdminContact = () => {
   }
   return (
     <div>
+      <HelmetSeo
+        title="Contact"
+        canonical={"dashboard/contact"}
+        description=""
+      />
       <h2 className="text-center my-10 md:text-5xl text-xl">Contact by User</h2>
       <div className="overflow-x-auto">
         <table className="table border text-center table-zebra">

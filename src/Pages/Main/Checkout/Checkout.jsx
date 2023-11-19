@@ -13,6 +13,7 @@ import { cookies, useAuth } from "../../../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import Loading from "../../../Sheard/Loading/Loading";
 import moment from "moment";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const stripePromise = loadStripe(import.meta.env.VITE_Publishable_key);
 
@@ -127,6 +128,12 @@ const Checkout = () => {
   console.log(checkoutData);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
+      <HelmetSeo
+        title="Checkout"
+        canonical={"checkout"}
+        description="Checkout page"
+      />
+
       <div className="bcheckoutData-t bcheckoutData-r bcheckoutData-gray-500">
         <div className="max-w-[600px] ms-auto p-5 md:pe-20">
           <p className="text-sm text-gray-400 text-center">Express checkout</p>

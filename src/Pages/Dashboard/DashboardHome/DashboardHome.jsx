@@ -12,6 +12,7 @@ import { FaUsers } from "react-icons/fa";
 import { MdProductionQuantityLimits, MdPermContactCalendar } from "react-icons/md";
 import { AiFillStar } from "react-icons/ai";
 import { FaHandHoldingDollar } from "react-icons/fa6";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const DashboardHome = () => {
   const { axiosSecure } = useAxiosSecure();
@@ -28,6 +29,11 @@ const DashboardHome = () => {
   }, []);
   return (
     <main>
+      <HelmetSeo
+        title="Dashboard"
+        canonical={"dashboard"}
+        description=""
+      />
       <section className="relative md:grid md:grid-cols-4 gap-5 w-full">
 
         <div className="bg-card col-span-2 row-span-2 w-full shadow border-[0.5px] p-5 flex justify-center items-center flex-col rounded">

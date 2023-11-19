@@ -4,6 +4,7 @@ import { BsTrash } from "react-icons/bs";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loading from "../../../Sheard/Loading/Loading";
 import Swal from "sweetalert2";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const ViewFaq = () => {
   const [loading, setLoading] = useState(true);
@@ -75,6 +76,11 @@ const ViewFaq = () => {
   }
   return (
     <div className="max-w-[1200px] mx-auto">
+      <HelmetSeo
+        title="All faqs"
+        canonical={"dashboard/view-faq"}
+        description=""
+      />
       <h2 className="text-center my-5 md:text-5xl text-xl">All FAQ</h2>
       <Accordion className="grid grid-cols-1 gap-5  my-[50px]">
         {items?.map((item, i) => {
@@ -82,38 +88,38 @@ const ViewFaq = () => {
             <div
               key={i}
               className={`${i + 1 == 1
-                  ? " border-green-400 border-b"
-                  : i + 1 == 2
-                    ? " border-blue-400 border-b"
-                    : i + 1 == 3
-                      ? " border-red-400 border-b"
-                      : i + 1 == 4
-                        ? " border-yellow-400 border-b"
-                        : (i + 1) % 4 === 1
-                          ? " border-amber-800 border-b"
-                          : (i + 1) % 4 === 2
-                            ? " border-blue-800 border-b"
-                            : (i + 1) % 4 === 3
-                              ? "border-green-400 border-b"
-                              : "border-red-400 border-b"
+                ? " border-green-400 border-b"
+                : i + 1 == 2
+                  ? " border-blue-400 border-b"
+                  : i + 1 == 3
+                    ? " border-red-400 border-b"
+                    : i + 1 == 4
+                      ? " border-yellow-400 border-b"
+                      : (i + 1) % 4 === 1
+                        ? " border-amber-800 border-b"
+                        : (i + 1) % 4 === 2
+                          ? " border-blue-800 border-b"
+                          : (i + 1) % 4 === 3
+                            ? "border-green-400 border-b"
+                            : "border-red-400 border-b"
                 }  flex justify-between items-center`}
             >
               <AccordionItem
                 className={`${i + 1 == 1
-                    ? "border-l-[10px] px-2 border-green-400"
-                    : i + 1 == 2
-                      ? "border-l-[10px] px-2 border-blue-400"
-                      : i + 1 == 3
-                        ? "border-l-[10px] px-2 border-red-400"
-                        : i + 1 == 4
-                          ? "border-l-[10px] px-2 border-yellow-400"
-                          : (i + 1) % 4 === 1
-                            ? "border-l-[10px] px-2 border-amber-800"
-                            : (i + 1) % 4 === 2
-                              ? "border-l-[10px] px-2 border-blue-800"
-                              : (i + 1) % 4 === 3
-                                ? "border-green-400"
-                                : "border-red-400"
+                  ? "border-l-[10px] px-2 border-green-400"
+                  : i + 1 == 2
+                    ? "border-l-[10px] px-2 border-blue-400"
+                    : i + 1 == 3
+                      ? "border-l-[10px] px-2 border-red-400"
+                      : i + 1 == 4
+                        ? "border-l-[10px] px-2 border-yellow-400"
+                        : (i + 1) % 4 === 1
+                          ? "border-l-[10px] px-2 border-amber-800"
+                          : (i + 1) % 4 === 2
+                            ? "border-l-[10px] px-2 border-blue-800"
+                            : (i + 1) % 4 === 3
+                              ? "border-green-400"
+                              : "border-red-400"
                   } md:text-2xl`}
                 header={item?.question}
               >

@@ -11,6 +11,7 @@ import { IoMdClose } from "react-icons/io";
 import UseGetCart from "../../../hooks/UseGetCart";
 import { Link, useNavigate } from "react-router-dom";
 import { useCheckoutData } from "../../../context/CheckoutProvider";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const Cart = () => {
   const { user } = useAuth();
@@ -70,6 +71,11 @@ const Cart = () => {
 
   return (
     <div className="max-w-[1200px] mx-auto">
+      <HelmetSeo
+        title="cart"
+        canonical={"cart"}
+        description="cart page"
+      />
       <h2 className="my-10 md:text-5xl text-xl ms-2">My Cart Page</h2>
       <div className="grid grid-cols-1 md:grid-cols-12">
         <div className="md:col-span-8 col-span-12 p-10">

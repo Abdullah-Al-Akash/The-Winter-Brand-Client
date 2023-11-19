@@ -8,6 +8,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { IoClose } from "react-icons/io5";
 import Swal from "sweetalert2";
 import Loading from "../../../Sheard/Loading/Loading";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const MyOrder = () => {
   const { user } = useContext(AuthContext);
@@ -118,6 +119,11 @@ const MyOrder = () => {
   }
   return (
     <div className="max-w-[1280px] mx-auto">
+      <HelmetSeo
+        title="my order"
+        canonical="my-order"
+        description="my order"
+      />
       <div className="">
         <h1 className="text-center text-xl font-extrabold p-3 my-4">
           My Order
@@ -208,9 +214,8 @@ const MyOrder = () => {
 
       {/* review modal */}
       <div
-        className={`${
-          open ? "" : "hidden"
-        } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
+        className={`${open ? "" : "hidden"
+          } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
       >
         <form className="relative" onSubmit={handleReview}>
           <h1 className="text-center my-2">Please Leave a Review!</h1>

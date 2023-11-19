@@ -7,24 +7,13 @@ const CustomerOnly = ({ children }) => {
     const { loading, user } = useAuth();
     const { isLoading, role } = useUserRole();
     const location = useLocation();
-    // if (loading) {
-    //     return <Loading></Loading>;
-    // }
-
-    if (!user?.email) {
+    if (loading || isLoading) {
         return <Loading></Loading>;
     }
 
-
-    if (isLoading) {
-        return <Loading></Loading>;
+    if (user?.email && role === "user") {
+        return children
     }
-
-
-    if (role === "user") {
-        return children;
-    }
-
     return <Navigate state={{ from: location }} to="/" replace />;
 };
 

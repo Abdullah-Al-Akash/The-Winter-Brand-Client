@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import UpdateProductModal from "../../../Component/Dashboard/UpdateProductModal/UpdateProductModal";
 import Loading from "../../../Sheard/Loading/Loading";
+import HelmetSeo from "../../../Component/shared/Helmet";
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -110,6 +111,11 @@ const AllProducts = () => {
 
   return (
     <div className="">
+      <HelmetSeo
+        title="all product"
+        canonical={"dashboard/all-products"}
+        description=""
+      />
       <h1 className="text-center text-xl font-extrabold p-3">
         Your All Products
       </h1>

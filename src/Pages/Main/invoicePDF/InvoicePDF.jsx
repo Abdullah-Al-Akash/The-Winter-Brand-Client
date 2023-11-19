@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 import BackButton from "../../../Sheard/BackButton/BackButton";
+import HelmetSeo from "../../../Component/shared/Helmet";
 const InvoicePDF = () => {
   const [loading, setLoading] = useState(false);
   const [invoiceLoading, setInvoiceLoading] = useState(true);
@@ -97,6 +98,11 @@ const InvoicePDF = () => {
   console.log(subtotal);
   return (
     <div className="max-w-[1000px] mx-auto mt-5 my-2">
+      <HelmetSeo
+        title="Invoice"
+        canonical={"invoice-details/" + id}
+        description="Invoice"
+      />
       <div className="flex justify-between">
         <BackButton></BackButton>
         <button

@@ -116,6 +116,13 @@ const OrderDetails = () => {
                   <span>Post Code</span>
                   <span>{order?.delivery_info?.postcode}</span>
                 </p>
+                {
+                  order?.delivery_info?.apartment &&
+                  <p className="flex justify-between items-center my-2">
+                    <span>Apartment</span>
+                    <span>{order?.delivery_info?.apartment}</span>
+                  </p>
+                }
                 <p className="flex justify-between items-center my-2">
                   <span>City</span>
                   <span>{order?.delivery_info?.city}</span>

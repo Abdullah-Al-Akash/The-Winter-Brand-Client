@@ -13,7 +13,7 @@ const Subscription = () => {
   const [orders, setOrders] = useState([]);
   const { axiosSecure } = useAxiosSecure();
   useEffect(() => {
-    axiosSecure.get("/get-orders").then((res) => {
+    axiosSecure.get("/get-orders/type=subscription").then((res) => {
       const orderResponse = res?.data?.data;
       const allOrders = orderResponse?.filter(
         (order) => order?.order_type === "subscription"

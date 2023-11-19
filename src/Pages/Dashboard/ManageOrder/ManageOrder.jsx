@@ -288,27 +288,6 @@ const ManageOrder = () => {
 
 
       </div>
-
-      <div className="flex justify-center">
-        <div>
-          <button className="btn btn-sm"
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-          >
-            <FaArrowAltCircleLeft />
-          </button>
-
-          <span className="p-1">{currentPage}</span>
-
-          <button
-            className="btn btn-sm"
-            disabled={totalOrderLength < itemsPerPage}
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            <FaArrowAltCircleRight />
-          </button>
-        </div>
-      </div>
     </div>
   );
 };

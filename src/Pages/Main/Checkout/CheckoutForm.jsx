@@ -254,6 +254,8 @@ const CheckoutForm = ({ amount, clientSecret }) => {
               }
             }
 
+            console.log(order?.delivery_info);
+
             if (checkoutData?.type === "gift") {
               order.gift = {
                 gift_message: checkoutData.gift_message,

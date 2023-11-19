@@ -60,7 +60,7 @@ const Checkout = () => {
 
   useEffect(() => {
     if (checkoutData?.price) {
-      const amount = (checkoutData.price * 100).toFixed(2);
+      const amount = checkoutData.price * 100;
       setAmount(amount);
     }
   }, [checkoutData]);

@@ -3,24 +3,48 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
 import { useEffect } from "react";
 import Loading from "../../../Sheard/Loading/Loading";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 
 const ReviewComponent = () => {
   const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { axiosSecure } = useAxiosSecure();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const [totalData, setTotalData] = useState(20)
+
+
+  let currentPage = 1;
+
+  const dataPerPage = 20
+  let pageNumbers = []
+  const totalPages = Math.ceil(totalData / dataPerPage)
+  let skip = (currentPage - 1) * dataPerPage
+  const pageNumber = Number(queryParams.get('page'))
+  if (Number(pageNumber >= 1)) {
+    currentPage = pageNumber
+  }
+
+  for (let i = currentPage - 3; i <= currentPage + 3; i++) {
+    if (i < 1) continue;
+    if (i > totalPages) break;
+    pageNumbers.push(i)
+  }
   useEffect(() => {
-    // ?skip=0&limit=20 {include api}
+    setLoading(true)
     axiosSecure
-      .get("/get-all-reviews")
+      .get(`/get-all-reviews?skip=${skip}&limit=${dataPerPage}`)
       .then((res) => {
-        setReviews(res?.data?.data);
-        console.log(res?.data?.data);
-        setLoading(false);
+        setReviews(res?.data?.data || []);
+        setTotalData(res?.data?.meta?.total || 20)
+        setLoading(false)
       })
       .catch((err) => {
+        setLoading(false)
         console.log(err?.message);
       });
-  }, []);
+  }, [currentPage]);
 
   if (loading) {
     return <Loading></Loading>;
@@ -55,6 +79,25 @@ const ReviewComponent = () => {
                 </div>
               );
             })}
+          </div>
+          <div className="text-center my-5">
+            {
+              currentPage - 1 >= 1 && (
+                <>
+                  <Link to={"/dashboard/reviews"}>{"<<"}</Link>
+                </>
+              )
+            }
+            {
+              pageNumbers?.map((page, i) => <Link className={page === currentPage ? "bg-black px-2 py-1 rounded text-white mx-2" : "border-2 px-2 py-1 rounded text-white mx-2"} key={i} to={`/dashboard/reviews?page=${page}`}>{page}</Link>)
+            }
+            {
+              currentPage + 1 <= totalPages && (
+                <>
+                  <Link to={"/dashboard/reviews"}>{">>"}</Link>
+                </>
+              )
+            }
           </div>
         </div>
       </div>

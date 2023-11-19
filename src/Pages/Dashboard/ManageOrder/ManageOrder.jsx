@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../../Sheard/Loading/Loading";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const ManageOrder = () => {
   const [control, setControl] = useState(false);
@@ -88,6 +89,11 @@ const ManageOrder = () => {
   }
   return (
     <div className="p-3">
+      <HelmetSeo
+        title="Orders"
+        canonical={"dashboard/manage-order"}
+        description=""
+      />
       <div className="my-8 bg-slate-50 shadow rounded p-5">
         <div className="flex gap-3 justify-between items-center mb-3">
           <h2 className="my-subtitle text-slate-600">All Orders</h2>

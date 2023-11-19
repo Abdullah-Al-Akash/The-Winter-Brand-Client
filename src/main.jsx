@@ -7,6 +7,7 @@ import { router } from "./Route/Route.jsx";
 import AuthProvider from "./AuthProvider/AuthProvider.jsx";
 import CheckoutProvider from "./context/CheckoutProvider.jsx";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { HelmetProvider } from "react-helmet-async";
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -14,7 +15,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <AuthProvider>
       <CheckoutProvider>
         <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
+          <HelmetProvider>
+            <RouterProvider router={router} />
+          </HelmetProvider>
         </QueryClientProvider>
       </CheckoutProvider>
     </AuthProvider>

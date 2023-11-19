@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import HelmetSeo from "../../../Component/shared/Helmet";
 const img_hosting_Token = import.meta.env.VITE_IMAGE_UPLOAD;
 
 const AddProduct = () => {
@@ -85,6 +86,11 @@ const AddProduct = () => {
   };
   return (
     <div className="max-w-[1200px] mx-auto">
+      <HelmetSeo
+        title="Add product"
+        canonical={"dashboard/add-product"}
+        description=""
+      />
       <h1 className="text-center my-5 md:text-5xl text-xl">Add Product</h1>
       <form onSubmit={handelAddProduct}>
         <div

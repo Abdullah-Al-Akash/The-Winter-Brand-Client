@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import axios from "axios";
 import { baseURL } from "../../../hooks/useAxiosSecure";
+import HelmetSeo from "../../../Component/shared/Helmet";
 const Login = () => {
   const [toggleIcon, setToggleIcon] = useState(true);
   const { login, controlCart, setControlCart } = useContext(AuthContext);
@@ -41,6 +42,11 @@ const Login = () => {
   };
   return (
     <div className="max-w-[1200px] mx-auto px-2 md:px-0">
+      <HelmetSeo
+        title="Login"
+        canonical="login"
+        description="login the winter brand account"
+      />
       <div className="flex flex-col justify-center items-center md:h-[90vh]">
         <h2 className="my-5 text-2xl font-semibold">
           Login to your The Winter Brand account

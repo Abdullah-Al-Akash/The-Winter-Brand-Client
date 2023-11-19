@@ -3,6 +3,7 @@ import { FaSearch, FaTrashAlt } from "react-icons/fa";
 import PendingReviewModal from "../../../Component/Dashboard/PendingReviewModal/PendingReviewModal";
 import { useEffect } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const AllReview = () => {
   const [item, setItem] = useState({});
@@ -26,6 +27,11 @@ const AllReview = () => {
   };
   return (
     <div className="max-w-[1200px] mx-auto">
+      <HelmetSeo
+        title="All Review"
+        canonical={"dashboard/all-review"}
+        description=""
+      />
       <h1 className="text-center text-xl font-extrabold p-3">
         Your All Review
       </h1>

@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { useAuth } from "../../../AuthProvider/AuthProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import HelmetSeo from "../../../Component/shared/Helmet";
 const ProductDetails = () => {
   const { id } = useParams();
   const { user, handleTop, controlCart, setControlCart } = useAuth();
@@ -72,6 +73,11 @@ const ProductDetails = () => {
   }
   return (
     <div className="max-w-[1200px] md:mx-auto m-5">
+      <HelmetSeo
+        title={product.product_name}
+        canonical={"product-details/" + id}
+        description={product.product_description}
+      />
       <div className="md:grid grid-cols-1 md:grid-cols-2 md:mt-10 gap-5 !h-[100%]">
         <div className="h-full border rounded-lg">
           <img
@@ -123,9 +129,8 @@ const ProductDetails = () => {
             <div>
               <button
                 onClick={() => handleAddToCard(product)}
-                className={`${
-                  role == "admin" ? "cursor-not-allowed" : "cursor-pointer"
-                } brand-btn transition-all ease-in-out flex items-center gap-2 px-4 py-2`}
+                className={`${role == "admin" ? "cursor-not-allowed" : "cursor-pointer"
+                  } brand-btn transition-all ease-in-out flex items-center gap-2 px-4 py-2`}
                 disabled={role == "admin"}
                 title={
                   role == "admin" &&

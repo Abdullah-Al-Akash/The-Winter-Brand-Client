@@ -1,6 +1,7 @@
 import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const PostFaq = () => {
   const { axiosSecure } = useAxiosSecure();
@@ -38,6 +39,11 @@ const PostFaq = () => {
   };
   return (
     <div className="max-w-[1200px] mx-auto">
+      <HelmetSeo
+        title="Add faq"
+        canonical={"dashboard/post-faq"}
+        description=""
+      />
       <h1 className="text-center my-5 md:text-5xl text-xl">
         Post Frequently asked and question
       </h1>

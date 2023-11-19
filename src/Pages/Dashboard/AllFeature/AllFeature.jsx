@@ -4,6 +4,7 @@ import { AiFillCheckSquare } from "react-icons/ai";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import Loading from "../../../Sheard/Loading/Loading";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const AllFeature = () => {
   const [loading, setLoading] = useState(true);
@@ -78,6 +79,11 @@ const AllFeature = () => {
   }
   return (
     <div>
+      <HelmetSeo
+        title="All feature"
+        canonical={"dashboard/all-feature"}
+        description=""
+      />
       <h2 className="text-center text-2xl">All feature Image</h2>
       {selectedImage?.length <= 0 ? (
         <div className="max-w-[1200px] lg:mx-auto mx-5 my-4">
@@ -131,8 +137,8 @@ const AllFeature = () => {
                   />
                   <div
                     className={`${image?.isChecked == true
-                        ? "bg-opacity-20 transition-all duration-500"
-                        : "hidden bg-opacity-40"
+                      ? "bg-opacity-20 transition-all duration-500"
+                      : "hidden bg-opacity-40"
                       } group-hover:block items-center justify-center absolute inset-0 bg-black  transition-all  ease-out p-5`}
                   >
                     <input

@@ -2,12 +2,13 @@
 import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, useToast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAuth, sendEmailVerification } from "firebase/auth";
 
-import { AuthContext, useAuth } from "../../../AuthProvider/AuthProvider";
+import { AuthContext, auth, useAuth } from "../../../AuthProvider/AuthProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import HelmetSeo from "../../../Component/shared/Helmet";
 
 const Register = () => {
   const { user } = useAuth();
@@ -15,6 +16,7 @@ const Register = () => {
   const [toggleIcon, setToggleIcon] = useState(true);
   const [errorMassage, setErrorMassage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [verificationMessage, setVerificationMessage] = useState("")
   const { signUp, controlCart, setControlCart } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,7 +40,13 @@ const Register = () => {
       signUp(email, password)
         .then((result) => {
           const saveUser = result.user;
-          sendEmailVerification(getAuth)
+          console.log(42, saveUser.email)
+          sendEmailVerification(saveUser?.email)
+            .then(res => {
+              console.log(45, res)
+              setVerificationMessage("please check your email to verify")
+
+            }).catch((err) => { console.log(47, err.message) })
           console.log(saveUser);
           axiosSecure
             .post("/user-registration", {
@@ -95,6 +103,11 @@ const Register = () => {
 
   return (
     <div className="max-w-[1200px] mx-auto px-2 md:px-0">
+      <HelmetSeo
+        title="Registration"
+        canonical="register"
+        description="register your account in the winter brand"
+      />
       <div className="flex flex-col justify-center items-center">
         <h2 className="my-5 text-2xl font-semibold">
           Create your The Winter Brand account
@@ -142,6 +155,7 @@ const Register = () => {
                   placeholder="Password"
                   onChange={handlePassword}
                 />
+                {verificationMessage && <p > <span className="text-red-600 font-bold">Note: </span>{verificationMessage}</p>}
                 {errorMassage && <p className="text-red-600">{errorMassage}</p>}
                 {successMessage && (
                   <p className="text-green-600">{successMessage}</p>

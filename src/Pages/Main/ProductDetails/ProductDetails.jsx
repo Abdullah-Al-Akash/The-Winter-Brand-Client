@@ -96,8 +96,7 @@ const ProductDetails = () => {
             <div>
               <div className=" items-end gap-2">
                 <h3 className="md:text-3xl text-xl text-justify">
-                  {product?.product_name} Lorem ipsum, dolor sit amet
-                  consectetur adipisicing elit. Rem, adipisci dolore officiis{" "}
+                  {product?.product_name}
                 </h3>
               </div>
               {/* TODO Price */}

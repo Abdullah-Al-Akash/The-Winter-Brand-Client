@@ -9,6 +9,8 @@ import HelmetSeo from "../../../Component/shared/Helmet";
 import { toast } from "react-toastify";
 
 const ManageOrder = () => {
+
+  const itemsPerPage = 10;
   const [control, setControl] = useState(false);
   const location = useLocation();
 
@@ -39,6 +41,7 @@ const ManageOrder = () => {
 
 
   const { axiosSecure } = useAxiosSecure();
+
   useEffect(() => {
 
     axiosSecure.get(`/get-orders?skip=${skip}&limit=${dataPerPage}&tap=${tap}`).then((res) => {
@@ -46,7 +49,7 @@ const ManageOrder = () => {
       setTotalData(res?.data?.meta?.payment || 20)
 
     });
-  }, [control, tap, pageNumber]);
+  }, [control, tap, currentPage]);
 
   const options = [
     { value: "pending", label: "Pending" },
@@ -303,7 +306,11 @@ const ManageOrder = () => {
             )
           }
         </div>
+
+
       </div>
+
+
     </div>
   );
 };

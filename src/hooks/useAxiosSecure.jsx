@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { cookies, cookiesOptions, useAuth } from "../AuthProvider/AuthProvider";
 
-// export const baseURL = "https://the-winter-brand-pnsc.onrender.com/api/v1"
+// export const baseURL = "https://the-winter-brand.vercel.app/api/v1"
 // export const baseURL = "http://localhost:5000/api/v1"
 export const baseURL = import.meta.env.VITE_Server;
 const axiosSecure = axios.create({

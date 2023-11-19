@@ -41,11 +41,11 @@ const Register = () => {
         .then((result) => {
           const saveUser = result.user;
           console.log(42, saveUser.email)
-          sendEmailVerification(saveUser?.email)
+          sendEmailVerification(saveUser)
             .then(res => {
               console.log(45, res)
               setVerificationMessage("please check your email to verify")
-
+              alert("Please verify your email! Check your email for verification!")
             }).catch((err) => { console.log(47, err.message) })
           console.log(saveUser);
           axiosSecure

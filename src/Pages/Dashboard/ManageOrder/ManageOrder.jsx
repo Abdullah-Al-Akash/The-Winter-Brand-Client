@@ -8,6 +8,8 @@ import Loading from "../../../Sheard/Loading/Loading";
 import HelmetSeo from "../../../Component/shared/Helmet";
 
 const ManageOrder = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
   const [control, setControl] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectValue, setSelectValue] = useState("Pending");
@@ -16,14 +18,18 @@ const ManageOrder = () => {
   const [subscription, setSubscription] = useState("");
   console.log(subscription);
   const { axiosSecure } = useAxiosSecure();
+  let totalOrderLength;
   useEffect(() => {
-    axiosSecure.get("/get-orders").then((res) => {
+    axiosSecure.get(`/get-orders?skip=${(currentPage - 1) * itemsPerPage}&limit=${itemsPerPage}`).then((res) => {
+      totalOrderLength = res?.data?.meta?.total;
+      console.log(totalOrderLength);
       const responseOrder = res?.data?.data;
       const allOrders = responseOrder?.filter(
         (order) =>
           order?.order_type === "cart" || order?.order_type === "payment"
       );
       if (tap === "all-order") {
+
         setOrders(allOrders);
         setLoading(false);
       } else if (tap === "completed") {
@@ -52,7 +58,11 @@ const ManageOrder = () => {
         setOrders(canceledOrders);
       }
     });
-  }, [control, tap, subscription]);
+  }, [control, tap, subscription, currentPage]);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   const options = [
     { value: "pending", label: "Pending" },
@@ -87,6 +97,7 @@ const ManageOrder = () => {
   if (loading) {
     return <Loading></Loading>;
   }
+
   return (
     <div className="p-3">
       <HelmetSeo
@@ -273,6 +284,29 @@ const ManageOrder = () => {
               </tbody>
             )}
           </table>
+        </div>
+
+
+      </div>
+
+      <div className="flex justify-center">
+        <div>
+          <button className="btn btn-sm"
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            <FaArrowAltCircleLeft />
+          </button>
+
+          <span className="p-1">{currentPage}</span>
+
+          <button
+            className="btn btn-sm"
+            disabled={totalOrderLength < itemsPerPage}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            <FaArrowAltCircleRight />
+          </button>
         </div>
       </div>
     </div>

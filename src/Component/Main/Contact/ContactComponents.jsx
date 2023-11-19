@@ -65,7 +65,7 @@ const ContactComponents = () => {
               Email
             </label>
             <input
-              type="text"
+              type="email"
               className="outline-none bg-gray-200 w-full py-3 px-2"
               name="email"
               placeholder="Enter You Email"

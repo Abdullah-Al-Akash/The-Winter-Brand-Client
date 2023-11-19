@@ -3,56 +3,50 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Loading from "../../../Sheard/Loading/Loading";
 import HelmetSeo from "../../../Component/shared/Helmet";
+import { toast } from "react-toastify";
 
 const ManageOrder = () => {
   const [control, setControl] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
   const [selectValue, setSelectValue] = useState("Pending");
-  const [tap, setTap] = useState("all-order");
+  const [tap, setTap] = useState("all");
   const [orders, setOrders] = useState([]);
-  const [subscription, setSubscription] = useState("");
-  console.log(subscription);
+  const queryParams = new URLSearchParams(location.search);
+  const [totalData, setTotalData] = useState(20)
+
+  // let skip = 
+  // console.log(param1Value)
+  let currentPage = 1;
+  // let totalPage = 10;
+  const dataPerPage = 20
+  let pageNumbers = []
+  const totalPages = Math.ceil(totalData / dataPerPage)
+  let skip = (currentPage - 1) * dataPerPage
+  const pageNumber = Number(queryParams.get('page'))
+  if (Number(pageNumber >= 1)) {
+    currentPage = pageNumber
+  }
+
+  for (let i = currentPage - 3; i <= currentPage + 3; i++) {
+    if (i < 1) continue;
+    if (i > totalPages) break;
+    pageNumbers.push(i)
+  }
+
+
   const { axiosSecure } = useAxiosSecure();
   useEffect(() => {
-    axiosSecure.get("/get-orders").then((res) => {
-      const responseOrder = res?.data?.data;
-      const allOrders = responseOrder?.filter(
-        (order) =>
-          order?.order_type === "cart" || order?.order_type === "payment"
-      );
-      if (tap === "all-order") {
-        setOrders(allOrders);
-        setLoading(false);
-      } else if (tap === "completed") {
-        const completedOrders = allOrders?.filter(
-          (order) => order?.order_status === "completed"
-        );
-        setLoading(false);
-        setOrders(completedOrders);
-      } else if (tap === "pending") {
-        const pendingOrders = allOrders?.filter(
-          (order) => order?.order_status === "pending"
-        );
-        setLoading(false);
-        setOrders(pendingOrders);
-      } else if (tap === "returned") {
-        const returnedOrders = allOrders?.filter(
-          (order) => order?.order_status === "returned"
-        );
-        setLoading(false);
-        setOrders(returnedOrders);
-      } else if (tap === "canceled") {
-        const canceledOrders = allOrders?.filter(
-          (order) => order?.order_status === "canceled"
-        );
-        setLoading(false);
-        setOrders(canceledOrders);
-      }
+
+    axiosSecure.get(`/get-orders?skip=${skip}&limit=${dataPerPage}&tap=${tap}`).then((res) => {
+      setOrders(res?.data?.data || [])
+      setTotalData(res?.data?.meta?.payment || 20)
+
     });
-  }, [control, tap, subscription]);
+  }, [control, tap, pageNumber]);
 
   const options = [
     { value: "pending", label: "Pending" },
@@ -84,9 +78,22 @@ const ManageOrder = () => {
     });
     //// console.log(order_status, id);
   };
-  if (loading) {
-    return <Loading></Loading>;
+
+  const searchOrder = (e) => {
+    e.preventDefault()
+    const searchText = e.target?.searchInput?.value
+    if (!searchText) {
+      toast("please give value in search field")
+      return
+    }
+
+    axiosSecure.get(`/search-orders/${searchText}`)
+      .then(res => {
+        setOrders(res?.data?.data || [])
+      }).catch(err => console.log(err.message))
+
   }
+
   return (
     <div className="p-3">
       <HelmetSeo
@@ -100,18 +107,12 @@ const ManageOrder = () => {
         </div>
         <div className="relative">
           <ul className="flex gap-5 items-stretch my-5 py-2">
-            {/* <TapLink href="/seller-dashboard/order-management/all_orders">
-                            All Orders
-                        </TapLink>
-                        <TapLink href="/seller-dashboard/order-management/pending">Pending</TapLink>
-                        <TapLink href="/seller-dashboard/order-management/completed">Completed</TapLink>
-                        <TapLink href="/seller-dashboard/order-management/retured">Retured</TapLink>
-                        <TapLink href="/seller-dashboard/order-management/canceled">Canceled</TapLink> */}
+
 
             <li
-              onClick={() => setTap("all-order")}
+              onClick={() => setTap("all")}
               className={
-                tap === "all-order"
+                tap === "all"
                   ? "border-b-2 border-[#0621bb] text-[#0621bb] py-2 uppercase cursor-pointer"
                   : "py-2 uppercase cursor-pointer"
               }
@@ -162,25 +163,32 @@ const ManageOrder = () => {
           <hr className="-mt-[29px]" />
         </div>
 
-        <div className="relative mx-auto w-[80%] flex justify-center my-8">
+
+
+        <form className="relative mx-auto w-[80%] flex justify-center my-8" onSubmit={searchOrder}>
           <input
-            placeholder="search here..."
+            placeholder="search by transaction id.. write and enter"
             type="text"
+            required
+            name="searchInput"
             className="bg-white py-3 w-full pl-14 border-2 rounded-full outline-none border-stone-300 text-black"
-          />{" "}
+          />
           <span className="absolute top-1/2 -translate-y-1/2 left-5 text-stone-300">
             <FaSearch></FaSearch>
-          </span>{" "}
-        </div>
+          </span>
+        </form>
+
+
 
         {/* Table */}
         <div className="overflow-x-auto mt-10">
-          <table className="table">
+          <table className="table w-[1558px]">
             {/* head */}
             <thead>
               <tr>
                 <th>No</th>
                 <th>Order Id</th>
+                <th>Transaction id</th>
                 <th>Customer</th>
                 <th>Order Type</th>
                 <th>Order Date</th>
@@ -219,12 +227,13 @@ const ManageOrder = () => {
                     price = order?.packages?.price;
                   }
 
-                  const { _id, name, order_status } = order || {};
+                  const { _id, name, order_status, transaction_id } = order || {};
                   const itemsNameColor = ["#FF0000", "#990099", "#003366"];
                   return (
                     <tr key={ind}>
                       <th>{ind + 1}</th>
                       <td>{_id}</td>
+                      <td>{transaction_id}</td>
                       <td>{name}</td>
                       <td>{orderType}</td>
                       <td>{formattedDate}</td>
@@ -273,6 +282,26 @@ const ManageOrder = () => {
               </tbody>
             )}
           </table>
+
+        </div>
+        <div className="text-center my-5">
+          {
+            currentPage - 1 >= 1 && (
+              <>
+                <Link to={"/dashboard/manage-order"}>{"<<"}</Link>
+              </>
+            )
+          }
+          {
+            pageNumbers?.map((page, i) => <Link className="bg-black px-2 py-1 rounded text-white mx-2" key={i} to={`/dashboard/manage-order?page=${page}`}>{page}</Link>)
+          }
+          {
+            currentPage + 1 <= totalPages && (
+              <>
+                <Link to={"/dashboard/manage-order"}>{">>"}</Link>
+              </>
+            )
+          }
         </div>
       </div>
     </div>

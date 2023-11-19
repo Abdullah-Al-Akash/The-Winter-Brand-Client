@@ -76,6 +76,7 @@ const ContactComponents = () => {
               What date do need me?
             </label>
             <input
+              min={new Date().toISOString().split('T')[0]}
               type="date"
               className="outline-none bg-gray-200 w-full py-3 px-2"
               name="need"

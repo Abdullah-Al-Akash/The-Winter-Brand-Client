@@ -9,6 +9,7 @@ import { getAuth, sendEmailVerification } from "firebase/auth";
 import { AuthContext, auth, useAuth } from "../../../AuthProvider/AuthProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import HelmetSeo from "../../../Component/shared/Helmet";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const { user } = useAuth();
@@ -45,28 +46,40 @@ const Register = () => {
             .then(res => {
               console.log(45, res)
               setVerificationMessage("please check your email to verify")
-              alert("Please verify your email! Check your email for verification!")
+              axiosSecure
+                .post("/user-registration", {
+                  name: name,
+                  email: saveUser.email,
+                })
+                .then((data) => {
+                  // console.log(object);
+                  if (data?.data?.success) {
+                    Swal.fire({
+                      title: "Registration Successful!",
+                      text: "Please check your email to verify!",
+                      icon: "success",
+                      showCancelButton: false,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Ok"
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        navigate(from, { replace: true });
+                      }
+                    });
+                    form.reset();
+                    setControlCart(!controlCart)
+
+                    setErrorMassage("");
+                    setSuccessMessage("");
+                  }
+                })
+                .catch((err) => {
+                  console.log(err?.message);
+                });
             }).catch((err) => { console.log(47, err.message) })
           console.log(saveUser);
-          axiosSecure
-            .post("/user-registration", {
-              name: name,
-              email: saveUser.email,
-            })
-            .then((data) => {
-              // console.log(object);
-              if (data?.data?.success) {
-                toast("Register successful!");
-                form.reset();
-                setControlCart(!controlCart)
-                navigate(from, { replace: true });
-                setErrorMassage("");
-                setSuccessMessage("");
-              }
-            })
-            .catch((err) => {
-              console.log(err?.message);
-            });
+
         })
         .catch((err) => {
           console.log(err.message);

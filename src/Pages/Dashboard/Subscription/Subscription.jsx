@@ -18,7 +18,7 @@ const Subscription = () => {
   const dataPerPage = 20
   let pageNumbers = []
   const totalPages = Math.ceil(totalData / dataPerPage)
-  let skip = (currentPage - 1) * dataPerPage
+
   const pageNumber = Number(queryParams.get('page'))
   if (Number(pageNumber >= 1)) {
     currentPage = pageNumber
@@ -31,10 +31,10 @@ const Subscription = () => {
   }
   const { axiosSecure } = useAxiosSecure();
   useEffect(() => {
-
+    let skip = (currentPage - 1) * dataPerPage
     axiosSecure.get(`/get-orders?skip=${skip}&limit=${dataPerPage}&tap=${tap}&type=subscription`).then((res) => {
       setOrders(res?.data?.data || [])
-      setTotalData(res?.data?.meta?.payment || 20)
+      setTotalData(res?.data?.meta?.subscription || 20)
 
     });
   }, [control, tap, pageNumber]);
@@ -281,17 +281,17 @@ const Subscription = () => {
           {
             currentPage - 1 >= 1 && (
               <>
-                <Link to={"/dashboard/manage-order"}>{"<<"}</Link>
+                <Link to={"/dashboard/subscription"}>{"<<"}</Link>
               </>
             )
           }
           {
-            pageNumbers?.map((page, i) => <Link className={page === currentPage ? "bg-black px-2 py-1 rounded text-white mx-2" : "border-2 px-2 py-1 rounded text-white mx-2"} key={i} to={`/dashboard/manage-order?page=${page}`}>{page}</Link>)
+            pageNumbers?.map((page, i) => <Link className={page === currentPage ? "bg-black px-2 py-1 rounded text-white mx-2" : "border-2 px-2 py-1 rounded  mx-2"} key={i} to={`/dashboard/subscription?page=${page}`}>{page}</Link>)
           }
           {
             currentPage + 1 <= totalPages && (
               <>
-                <Link to={"/dashboard/manage-order"}>{">>"}</Link>
+                <Link to={"/dashboard/subscription"}>{">>"}</Link>
               </>
             )
           }

@@ -20,7 +20,7 @@ const AllReview = () => {
   const dataPerPage = 20
   let pageNumbers = []
   const totalPages = Math.ceil(totalData / dataPerPage)
-  let skip = (currentPage - 1) * dataPerPage
+
   const pageNumber = Number(queryParams.get('page'))
   if (Number(pageNumber >= 1)) {
     currentPage = pageNumber
@@ -34,6 +34,7 @@ const AllReview = () => {
 
 
   useEffect(() => {
+    let skip = (currentPage - 1) * dataPerPage
     axiosSecure
       .get(`/get-all-reviews?skip=${skip}&limit=${dataPerPage}`)
       .then((res) => {
@@ -114,7 +115,7 @@ const AllReview = () => {
           )
         }
         {
-          pageNumbers?.map((page, i) => <Link className={page === currentPage ? "bg-black px-2 py-1 rounded text-white mx-2" : "border-2 px-2 py-1 rounded text-white mx-2"} key={i} to={`/dashboard/all-review?page=${page}`}>{page}</Link>)
+          pageNumbers?.map((page, i) => <Link className={page === currentPage ? "bg-black px-2 py-1 rounded mx-2 text-white" : "border-2 px-2 py-1 rounded mx-2"} key={i} to={`/dashboard/all-review?page=${page}`}>{page}</Link>)
         }
         {
           currentPage + 1 <= totalPages && (

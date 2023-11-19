@@ -156,16 +156,16 @@ const CheckoutForm = ({ amount, clientSecret }) => {
         const order = {
           order_type: checkoutData.duration,
           name: `${first_name + " " + last_name}`,
-          subscription_id: response.data.subscriptionId,
-          products_price: checkoutData.price,
+          subscription_id: response?.data?.subscriptionId,
+          products_price: checkoutData?.price,
           company: company,
           email: user.email,
           packages: {
-            type: checkoutData.type,
-            gender: checkoutData.gender,
-            size: checkoutData.size,
-            selected: checkoutData.selected,
-            package: checkoutData.quantity,
+            type: checkoutData?.type,
+            gender: checkoutData?.gender,
+            size: checkoutData?.size,
+            selected: checkoutData?.selected,
+            package: checkoutData?.quantity,
           },
           contact_email: email,
           delivery_info: {
@@ -185,10 +185,10 @@ const CheckoutForm = ({ amount, clientSecret }) => {
 
         if (checkoutData?.type === "gift") {
           order.gift = {
-            gift_message: checkoutData.gift_message,
-            gift_recipient_email: checkoutData.gift_recipient_email,
-            gift_message_date: checkoutData.gift_message_date,
-            shipping_date: checkoutData.shipping_date
+            gift_message: checkoutData?.gift_message,
+            gift_recipient_email: checkoutData?.gift_recipient_email,
+            gift_message_date: checkoutData?.gift_message_date,
+            shipping_date: checkoutData?.shipping_date
           }
         }
         axiosSecure.post("/create-order", order)
@@ -226,16 +226,16 @@ const CheckoutForm = ({ amount, clientSecret }) => {
             const order = {
               order_type: checkoutData.duration,
               name: `${first_name + " " + last_name}`,
-              transaction_id: paymentIntent.id,
-              products_price: checkoutData.price,
+              transaction_id: paymentIntent?.id,
+              products_price: checkoutData?.price,
               company: company,
               email: user.email,
               packages: {
-                type: checkoutData.type,
-                gender: checkoutData.gender,
-                size: checkoutData.size,
-                selected: checkoutData.selected,
-                package: checkoutData.quantity,
+                type: checkoutData?.type,
+                gender: checkoutData?.gender,
+                size: checkoutData?.size,
+                selected: checkoutData?.selected,
+                package: checkoutData?.quantity,
 
               },
               contact_email: email,
@@ -258,10 +258,10 @@ const CheckoutForm = ({ amount, clientSecret }) => {
 
             if (checkoutData?.type === "gift") {
               order.gift = {
-                gift_message: checkoutData.gift_message,
-                gift_recipient_email: checkoutData.gift_recipient_email,
-                gift_message_date: checkoutData.gift_message_date,
-                shipping_date: checkoutData.shipping_date
+                gift_message: checkoutData?.gift_message,
+                gift_recipient_email: checkoutData?.gift_recipient_email,
+                gift_message_date: checkoutData?.gift_message_date,
+                shipping_date: checkoutData?.shipping_date
               }
             }
 
@@ -303,7 +303,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
                     };
                   }),
                 company: company,
-                email: user.email,
+                email: user?.email,
                 contact_email: email,
                 delivery_info: {
                   country: selectedCountry,

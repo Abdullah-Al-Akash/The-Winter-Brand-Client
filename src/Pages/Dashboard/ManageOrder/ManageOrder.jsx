@@ -309,11 +309,8 @@ const ManageOrder = () => {
 
 
       </div>
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 87dbbef9d1079f269da6961f9e75461b3f9aa64a
     </div>
   );
 };

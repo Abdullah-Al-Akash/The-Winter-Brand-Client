@@ -33,7 +33,7 @@ const sizes = [
 const Subscription = () => {
   const navigate = useNavigate();
   const { toggleDrawer } = useContext(AuthContext);
-  const { setControl, control } = useCheckoutData();
+  const { setControl, control } = useCheckoutData() || {};
   const [sub, setSub] = useState("me");
   const [gender, setGender] = useState("male");
   const [plan, setPlan] = useState("plan1");
@@ -201,6 +201,7 @@ const Subscription = () => {
                 className="px-4 py-2 rounded-lg outline-none border w-full"
                 type="date"
                 name=""
+                min={new Date().toISOString().split('T')[0]}
                 value={shippingDate}
                 onChange={(e) => setShippingDate(e.target.value)}
                 placeholder="Shipping Date"

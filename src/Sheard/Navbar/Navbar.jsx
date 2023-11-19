@@ -1,6 +1,6 @@
 import React from "react";
 import Navlogo from "../../assets/Navlogo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import DrawerComponent from "../Drawer/DrawerComponent";
@@ -29,6 +29,7 @@ const Navbar = () => {
   } = useContext(AuthContext);
   const { axiosSecure } = useAxiosSecure();
   const { role } = useUserRole();
+  const navigate = useNavigate();
   const { cartProduct } = UseGetCart();
   console.log(user);
   const handleLogOut = () => {
@@ -37,6 +38,8 @@ const Navbar = () => {
         axiosSecure
           .get(`/logout?email=${user.email}`)
           .then((response) => {
+            setNevActive("home");
+            navigate("/");
             // console.log(response);
           })
           .catch((error) => {
@@ -54,7 +57,7 @@ const Navbar = () => {
     axiosSecure.get(`/get-user-profile/${user?.email}`).then((res) => {
       setUserImage(res?.data?.data?.avatar);
     });
-  }, [updateProfileControl]);
+  }, [user, updateProfileControl]);
   return (
     <div className="border-b md:py-1 max-h-16 md:max-h-20">
       <div className="max-w-[1200px] mx-auto">
@@ -138,18 +141,20 @@ const Navbar = () => {
                           </Link>
                         </li>
                       )}
-                      <li>
-                        <Link
-                          className="text-sm flex items-center hover:bg-gray-100"
-                          to={"/cart"}
-                          onClick={handleTop}
-                        >
-                          <FiShoppingCart></FiShoppingCart>{" "}
-                          <span className="ms-2 text-sm bg-black text-white">
-                            My Cart
-                          </span>
-                        </Link>
-                      </li>
+                      {(user && !role == "admin") && (
+                        <li>
+                          <Link
+                            className="text-sm flex items-center hover:bg-gray-100"
+                            to={"/cart"}
+                            onClick={handleTop}
+                          >
+                            <FiShoppingCart></FiShoppingCart>{" "}
+                            <span className="ms-2 text-sm bg-black text-white">
+                              My Cart
+                            </span>
+                          </Link>
+                        </li>
+                      )}
                       <li>
                         <h3 onClick={handleLogOut}>
                           <FaSignOutAlt></FaSignOutAlt>{" "}
@@ -185,7 +190,10 @@ const Navbar = () => {
                         <Link
                           className="text-sm flex items-center hover:bg-gray-100"
                           to={"/profile"}
-                          onClick={handleTop}
+                          onClick={() => {
+                            handleTop();
+                            setNevActive("");
+                          }}
                         >
                           <FaRegUserCircle></FaRegUserCircle>{" "}
                           <span className="ms-2 text-sm">My Profile</span>
@@ -196,7 +204,10 @@ const Navbar = () => {
                           <Link
                             className="text-sm flex items-center hover:bg-gray-100"
                             to={"/dashboard"}
-                            onClick={handleTop}
+                            onClick={() => {
+                              handleTop();
+                              setNevActive("");
+                            }}
                           >
                             <FaRegUserCircle></FaRegUserCircle>{" "}
                             <span className="ms-2 text-sm">Dashboard</span>
@@ -207,7 +218,10 @@ const Navbar = () => {
                           <Link
                             className="text-sm flex items-center hover:bg-gray-100"
                             to={"/my-order"}
-                            onClick={handleTop}
+                            onClick={() => {
+                              handleTop();
+                              setNevActive("");
+                            }}
                           >
                             <FaRegUserCircle></FaRegUserCircle>{" "}
                             <span className="ms-2 text-sm">My Order</span>
@@ -215,7 +229,12 @@ const Navbar = () => {
                         </li>
                       )}
                       <li>
-                        <h3 onClick={handleLogOut}>
+                        <h3
+                          onClick={() => {
+                            handleLogOut();
+                            setNevActive("");
+                          }}
+                        >
                           <FaSignOutAlt></FaSignOutAlt>{" "}
                           <span className="ms-2 text-sm">Logout</span>
                         </h3>
@@ -226,24 +245,29 @@ const Navbar = () => {
                   <Link to="/login">Login</Link>
                 )}
               </div>
-              {user && (
-                <li className="list-none md:flex justify-center items-center gap-5 hidden relative">
-                  <Link
-                    className="text-sm flex items-center"
-                    to={"/cart"}
-                    onClick={handleTop}
-                  >
-                    <span className="text-3xl">
-                      <FiShoppingCart></FiShoppingCart>
-                    </span>
-                  </Link>
-                  {cartProduct?.length > 0 && (
-                    <p className="text-black font-bold absolute -top-3 -right-2">
-                      {cartProduct?.length}
-                    </p>
+              {(user &&
+                !role ==
+                  "admin") && (
+                    <li className="list-none md:flex justify-center items-center gap-5 hidden relative">
+                      <Link
+                        className="text-sm flex items-center"
+                        to={"/cart"}
+                        onClick={() => {
+                          handleTop();
+                          setNevActive("");
+                        }}
+                      >
+                        <span className="text-3xl">
+                          <FiShoppingCart></FiShoppingCart>
+                        </span>
+                      </Link>
+                      {cartProduct?.length > 0 && (
+                        <p className="text-black font-bold absolute -top-3 -right-2">
+                          {cartProduct?.length}
+                        </p>
+                      )}
+                    </li>
                   )}
-                </li>
-              )}
               <button
                 className="bg-black text-white transition-all ease-in-out duration-200 hover:text-black hover:bg-white border-2 border-black md:px-12 md:text-xl px-6 font-semibold md:py-3 py-2 rounded-[50px]"
                 onClick={toggleDrawer}

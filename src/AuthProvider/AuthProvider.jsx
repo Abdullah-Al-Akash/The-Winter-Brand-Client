@@ -106,6 +106,7 @@ const AuthProvider = ({ children }) => {
     auth,
     setFavorite,
     Favorite,
+    reload,
     setReload,
     isOpen,
     setIsOpen,

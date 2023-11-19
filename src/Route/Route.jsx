@@ -58,7 +58,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <LoginRequired><UserProfile></UserProfile></LoginRequired>,
+        element: (
+          <LoginRequired>
+            <UserProfile></UserProfile>
+          </LoginRequired>
+        ),
       },
       {
         path: "/about",
@@ -78,7 +82,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/cart",
-        element: <CustomerOnly><Cart></Cart></CustomerOnly>,
+        element: (
+          <CustomerOnly>
+            <Cart></Cart>
+          </CustomerOnly>
+        ),
       },
       {
         path: "/all-product",
@@ -94,11 +102,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: <CustomerOnly><Checkout></Checkout></CustomerOnly>,
+        element: (
+          <CustomerOnly>
+            <Checkout></Checkout>
+          </CustomerOnly>
+        ),
       },
       {
         path: "/my-order",
-        element: <CustomerOnly><MyOrder></MyOrder></CustomerOnly>,
+        element: (
+          <CustomerOnly>
+            <MyOrder></MyOrder>
+          </CustomerOnly>
+        ),
       },
       {
         path: "/product-details/:id",
@@ -106,14 +122,22 @@ export const router = createBrowserRouter([
       },
       {
         path: "/invoice-details/:id",
-        element: <CustomerOnly><InvoicePDF></InvoicePDF></CustomerOnly>,
+        element: (
+          <CustomerOnly>
+            <InvoicePDF></InvoicePDF>
+          </CustomerOnly>
+        ),
       },
     ],
   },
 
   {
     path: "/dashboard",
-    element: <AdminOnly><Dashboard></Dashboard></AdminOnly>,
+    element: (
+      <AdminOnly>
+        <Dashboard></Dashboard>
+      </AdminOnly>
+    ),
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {

@@ -44,7 +44,7 @@ const UserProfile = () => {
       });
   }, [control]);
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleUpdateUser = (e) => {
     e.preventDefault();
     const name = e.target.displayName.value;

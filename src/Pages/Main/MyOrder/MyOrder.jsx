@@ -234,7 +234,7 @@ const MyOrder = () => {
           <h1 className="text-center my-2">Please Leave a Review!</h1>
           <span
             onClick={() => setOpen(false)}
-            className="cursor-pointer bg-gray-200 rounded-full p-2 absolute -top-11 -right-10  text-xl"
+            className="cursor-pointer bg-red-500 text-white rounded-full p-2 absolute -top-11 -right-10  text-xl"
           >
             <IoClose />
           </span>

@@ -19,10 +19,17 @@ const AddProduct = () => {
     const from = e.target;
     const selectedFile = watch("image") && watch("image")[0];
     const product_name = from?.product_name?.value;
-    const price = from?.price?.value;
-    const quantity = from?.quantity?.value;
-    const discount = from?.discount?.value;
+    const price = parseFloat(from?.price?.value);
+    const quantity = parseFloat(from?.quantity?.value);
+    const discount = parseFloat(from?.discount?.value);
     const product_description = from?.product_description?.value;
+    console.log({
+      product_name,
+      price,
+      quantity,
+      discount,
+      product_description
+    })
     if (!selectedFile) {
       console.log("You haven't selected an image.");
       return;

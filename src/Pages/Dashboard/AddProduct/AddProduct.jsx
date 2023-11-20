@@ -27,6 +27,7 @@ const AddProduct = () => {
       console.log("You haven't selected an image.");
       return;
     }
+
     // Handle image submission
     const formData = new FormData();
     formData.append("image", selectedFile);
@@ -44,11 +45,11 @@ const AddProduct = () => {
           const updateImageFile = {
             product_name,
             product_description,
-            price: price,
+            price: parseFloat(price).toFixed(2),
             product_image: imgURL,
             quantity,
-            discount,
-          }
+            discount: parseFloat(discount).toFixed(2),
+          };
           console.log(imgURL);
           axiosSecure
             .post("/create-product", updateImageFile)
@@ -63,7 +64,7 @@ const AddProduct = () => {
                 });
                 from.reset();
                 setLoadImage(false);
-                navigate("/dashboard/all-products")
+                navigate("/dashboard/all-products");
                 setError("");
               } else {
                 Swal.fire({
@@ -142,7 +143,7 @@ const AddProduct = () => {
               <input
                 id="price"
                 min={0}
-                type="number"
+                type="text"
                 required
                 autoComplete="off"
                 placeholder="Enter Product Price"
@@ -169,7 +170,7 @@ const AddProduct = () => {
               <label htmlFor="discount">Discount</label>
               <input
                 id="discount"
-                type="number"
+                type="text"
                 min={0}
                 max={100}
                 autoComplete="off"

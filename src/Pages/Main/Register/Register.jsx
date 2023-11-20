@@ -17,8 +17,15 @@ const Register = () => {
   const [toggleIcon, setToggleIcon] = useState(true);
   const [errorMassage, setErrorMassage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [verificationMessage, setVerificationMessage] = useState("")
-  const { signUp, controlCart, setControlCart } = useContext(AuthContext);
+  const [verificationMessage, setVerificationMessage] = useState("");
+  const {
+    signUp,
+    controlCart,
+    setControlCart,
+    updateProfileControl,
+    setNevActive,
+    setUpdateProfileControl,
+  } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { axiosSecure } = useAxiosSecure();
@@ -41,11 +48,11 @@ const Register = () => {
       signUp(email, password)
         .then((result) => {
           const saveUser = result.user;
-          console.log(42, saveUser.email)
+          console.log(42, saveUser.email);
           sendEmailVerification(saveUser)
-            .then(res => {
-              console.log(45, res)
-              setVerificationMessage("please check your email to verify")
+            .then((res) => {
+              console.log(45, res);
+              setVerificationMessage("please check your email to verify");
               axiosSecure
                 .post("/user-registration", {
                   name: name,
@@ -61,14 +68,16 @@ const Register = () => {
                       showCancelButton: false,
                       confirmButtonColor: "#3085d6",
                       cancelButtonColor: "#d33",
-                      confirmButtonText: "Ok"
+                      confirmButtonText: "Ok",
                     }).then((result) => {
                       if (result.isConfirmed) {
                         navigate(from, { replace: true });
+                        setUpdateProfileControl(!updateProfileControl);
+                        setNevActive("home");
                       }
                     });
                     form.reset();
-                    setControlCart(!controlCart)
+                    setControlCart(!controlCart);
 
                     setErrorMassage("");
                     setSuccessMessage("");
@@ -77,9 +86,11 @@ const Register = () => {
                 .catch((err) => {
                   console.log(err?.message);
                 });
-            }).catch((err) => { console.log(47, err.message) })
+            })
+            .catch((err) => {
+              console.log(47, err.message);
+            });
           console.log(saveUser);
-
         })
         .catch((err) => {
           console.log(err.message);
@@ -168,7 +179,13 @@ const Register = () => {
                   placeholder="Password"
                   onChange={handlePassword}
                 />
-                {verificationMessage && <p > <span className="text-red-600 font-bold">Note: </span>{verificationMessage}</p>}
+                {verificationMessage && (
+                  <p>
+                    {" "}
+                    <span className="text-red-600 font-bold">Note: </span>
+                    {verificationMessage}
+                  </p>
+                )}
                 {errorMassage && <p className="text-red-600">{errorMassage}</p>}
                 {successMessage && (
                   <p className="text-green-600">{successMessage}</p>

@@ -149,7 +149,7 @@ const Navbar = () => {
                             onClick={handleTop}
                           >
                             <FiShoppingCart></FiShoppingCart>{" "}
-                            <span className="ms-2 text-sm bg-black text-white">
+                            <span className="ms-2 text-sm  ">
                               My Cart
                             </span>
                           </Link>

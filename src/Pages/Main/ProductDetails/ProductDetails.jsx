@@ -18,7 +18,6 @@ const ProductDetails = () => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const { axiosSecure } = useAxiosSecure();
-
   useEffect(() => {
     axiosSecure
       .get(`get-product/${id}`)
@@ -128,8 +127,9 @@ const ProductDetails = () => {
             <div>
               <button
                 onClick={() => handleAddToCard(product)}
-                className={`${role == "admin" ? "cursor-not-allowed" : "cursor-pointer"
-                  } brand-btn transition-all ease-in-out flex items-center gap-2 px-4 py-2`}
+                className={`${
+                  role == "admin" ? "cursor-not-allowed" : "cursor-pointer"
+                } brand-btn transition-all ease-in-out flex items-center gap-2 px-4 py-2`}
                 disabled={role == "admin"}
                 title={
                   role == "admin" &&

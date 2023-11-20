@@ -15,9 +15,9 @@ const AdminOnly = ({ children }) => {
 
   if (user?.email && role === "admin") {
     return children;
+  } else {
+    <Navigate state={{ from: location }} to="/" replace />;
   }
-
-  return <Navigate state={{ from: location }} to="/" replace />;
 };
 
 export default AdminOnly;

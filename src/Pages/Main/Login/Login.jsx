@@ -11,7 +11,14 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import Swal from "sweetalert2";
 const Login = () => {
   const [toggleIcon, setToggleIcon] = useState(true);
-  const { login, controlCart, setControlCart } = useContext(AuthContext);
+  const {
+    login,
+    controlCart,
+    setControlCart,
+    updateProfileControl,
+    setUpdateProfileControl,
+    setNevActive,
+  } = useContext(AuthContext);
   const [errorMassage, setErrorMassage] = useState("");
   const [successMassage, setSuccessMassage] = useState("");
   const location = useLocation();
@@ -33,8 +40,10 @@ const Login = () => {
           })
           .then((res) => "");
         setSuccessMassage("login successful");
+        setNevActive("home");
         setErrorMassage("");
         setControlCart(!controlCart);
+        setUpdateProfileControl(!updateProfileControl);
         navigate(from, { replace: true });
       })
       .catch((err) => {
@@ -43,13 +52,13 @@ const Login = () => {
       });
   };
 
-  const [resetEmail, setResetEmail] = useState('');
+  const [resetEmail, setResetEmail] = useState("");
   const auth = getAuth();
   const handleResetPassword = () => {
     if (!resetEmail) {
-      alert('Please Enter Email!')
+      alert("Please Enter Email!");
       return;
-    };
+    }
     sendPasswordResetEmail(auth, resetEmail)
       .then(() => {
         Swal.fire({
@@ -70,8 +79,7 @@ const Login = () => {
         });
         // ..
       });
-
-  }
+  };
   return (
     <div className="max-w-[1200px] mx-auto px-2 md:px-0">
       <HelmetSeo
@@ -141,7 +149,12 @@ const Login = () => {
         </p>
         <p className="py-3">
           Forgot your password?{" "}
-          <span onClick={handleResetPassword} className="text-[#4CA7FF] cursor-pointer">Reset password</span>
+          <span
+            onClick={handleResetPassword}
+            className="text-[#4CA7FF] cursor-pointer"
+          >
+            Reset password
+          </span>
         </p>
       </div>
     </div>

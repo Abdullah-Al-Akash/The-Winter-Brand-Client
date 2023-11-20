@@ -29,7 +29,7 @@ const MyOrder = () => {
       .catch((err) => {
         console.log(err?.message);
       });
-  }, []);
+  }, [control]);
 
   const [userName, setUserName] = useState("");
   const [star, setStar] = useState(null);
@@ -67,6 +67,7 @@ const MyOrder = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        setControl(!control);
       } else {
         Swal.fire({
           icon: "error",
@@ -119,11 +120,7 @@ const MyOrder = () => {
   }
   return (
     <div className="max-w-[1280px] mx-auto">
-      <HelmetSeo
-        title="my order"
-        canonical="my-order"
-        description="my order"
-      />
+      <HelmetSeo title="my order" canonical="my-order" description="my order" />
       <div className="">
         <h1 className="text-center text-xl font-extrabold p-3 my-4">
           My Order
@@ -186,7 +183,9 @@ const MyOrder = () => {
                     {" "}
                     <button
                       onClick={() => handleModal(_id, name)}
-                      className="rounded btn-sm bg-black text-white flex items-center mx-auto"
+                      className={`rounded btn-sm  text-white flex items-center mx-auto ${
+                        order?.user_review ? "bg-gray-400" : "bg-black"
+                      }`}
                       disabled={order?.user_review ? true : false}
                     >
                       Add Review
@@ -214,8 +213,9 @@ const MyOrder = () => {
 
       {/* review modal */}
       <div
-        className={`${open ? "" : "hidden"
-          } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
+        className={`${
+          open ? "" : "hidden"
+        } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
       >
         <form className="relative" onSubmit={handleReview}>
           <h1 className="text-center my-2">Please Leave a Review!</h1>

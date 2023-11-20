@@ -12,38 +12,37 @@ const ReviewComponent = () => {
   const { axiosSecure } = useAxiosSecure();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const [totalData, setTotalData] = useState(20)
-
+  const [totalData, setTotalData] = useState(20);
 
   let currentPage = 1;
 
-  const dataPerPage = 20
-  let pageNumbers = []
-  const totalPages = Math.ceil(totalData / dataPerPage)
+  const dataPerPage = 20;
+  let pageNumbers = [];
+  const totalPages = Math.ceil(totalData / dataPerPage);
 
-  const pageNumber = Number(queryParams.get('page'))
+  const pageNumber = Number(queryParams.get("page"));
   if (Number(pageNumber >= 1)) {
-    currentPage = pageNumber
+    currentPage = pageNumber;
   }
 
   for (let i = currentPage - 3; i <= currentPage + 3; i++) {
     if (i < 1) continue;
     if (i > totalPages) break;
-    pageNumbers.push(i)
+    pageNumbers.push(i);
   }
   useEffect(() => {
-
-    setLoading(true)
-    let skip = (currentPage - 1) * dataPerPage
+    setLoading(true);
+    let skip = (currentPage - 1) * dataPerPage;
     axiosSecure
       .get(`/get-all-reviews?skip=${skip}&limit=${dataPerPage}`)
       .then((res) => {
+        console.log(res?.data?.data);
         setReviews(res?.data?.data || []);
-        setTotalData(res?.data?.meta?.total || 20)
-        setLoading(false)
+        setTotalData(res?.data?.meta?.total || 20);
+        setLoading(false);
       })
       .catch((err) => {
-        setLoading(false)
+        setLoading(false);
         console.log(err?.message);
       });
   }, [currentPage]);
@@ -83,23 +82,29 @@ const ReviewComponent = () => {
             })}
           </div>
           <div className="text-center my-5">
-            {
-              currentPage - 1 >= 1 && (
-                <>
-                  <Link to={"/dashboard/reviews"}>{"<<"}</Link>
-                </>
-              )
-            }
-            {
-              pageNumbers?.map((page, i) => <Link className={page === currentPage ? "bg-black px-2 py-1 rounded text-white mx-2" : "border-2 px-2 py-1 rounded mx-2"} key={i} to={`/dashboard/reviews?page=${page}`}>{page}</Link>)
-            }
-            {
-              currentPage + 1 <= totalPages && (
-                <>
-                  <Link to={"/dashboard/reviews"}>{">>"}</Link>
-                </>
-              )
-            }
+            {currentPage - 1 >= 1 && (
+              <>
+                <Link to={"/dashboard/reviews"}>{"<<"}</Link>
+              </>
+            )}
+            {pageNumbers?.map((page, i) => (
+              <Link
+                className={
+                  page === currentPage
+                    ? "bg-black px-2 py-1 rounded text-white mx-2"
+                    : "border-2 px-2 py-1 rounded mx-2"
+                }
+                key={i}
+                to={`/dashboard/reviews?page=${page}`}
+              >
+                {page}
+              </Link>
+            ))}
+            {currentPage + 1 <= totalPages && (
+              <>
+                <Link to={"/dashboard/reviews"}>{">>"}</Link>
+              </>
+            )}
           </div>
         </div>
       </div>

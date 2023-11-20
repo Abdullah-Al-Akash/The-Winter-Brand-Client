@@ -84,7 +84,7 @@ const ReviewComponent = () => {
           <div className="text-center my-5">
             {currentPage - 1 >= 1 && (
               <>
-                <Link to={"/dashboard/reviews"}>{"<<"}</Link>
+                <Link to={"/reviews"}>{"<<"}</Link>
               </>
             )}
             {pageNumbers?.map((page, i) => (
@@ -95,14 +95,14 @@ const ReviewComponent = () => {
                     : "border-2 px-2 py-1 rounded mx-2"
                 }
                 key={i}
-                to={`/dashboard/reviews?page=${page}`}
+                to={`/reviews?page=${page}`}
               >
                 {page}
               </Link>
             ))}
             {currentPage + 1 <= totalPages && (
               <>
-                <Link to={"/dashboard/reviews"}>{">>"}</Link>
+                <Link to={"/reviews"}>{">>"}</Link>
               </>
             )}
           </div>

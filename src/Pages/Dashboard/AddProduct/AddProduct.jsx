@@ -106,7 +106,7 @@ const AddProduct = () => {
         >
           {watch("image") ? (
             <img
-              src={URL.createObjectURL(watch("image")[0])}
+              src={URL?.createObjectURL(watch("image")[0])}
               alt="Product Preview"
               className="flex justify-center items-center rounded-[20px]"
             />

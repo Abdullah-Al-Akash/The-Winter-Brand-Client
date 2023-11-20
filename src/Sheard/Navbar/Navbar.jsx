@@ -28,7 +28,7 @@ const Navbar = () => {
     updateProfileControl,
   } = useContext(AuthContext);
   const { axiosSecure } = useAxiosSecure();
-  const { role } = useUserRole();
+  const { isLoading, role } = useUserRole();
   const navigate = useNavigate();
   const { cartProduct } = UseGetCart();
   console.log(user);
@@ -122,7 +122,7 @@ const Navbar = () => {
                         <li>
                           <Link
                             className="text-sm flex items-center hover:bg-gray-100"
-                            to={"/dashboard"}
+                            to={"/dashboard/"}
                             onClick={handleTop}
                           >
                             <FaRegUserCircle></FaRegUserCircle>{" "}
@@ -141,7 +141,7 @@ const Navbar = () => {
                           </Link>
                         </li>
                       )}
-                      {(user && !role == "admin") && (
+                      {(user && role !== "admin") && (
                         <li>
                           <Link
                             className="text-sm flex items-center hover:bg-gray-100"
@@ -203,7 +203,7 @@ const Navbar = () => {
                         <li>
                           <Link
                             className="text-sm flex items-center hover:bg-gray-100"
-                            to={"/dashboard"}
+                            to={"/dashboard/"}
                             onClick={() => {
                               handleTop();
                               setNevActive("");
@@ -246,28 +246,28 @@ const Navbar = () => {
                 )}
               </div>
               {(user &&
-                !role ==
-                  "admin") && (
-                    <li className="list-none md:flex justify-center items-center gap-5 hidden relative">
-                      <Link
-                        className="text-sm flex items-center"
-                        to={"/cart"}
-                        onClick={() => {
-                          handleTop();
-                          setNevActive("");
-                        }}
-                      >
-                        <span className="text-3xl">
-                          <FiShoppingCart></FiShoppingCart>
-                        </span>
-                      </Link>
-                      {cartProduct?.length > 0 && (
-                        <p className="text-black font-bold absolute -top-3 -right-2">
-                          {cartProduct?.length}
-                        </p>
-                      )}
-                    </li>
-                  )}
+                role !==
+                "admin") && (
+                  <li className="list-none md:flex justify-center items-center gap-5 hidden relative">
+                    <Link
+                      className="text-sm flex items-center"
+                      to={"/cart"}
+                      onClick={() => {
+                        handleTop();
+                        setNevActive("");
+                      }}
+                    >
+                      <span className="text-3xl">
+                        <FiShoppingCart></FiShoppingCart>
+                      </span>
+                    </Link>
+                    {cartProduct?.length > 0 && (
+                      <p className="text-black font-bold absolute -top-3 -right-2">
+                        {cartProduct?.length}
+                      </p>
+                    )}
+                  </li>
+                )}
               <button
                 className="bg-black text-white transition-all ease-in-out duration-200 hover:text-black hover:bg-white border-2 border-black md:px-12 md:text-xl px-6 font-semibold md:py-3 py-2 rounded-[50px]"
                 onClick={toggleDrawer}

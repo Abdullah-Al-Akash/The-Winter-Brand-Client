@@ -60,7 +60,7 @@ const Checkout = () => {
 
   useEffect(() => {
     if (checkoutData?.price) {
-      const amount = checkoutData.price * 100;
+      const amount = parseFloat(checkoutData.price) * 100;
       setAmount(amount);
     }
   }, [checkoutData]);
@@ -86,7 +86,8 @@ const Checkout = () => {
             (acc, item) => acc + item.price * item.quantity,
             0
           );
-          setAmount(totalPrice * 100);
+          setAmount(parseFloat(totalPrice) * 100);
+          console.log("from 90", totalPrice);
           if (amount) {
             axiosSecure
               .post("/payment", {
@@ -100,6 +101,7 @@ const Checkout = () => {
       });
     }
   }, [amount, checkoutData]);
+
 
   useEffect(() => {
     if (checkoutData?.duration === "cart") {
@@ -125,7 +127,8 @@ const Checkout = () => {
         });
     }
   }, [checkoutData]);
-  console.log(checkoutData);
+  console.log("from 130", amount);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
       <HelmetSeo

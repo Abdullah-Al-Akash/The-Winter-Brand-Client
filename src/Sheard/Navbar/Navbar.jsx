@@ -31,7 +31,6 @@ const Navbar = () => {
   const { isLoading, role } = useUserRole();
   const navigate = useNavigate();
   const { cartProduct } = UseGetCart();
-  console.log(user);
   const handleLogOut = () => {
     logout()
       .then((res) => {

@@ -21,7 +21,7 @@ const AddProduct = () => {
     const product_name = from?.product_name?.value;
     const price = parseFloat(from?.price?.value);
     const quantity = parseFloat(from?.quantity?.value);
-    const discount = parseFloat(from?.discount?.value);
+    const discount = parseFloat(from?.discount?.value) || 0;
     const product_description = from?.product_description?.value;
     console.log({
       product_name,

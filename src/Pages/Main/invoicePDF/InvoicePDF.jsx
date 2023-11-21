@@ -95,7 +95,7 @@ const InvoicePDF = () => {
       doc.save("winter-invoice.pdf");
     });
   };
-  console.log(subtotal);
+  console.log(invoice);
   return (
     <div className="max-w-[1000px] mx-auto mt-5 my-2">
       <HelmetSeo
@@ -117,6 +117,19 @@ const InvoicePDF = () => {
       <div className="actual-receipt px-10">
         <div className="flex items-center gap-2 my-10">
           <h1 className="md:text-5xl font-bold">Invoice</h1>
+          {invoice?.subscription_id ? (
+            <td>
+              {invoice?.subscription_status === "active" ? (
+                <p className="text-pink-500">Active</p>
+              ) : (
+                <p className="text-pink-500">
+                  Inactive
+                </p>
+              )}
+            </td>
+          ) : (
+            <td></td>
+          )}
           {invoice?.order_type && (
             <p className="text-[#2BD0C0] text-sm font-semibold">
               {invoice.order_type === "payment" ? "One-time Payment" : ""}
@@ -133,7 +146,15 @@ const InvoicePDF = () => {
               <p>info@thewinterbrand.com</p>
             </div>
             <div className="flex flex-col gap-2 md:w-[50%] ms-auto ">
-              <h1 className="font-bold">Order ID: {invoice?._id}</h1>
+              {invoice?.subscription_id ? (
+                <h1 className="font-bold">
+                  Subscription ID: {invoice?.subscription_id}
+                </h1>
+              ) : (
+                <h1 className="font-bold">
+                  Transaction ID: {invoice?.transaction_id}
+                </h1>
+              )}
               <h1 className="font-bold">Payment Date: {formattedDate}</h1>
             </div>
           </div>
@@ -145,11 +166,12 @@ const InvoicePDF = () => {
             <>
               <div className="customer-info flex justify-between items-start">
                 <div
-                  className={`flex flex-col gap-2 md:w-[50%] ${invoice?.order_type === "payment" ||
+                  className={`flex flex-col gap-2 md:w-[50%] ${
+                    invoice?.order_type === "payment" ||
                     invoice?.order_type == "subscription"
-                    ? "ms-auto"
-                    : "me-auto"
-                    }`}
+                      ? "ms-auto"
+                      : "me-auto"
+                  }`}
                 >
                   <h1 className="font-bold">Bill to:</h1>
                   <p>{invoice?.name}</p>
@@ -159,37 +181,37 @@ const InvoicePDF = () => {
                 </div>
                 {(invoice?.order_type === "payment" ||
                   invoice?.order_type == "subscription") && (
-                    <div className="flex flex-col gap-2 md:w-[50%] me-auto">
+                  <div className="flex flex-col gap-2 md:w-[50%] me-auto">
+                    {" "}
+                    <h1 className="font-bold">
+                      Type: {invoice?.packages?.type}
+                    </h1>
+                    <p>
                       {" "}
-                      <h1 className="font-bold">
-                        Type: {invoice?.packages?.type}
-                      </h1>
-                      <p>
-                        {" "}
-                        Gender:{" "}
-                        {invoice?.packages?.gender == "male" ? "Male" : "Female"}
-                      </p>
-                      <p>
-                        {" "}
-                        package:{" "}
-                        {invoice?.packages?.package == "bundle_one"
-                          ? "Bundle One"
-                          : "Bundle Two"}
-                      </p>
-                      <div className="flex items-center gap-1">
-                        <span>selected: </span>
-                        {invoice?.packages?.selected?.map((select, index) => (
-                          <p
-                            key={index}
-                            className="text-[#2BD0C0] mx-1 px-2 py-[2px] text-[14px] font-semibold"
-                          >
-                            {select}
-                          </p>
-                        ))}
-                      </div>
-                      <p> Size: {invoice?.packages?.size}</p>
+                      Gender:{" "}
+                      {invoice?.packages?.gender == "male" ? "Male" : "Female"}
+                    </p>
+                    <p>
+                      {" "}
+                      package:{" "}
+                      {invoice?.packages?.package == "bundle_one"
+                        ? "Bundle One"
+                        : "Bundle Two"}
+                    </p>
+                    <div className="flex items-center gap-1">
+                      <span>selected: </span>
+                      {invoice?.packages?.selected?.map((select, index) => (
+                        <p
+                          key={index}
+                          className="text-[#2BD0C0] mx-1 px-2 py-[2px] text-[14px] font-semibold"
+                        >
+                          {select}
+                        </p>
+                      ))}
                     </div>
-                  )}
+                    <p> Size: {invoice?.packages?.size}</p>
+                  </div>
+                )}
               </div>
               <div className="customer-items-table">
                 <div className="overflow-x-auto">

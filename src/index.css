@@ -72,3 +72,6 @@ input::placeholder {
 .CardField-input-wrapper {
     background-color: red !important;
 }
+.review_start {
+    clip-path: polygon(50% 0%, 100% 0, 94% 53%, 100% 100%, 0 100%, 7% 52%, 0 0);
+}

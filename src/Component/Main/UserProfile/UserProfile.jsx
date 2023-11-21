@@ -10,6 +10,8 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const img_hosting_Token = import.meta.env.VITE_IMAGE_UPLOAD;
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IoClose } from "react-icons/io5";
+import Swal from "sweetalert2";
 const UserProfile = () => {
   const { user, updateProfileControl, setUpdateProfileControl } =
     useContext(AuthContext);
@@ -42,6 +44,7 @@ const UserProfile = () => {
       });
   }, [control]);
 
+  const [open, setOpen] = useState(false);
   const handleUpdateUser = (e) => {
     e.preventDefault();
     const name = e.target.displayName.value;
@@ -84,7 +87,14 @@ const UserProfile = () => {
             .put("/update-user-profile", updateUser)
             .then((res) => {
               if (res?.data?.success) {
-                toast("Update-successfully");
+                setOpen(false);
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Profile Updated!",
+                  showConfirmButton: false,
+                  timer: 1000
+                });
                 setLoadImage(false);
                 setControl(!control);
                 setUpdateProfileControl(!updateProfileControl);
@@ -146,8 +156,7 @@ const UserProfile = () => {
                     <li>
                       <a
                         className="text-black"
-                        onClick={() =>
-                          document.getElementById("my_modal_3").showModal()
+                        onClick={() => setOpen(true)
                         }
                       >
                         Update Profile
@@ -176,128 +185,126 @@ const UserProfile = () => {
         </div>
       </div>
 
-      <dialog id="my_modal_3" className="modal">
-        <div className="modal-box">
-          <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-sm btn-circle btn-dark bg-dark absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-          <div>
-            <form
-              onSubmit={handleUpdateUser}
-              className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      <div>
+        <div className="relative">
+          <form
+            onSubmit={handleUpdateUser}
+            className={`${open ? "" : "hidden"
+              } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
+          >
+            <span
+              onClick={() => setOpen(false)}
+              className="cursor-pointer bg-red-500 text-white rounded-full p-2 absolute top-0 right-0  text-xl"
             >
-              <ToastContainer className="!z-[9999999999999999999999]" />
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="email"
-                >
-                  Email:
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
-                  type="email"
-                  placeholder="example@gmail.com"
-                  defaultValue={email}
-                  disabled
-                  name="email"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="name"
-                >
-                  Name:
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="name"
-                  defaultValue={name}
-                  type="text"
-                  placeholder="Your Name"
-                  name="displayName"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="name"
-                >
-                  Phone Number:
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  defaultValue={phone_number}
-                  id="name"
-                  type="text"
-                  placeholder="Your Phone Number"
-                  name="phone"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="location"
-                >
-                  Location:
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  defaultValue={location}
-                  id="location"
-                  type="text"
-                  placeholder="Your Location"
-                  name="location"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="files"
-                >
-                  Image:
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="files"
-                  type="file"
-                  placeholder="Image URL"
-                  name="files"
-                />
-              </div>
-              <div className="mb-6">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="about"
-                >
-                  About:
-                </label>
-                <textarea
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  defaultValue={about}
-                  id="about"
-                  placeholder="Tell us about yourself..."
-                  rows="4"
-                  name="about"
-                ></textarea>
-              </div>
-              <div className="flex items-center justify-between">
-                <button
-                  className="bg-black text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
+              <IoClose />
+            </span>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="email"
+              >
+                Email:
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email"
+                type="email"
+                placeholder="example@gmail.com"
+                defaultValue={email}
+                disabled
+                name="email"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="name"
+              >
+                Name:
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="name"
+                defaultValue={name}
+                type="text"
+                placeholder="Your Name"
+                name="displayName"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="name"
+              >
+                Phone Number:
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                defaultValue={phone_number}
+                id="name"
+                type="text"
+                placeholder="Your Phone Number"
+                name="phone"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="location"
+              >
+                Location:
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                defaultValue={location}
+                id="location"
+                type="text"
+                placeholder="Your Location"
+                name="location"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="files"
+              >
+                Image:
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="files"
+                type="file"
+                placeholder="Image URL"
+                name="files"
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="about"
+              >
+                About:
+              </label>
+              <textarea
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                defaultValue={about}
+                id="about"
+                placeholder="Tell us about yourself..."
+                rows="4"
+                name="about"
+              ></textarea>
+            </div>
+            <div className="flex items-center justify-between">
+              <button
+                className="bg-black text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
-      </dialog>
+      </div>
     </div>
   );
 };

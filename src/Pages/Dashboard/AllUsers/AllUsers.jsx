@@ -21,6 +21,7 @@ const AllUsers = () => {
   const [control, setControl] = useState(true);
   const queryParams = new URLSearchParams(location.search);
   const [totalData, setTotalData] = useState(20)
+  const [skipData, setSkipData] = useState(0)
 
 
   let currentPage = 1;
@@ -43,6 +44,7 @@ const AllUsers = () => {
 
   useEffect(() => {
     let skip = (currentPage - 1) * dataPerPage
+    setSkipData(skip)
     axiosSecure.get(`/get-all-users?skip=${skip}&limit=${dataPerPage}&role=${tap}`).then((res) => {
       setUsers(res?.data?.data);
       setTotalData(res?.data?.meta?.total || 20)
@@ -200,7 +202,7 @@ const AllUsers = () => {
 
                     return (
                       <tr key={_id}>
-                        <th>{i + 1}</th>
+                        <th>{i + 1 + skipData}</th>
                         <td>
                           <span className="border block  w-[60px] h-[60px] relative rounded overflow-hidden">
                             <img

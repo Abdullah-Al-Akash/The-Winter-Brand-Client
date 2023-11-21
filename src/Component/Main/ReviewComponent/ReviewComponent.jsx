@@ -6,6 +6,11 @@ import Loading from "../../../Sheard/Loading/Loading";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import defaultImage from "../../../assets/images/reviewDefaultimage.png";
+import "@smastrom/react-rating/style.css";
+import { Rating, Star } from "@smastrom/react-rating";
+import { FaRegStar, FaStar } from "react-icons/fa";
+
+
 const ReviewComponent = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -64,7 +69,6 @@ const ReviewComponent = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 mx-auto gap-5">
             {reviews?.map((r, id) => {
               const { name, rating, review, avatar } = r?.user_review;
-              console.log(rating);
               return (
                 <div
                   key={i}
@@ -78,7 +82,14 @@ const ReviewComponent = () => {
                         alt=""
                       />
                       <p>{name}</p>
-                      <p>{rating}</p>
+                      <div className="py-2 my-2">
+                        <Rating
+                          placeholderRating={3.5}
+                          emptySymbol={<FaRegStar/>}
+                          placeholderSymbol={<FaRegStar />}
+                          fullSymbol={<FaStar />}
+                        />
+                      </div>
                       <p>{review}</p>
                     </div>
                   </div>
@@ -89,7 +100,7 @@ const ReviewComponent = () => {
           <div className="text-center my-5">
             {currentPage - 1 >= 1 && (
               <>
-                <Link to={"/dashboard/reviews"}>{"<<"}</Link>
+                <Link to={"/reviews"}>{"<<"}</Link>
               </>
             )}
             {pageNumbers?.map((page, i) => (
@@ -100,14 +111,14 @@ const ReviewComponent = () => {
                     : "border-2 px-2 py-1 rounded mx-2"
                 }
                 key={i}
-                to={`/dashboard/reviews?page=${page}`}
+                to={`/reviews?page=${page}`}
               >
                 {page}
               </Link>
             ))}
             {currentPage + 1 <= totalPages && (
               <>
-                <Link to={"/dashboard/reviews"}>{">>"}</Link>
+                <Link to={"/reviews"}>{">>"}</Link>
               </>
             )}
           </div>

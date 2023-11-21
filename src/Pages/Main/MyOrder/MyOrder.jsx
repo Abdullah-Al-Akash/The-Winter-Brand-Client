@@ -45,13 +45,21 @@ const MyOrder = () => {
     setOrderID(id);
     setUserName(name);
     setOpen(true);
+    reset()
   };
   const handleReview = (e, id) => {
+
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
-
+    if (!star) {
+      return Swal.fire({
+        title: "Review Star Required!",
+        text: "Provide Star",
+        icon: "warning"
+      });
+    }
     const newReview = {
       order_id: orderID,
       rating: star,
@@ -156,8 +164,10 @@ const MyOrder = () => {
                 transaction_id,
                 order_status,
                 subscription_id,
+                subscription_status,
                 delivery_info: { address },
               } = order || {};
+              console.log(order);
               console.log(transaction_id);
               return (
                 <tr key={order?._id} className="text-center">
@@ -169,12 +179,17 @@ const MyOrder = () => {
                   <td>{order_status}</td>
                   {subscription_id ? (
                     <td>
-                      <button
-                        className="rounded btn-sm bg-black text-white flex items-center mx-auto"
-                        onClick={() => handleUnsubscribe(subscription_id)}
-                      >
-                        Unsubscribe
-                      </button>
+                      {
+                        subscription_status === 'active' ?
+                          <button
+                            className="rounded btn-sm bg-black text-white flex items-center mx-auto"
+                            onClick={() => handleUnsubscribe(subscription_id)}
+                          >
+                            Unsubscribe
+                          </button>
+                          :
+                          <div className="badge badge-secondary badge-outline">inactive</div>
+                      }
                     </td>
                   ) : (
                     <td></td>
@@ -183,9 +198,8 @@ const MyOrder = () => {
                     {" "}
                     <button
                       onClick={() => handleModal(_id, name)}
-                      className={`rounded btn-sm  text-white flex items-center mx-auto ${
-                        order?.user_review ? "bg-gray-400" : "bg-black"
-                      }`}
+                      className={`rounded btn-sm  text-white flex items-center mx-auto ${order?.user_review ? "bg-gray-400" : "bg-black"
+                        }`}
                       disabled={order?.user_review ? true : false}
                     >
                       Add Review
@@ -213,15 +227,14 @@ const MyOrder = () => {
 
       {/* review modal */}
       <div
-        className={`${
-          open ? "" : "hidden"
-        } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
+        className={`${open ? "" : "hidden"
+          } fixed md:w-4/12 w-11/12 top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] p-8 bg-white shadow-2xl border rounded-md z-[999] `}
       >
         <form className="relative" onSubmit={handleReview}>
           <h1 className="text-center my-2">Please Leave a Review!</h1>
           <span
             onClick={() => setOpen(false)}
-            className="cursor-pointer bg-gray-200 rounded-full p-2 absolute -top-11 -right-10  text-xl"
+            className="cursor-pointer bg-red-500 text-white rounded-full p-2 absolute -top-11 -right-10  text-xl"
           >
             <IoClose />
           </span>

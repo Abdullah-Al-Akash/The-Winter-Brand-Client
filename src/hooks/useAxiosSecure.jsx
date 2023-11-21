@@ -11,14 +11,14 @@ const axiosSecure = axios.create({
 });
 
 const useAxiosSecure = () => {
-  const { user } = useAuth();
+  const { user } = useAuth() || {};
   useEffect(() => {
     axiosSecure.interceptors.request.use((config) => {
       const token = cookies.get("accessToken");
       if (token) {
         config.headers.authorization = token;
-        config.withCredentials = true;
       }
+      config.withCredentials = true;
       return config;
     });
   }, []);

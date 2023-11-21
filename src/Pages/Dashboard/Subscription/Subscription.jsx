@@ -13,6 +13,7 @@ const Subscription = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [totalData, setTotalData] = useState(20)
+  const [skipData, setSkipData] = useState(0)
   let currentPage = 1;
   // let totalPage = 10;
   const dataPerPage = 20
@@ -32,6 +33,7 @@ const Subscription = () => {
   const { axiosSecure } = useAxiosSecure();
   useEffect(() => {
     let skip = (currentPage - 1) * dataPerPage
+    setSkipData(skip)
     axiosSecure.get(`/get-orders?skip=${skip}&limit=${dataPerPage}&tap=${tap}&type=subscription`).then((res) => {
       setOrders(res?.data?.data || [])
       setTotalData(res?.data?.meta?.subscription || 20)
@@ -224,7 +226,7 @@ const Subscription = () => {
                   const itemsNameColor = ["#FF0000", "#990099", "#003366"];
                   return (
                     <tr key={ind}>
-                      <th>{ind + 1}</th>
+                      <th>{ind + 1 + skipData}</th>
                       <td>{_id}</td>
                       <td>{subscription_id}</td>
                       <td><p className={`${subscription_status === "active" ? "badge badge-accent badge-outline" : "badge badge-secondary badge-outline"}`}>{subscription_status}</p></td>

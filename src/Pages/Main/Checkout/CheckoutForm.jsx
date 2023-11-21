@@ -9,8 +9,9 @@ import { FiSmartphone } from "react-icons/fi";
 import { PiWarningCircle } from "react-icons/pi";
 
 import "./checkout.css";
-import { duration } from "moment/moment";
+
 import { cookies, useAuth } from "../../../AuthProvider/AuthProvider";
+import CheckoutLoading from "../../../Sheard/checkout/CheckoutLoading";
 
 const countries = {
   "United States": [
@@ -103,14 +104,13 @@ const CheckoutForm = ({ amount, clientSecret }) => {
   const [emailMassage, setEmailMassage] = useState(false);
   const { axiosSecure } = useAxiosSecure();
   const { checkoutData } = useCheckoutData();
+  const [paymentLoading, setPaymentLoading] = useState(false)
   const { user, setControlCart, controlCart, handleTop } = useAuth();
   const navigate = useNavigate()
 
   const stripe = useStripe();
   const elements = useElements();
-  console.log(10, checkoutData?.duration);
 
-  console.log("from 115", checkoutData)
   const handleSubmit = async (event) => {
     event.preventDefault();
     const from = event.target;
@@ -124,7 +124,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
     const city = from.city.value;
     const phone = from?.phone?.value || "";
     const mobile_number = from?.mobile_number?.value || "";
-
+    setPaymentLoading(true)
     if (!stripe || !elements) {
       return;
     }
@@ -194,10 +194,12 @@ const CheckoutForm = ({ amount, clientSecret }) => {
         axiosSecure.post("/create-order", order)
           .then((res) => {
             if (res?.data?.success) {
+              
               cookies.remove("data")
               from.reset()
               navigate("/my-order")
               handleTop()
+              setPaymentLoading(false)
               Swal.fire({
                 position: "center",
                 icon: "success",
@@ -272,6 +274,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
                   from.reset()
                   navigate("/my-order")
                   handleTop()
+                  setPaymentLoading(false)
                   Swal.fire({
                     position: "center",
                     icon: "success",
@@ -326,6 +329,7 @@ const CheckoutForm = ({ amount, clientSecret }) => {
                     cookies.remove("data")
                     navigate("/my-order")
                     handleTop()
+                    setPaymentLoading(false)
                     Swal.fire({
                       position: "center",
                       icon: "success",
@@ -341,9 +345,10 @@ const CheckoutForm = ({ amount, clientSecret }) => {
           }
         }
 
-        console.log(paymentIntent);
+  
 
         if (confirmError) {
+          setPaymentLoading(false)
           console.error("Error confirming card payment:", confirmError);
           return;
         }
@@ -351,13 +356,17 @@ const CheckoutForm = ({ amount, clientSecret }) => {
         console.log("PaymentIntent:", paymentIntent);
       }
     } catch (error) {
+      setPaymentLoading(false)
       console.error("Payment error:", error);
     }
   };
 
+  // if(paymentLoading) return <CheckoutLoading/>
+  
+
   return (
-    <form onSubmit={handleSubmit}>
-      {/* additional data start */}
+   <form onSubmit={handleSubmit}>
+    {paymentLoading && <CheckoutLoading/>}
       <div>
         <div className="flex justify-between items-center w-full my-2">
           <h2 className="text-xl font-semibold">Contact</h2>

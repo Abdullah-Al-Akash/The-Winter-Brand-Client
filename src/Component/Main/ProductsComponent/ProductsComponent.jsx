@@ -65,7 +65,13 @@ const ProductsComponent = () => {
             .post("/create-cart", newProduct)
             .then((res) => {
               if (res?.data?.success) {
-                toast(`Product Added in cart!`);
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Product added in cart!",
+                  showConfirmButton: false,
+                  timer: 1000
+                });
                 setControlCart(!controlCart);
               }
             })
@@ -91,21 +97,21 @@ const ProductsComponent = () => {
       <div className="md:grid lg:grid-cols-3 md:grid-cols-2 gap-4 md:py-14 px-8 hidden lg:px-24">
         {location.pathname === "/"
           ? products
-              .slice(0, 6)
-              ?.map((product) => (
-                <ProductsCard
-                  key={product.id}
-                  product={product}
-                  handleAddToCard={handleAddToCard}
-                ></ProductsCard>
-              ))
-          : products?.map((product) => (
+            .slice(0, 6)
+            ?.map((product) => (
               <ProductsCard
                 key={product.id}
                 product={product}
                 handleAddToCard={handleAddToCard}
               ></ProductsCard>
-            ))}
+            ))
+          : products?.map((product) => (
+            <ProductsCard
+              key={product.id}
+              product={product}
+              handleAddToCard={handleAddToCard}
+            ></ProductsCard>
+          ))}
       </div>
       {location.pathname === "/" ? (
         <Link onClick={handleTop} to="/all-product">

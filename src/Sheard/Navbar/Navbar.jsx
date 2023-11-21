@@ -122,7 +122,7 @@ const Navbar = () => {
                         <li>
                           <Link
                             className="text-sm flex items-center hover:bg-gray-100"
-                            to={"/dashboard"}
+                            to={"/dashboard/"}
                             onClick={handleTop}
                           >
                             <FaRegUserCircle></FaRegUserCircle>{" "}
@@ -141,7 +141,7 @@ const Navbar = () => {
                           </Link>
                         </li>
                       )}
-                      {(user && !role == "admin") && (
+                      {(user && !(role == "admin")) && (
                         <li>
                           <Link
                             className="text-sm flex items-center hover:bg-gray-100"
@@ -149,7 +149,7 @@ const Navbar = () => {
                             onClick={handleTop}
                           >
                             <FiShoppingCart></FiShoppingCart>{" "}
-                            <span className="ms-2 text-sm bg-black text-white">
+                            <span className="ms-2 text-sm">
                               My Cart
                             </span>
                           </Link>
@@ -203,7 +203,7 @@ const Navbar = () => {
                         <li>
                           <Link
                             className="text-sm flex items-center hover:bg-gray-100"
-                            to={"/dashboard"}
+                            to={"/dashboard/"}
                             onClick={() => {
                               handleTop();
                               setNevActive("");
@@ -246,8 +246,8 @@ const Navbar = () => {
                 )}
               </div>
               {(user &&
-                !role ==
-                  "admin") && (
+                !(role ==
+                  "admin")) && (
                     <li className="list-none md:flex justify-center items-center gap-5 hidden relative">
                       <Link
                         className="text-sm flex items-center"

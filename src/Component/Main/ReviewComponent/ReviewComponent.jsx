@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Loading from "../../../Sheard/Loading/Loading";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
-
+import defaultImage from "../../../assets/images/reviewDefaultimage.png";
 const ReviewComponent = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -58,12 +58,12 @@ const ReviewComponent = () => {
       <hr className="border my-10" />
       <div>
         <h4 className="section-title text-xl font-semibold border-b-2 inline border-black pb-2">
-          Product Review
+          Product Review {totalData}
         </h4>
         <div className="px-2">
           <div className="grid grid-cols-1 md:grid-cols-3 mx-auto gap-5">
             {reviews?.map((r, id) => {
-              const { name, rating, review } = r?.user_review;
+              const { name, rating, review, avatar } = r?.user_review;
               console.log(rating);
               return (
                 <div
@@ -72,6 +72,11 @@ const ReviewComponent = () => {
                 >
                   <div className="h-full">
                     <div className="flex flex-col justify-between h-full">
+                      <img
+                        className="h-[100px] w-[100px] mx-auto my-4 object-contain rounded-full"
+                        src={avatar ? avatar : defaultImage}
+                        alt=""
+                      />
                       <p>{name}</p>
                       <p>{rating}</p>
                       <p>{review}</p>

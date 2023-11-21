@@ -19,6 +19,7 @@ const ManageOrder = () => {
   const [orders, setOrders] = useState([]);
   const queryParams = new URLSearchParams(location.search);
   const [totalData, setTotalData] = useState(20)
+  const [skipData, setSkipData] = useState(0)
 
   // let skip = 
   // console.log(param1Value)
@@ -45,6 +46,7 @@ const ManageOrder = () => {
 
   useEffect(() => {
     let skip = (currentPage - 1) * dataPerPage
+    setSkipData(skip)
     axiosSecure.get(`/get-orders?skip=${skip}&limit=${dataPerPage}&tap=${tap}`).then((res) => {
       setOrders(res?.data?.data || [])
       setTotalData(res?.data?.meta?.payment || 20)
@@ -235,7 +237,7 @@ const ManageOrder = () => {
                   const itemsNameColor = ["#FF0000", "#990099", "#003366"];
                   return (
                     <tr key={ind}>
-                      <th>{ind + 1}</th>
+                      <th>{ind + 1 + skipData}</th>
                       <td>{_id}</td>
                       <td>{transaction_id}</td>
                       <td>{name}</td>

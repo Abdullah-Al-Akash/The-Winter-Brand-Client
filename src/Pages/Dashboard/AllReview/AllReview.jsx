@@ -13,7 +13,7 @@ const AllReview = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const [totalData, setTotalData] = useState(20)
-
+  const [skipData, setSkipData] = useState(0)
 
   let currentPage = 1;
 
@@ -35,6 +35,7 @@ const AllReview = () => {
 
   useEffect(() => {
     let skip = (currentPage - 1) * dataPerPage
+    setSkipData(skip)
     axiosSecure
       .get(`/get-all-reviews?skip=${skip}&limit=${dataPerPage}`)
       .then((res) => {
@@ -78,7 +79,7 @@ const AllReview = () => {
             {items?.map((item, i) => {
               return (
                 <tr key={i}>
-                  <th>{i + 1}</th>
+                  <th>{i + 1 + skipData}</th>
                   <td>{item?.user_review?.name}</td>
                   <td>{item?.email}</td>
                   <td>{item?.user_review?.rating}</td>
